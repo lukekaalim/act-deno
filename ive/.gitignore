@@ -1,0 +1,6 @@
+bazel-bin
+bazel-ive
+bazel-out
+bazel-testlogs
+.idea
+.aswb
