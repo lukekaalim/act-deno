@@ -6,5 +6,3 @@ export * from './errors.ts';
 export * from './element.ts';
 export * from './node.ts';
 export * from './id.ts';
-
-export { createElement as h } from './element.ts';

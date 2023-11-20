@@ -52,3 +52,5 @@ export function createElement(
     children: children || [],
   } as Element;
 }
+
+export const h = createElement;
