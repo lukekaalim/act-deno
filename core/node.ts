@@ -1,6 +1,6 @@
 import { Element } from "./element.ts";
 import { UnknownElementType } from "./errors.ts";
-import { h } from "./mod.ts";
+import { h } from "./element.ts";
 
 export type Node =
   | string
