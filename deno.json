@@ -5,7 +5,8 @@
   "compilerOptions": {
     "lib": [
       "deno.window",
-      "DOM"
+      "DOM",
+      "ES2021"
     ]
   }
 }
