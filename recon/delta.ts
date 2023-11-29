@@ -41,6 +41,7 @@ export const createDeltaManager = (
      * If we're "on a target's path", then we have to continue rendering.
      */
     const requiredChange = !!targets.find(target => target.path.includes(ref.id));
+    const requiresRerender = targets.some(target => target.id === ref.id);
 
     if (identicalChange && !requiredChange)
       return;
@@ -51,6 +52,13 @@ export const createDeltaManager = (
     // If we have a "Next", then this is a request to either
     // Create or Update a commit.
     if (next) {
+      if (identicalChange && !requiresRerender) {
+        const updates = prevChildren.map(prev => ({ ref: prev, prev, next: prev.element, targets }));  
+        thread.pendingUpdates.push(...updates);
+        const commit = updateCommit(ref, prev.element, prev.children);
+        thread.completedDeltas.push({ ref, prev, next: commit });
+        return;
+      }
       const children = stateManager.calculateCommitChildren(thread, next, ref);
       const [childRefs, updates] = calculateUpdates(ref, prevChildren, children);
 

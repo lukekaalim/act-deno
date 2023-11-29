@@ -12,6 +12,7 @@ import { Update } from "./update.ts";
  * may start rendering more nodes due to updates.
  */
 export type WorkThread = {
+  rootTargets: CommitRef[],
   root: CommitRef,
 
   pendingUpdates: Update[],
@@ -54,6 +55,7 @@ export const createThreadManager = (
   const requestRender = (target: CommitRef) => {
     const root = commits.get(rootRef.path[0]) || null;
     const thread: WorkThread = {
+      rootTargets: [target],
       root: rootRef,
       pendingEffects: [],
       pendingUpdates: [{ ref: rootRef, prev: root, next: rootElement, targets: [target] }],
