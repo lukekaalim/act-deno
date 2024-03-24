@@ -20,6 +20,7 @@ export const createTree = (
       pendingUpdates: [
         { ref: rootRef, prev: rootCommit, next: element, targets: [] }
       ],
+      rootTargets: [],
       pendingEffects: [],
       completedDeltas: [],
     };
@@ -39,6 +40,7 @@ export const createTree = (
       pendingUpdates: [
         { ref: rootRef, prev: null, next: element, targets: [] }
       ],
+      rootTargets: [],
       pendingEffects: [],
       completedDeltas: [],
     };
@@ -58,6 +60,7 @@ export const createTree = (
       pendingUpdates: [
         { ref: rootRef, prev: rootCommit, next: null, targets: [] }
       ],
+      rootTargets: [],
       pendingEffects: [],
       completedDeltas: [],
     };

@@ -33,13 +33,17 @@ export type CommitRef = {
 export type Commit = CommitRef & {
   version: CommitVersion;
   element: act.Element;
-  children: CommitRef[];
+  children: readonly CommitRef[];
 };
 
+/**
+ * Create a new commit representing a change
+ * in a previous commit.
+ */
 export const updateCommit = (
   ref: CommitRef,
   element: act.Element,
-  children: CommitRef[]
+  children: readonly CommitRef[]
 ): Commit => ({
   ...ref,
   element,

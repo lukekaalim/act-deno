@@ -3,18 +3,16 @@ import { StateManager } from "./state.ts";
 import { WorkThread } from "./thread.ts";
 import { Update, calculateUpdates } from "./update.ts";
 
+/**
+ * A processed "Update" to the tree - contains both before & after
+ * commits, as well as a "neutral" ref (so you don't have to keep
+ * testing if prev or next are null)
+*/
 export type Delta = {
   ref: CommitRef,
 
   prev: null | Commit,
   next: null | Commit,
-};
-
-/** TODO: come up with better name */
-export type TreePatch = {
-  created: { ref: CommitRef, next: Commit },
-  updated: { ref: CommitRef, next: Commit, prev: Commit },
-  removed: { ref: CommitRef, prev: Commit },
 };
 
 export const createDeltaManager = (
