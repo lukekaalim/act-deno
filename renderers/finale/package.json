@@ -1,0 +1,7 @@
+{
+  "name": "@lukekaalim/act-finale",
+  "dependencies": {
+    "@types/three": ">= 0.162.0",
+    "three": ">= 0.162.0"
+  }
+}

@@ -11,7 +11,8 @@ export type Particle = {
   title?: string,
   color: string,
   mass: number,
-  pos: Vector2, vel: Vector2
+  pos: Vector2,
+  vel: Vector2
 };
 export type Spring = {
   id: number,

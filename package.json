@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "workspaces": [
+    "renderers/*",
+    "extras/*",
+    "recon",
+    "core",
+    "docs",
+    "docs2",
+    "docs3"
+  ],
+  "devDependencies": {
+    "vite": "^5.2.6"
+  }
+}

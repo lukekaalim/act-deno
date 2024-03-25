@@ -81,12 +81,18 @@ export const useContext = <T>(context: Context<T>): T => {
   return hookImplementation.useContext(context);
 };
 
-export type Ref<T> = {
+export type Ref<in out T> = {
   current: T;
 };
+export type ReadonlyRef<out T> = {
+  readonly current: T;
+};
+
+export const refSymbol = Symbol();
+export const memoSymbol = Symbol();
 
 export const useRef = <T>(initialValue: ValueOrCalculator<T>): Ref<T> => {
-  const [ref] = useState(() => ({ current: calculateValue(initialValue) }));
+  const [ref] = useState(() => ({ current: calculateValue(initialValue), [refSymbol]: true }));
   return ref;
 };
 export const useMemo = <T>(calculate: () => T, deps: Deps): T => {

@@ -100,7 +100,7 @@ export const createStateManager = (
       effectManager.enqueueTeardown(thread, effect);
   };
 
-  return { calculateCommitChildren, clearCommitState };
+  return { calculateCommitChildren, clearCommitState, states };
 };
 
 export type StateManager = ReturnType<typeof createStateManager>;

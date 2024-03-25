@@ -1,4 +1,5 @@
 import { spider, act } from "../mod.ts";
+import { FinaleCanvas } from "./finale.ts";
 import { Particle, Sim, Spring, Vector2, distance, runSim } from "./mods/sim.ts";
 import { useDraggableSurface2 } from "./mods/useDraggableSurface2.ts";
 
@@ -44,6 +45,7 @@ const TestApp = () => {
       setTodos([...todos, wip])
     } }, 'Add Todo'),
     h('pre', {}, wip),
+    h(FinaleCanvas),
   ]);
 };
 
@@ -234,6 +236,7 @@ const RendererVisualisation = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const groupDrag = useDraggableSurface2(svgRef)
   const camera = useRef({ x: 0, y: 0 }).current;
+
   useEffect(() => {
     const el = groupRef.current;
     if (!el)
@@ -247,7 +250,7 @@ const RendererVisualisation = () => {
         el.style.transform = `translate(${camera.x}px, ${camera.y}px)`;
       });
     })
-  })
+  }, [])
 
   return [
     h(spider.el.div, { style: { display: 'flex', flexDirection: 'column', flex: 1 } }, [
@@ -273,3 +276,4 @@ const RendererVisualisation = () => {
 };
 
 spider.createWebRenderer(document.body, h(RendererVisualisation));
+
