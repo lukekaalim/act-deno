@@ -7,6 +7,7 @@ import { createDeltaManager, Delta } from "./delta";
 import { createEffectManager } from "./effects";
 import { createStateManager } from "./state";
 import { createThreadManager, WorkThread } from "./thread";
+import { createContextManager } from "./context";
 
 
 export const createReconciler = (
@@ -19,12 +20,13 @@ export const createReconciler = (
   const rootRef = { id: rootId, path: [rootId] };
   
   const effectManager = createEffectManager();
+  const contextManager = createContextManager();
   const stateManager = createStateManager(effectManager, (ref) => {
     setTimeout(() => {
       threadManager.requestRender(ref);
     }, 0);
-  });
-  const deltaManager = createDeltaManager(stateManager, commits);
+  }, contextManager);
+  const deltaManager = createDeltaManager(stateManager, commits, contextManager);
   const threadManager = createThreadManager(deltaManager, commits, rootRef, element, (thread) => {
     space
       .create(thread.completedDeltas, commits)

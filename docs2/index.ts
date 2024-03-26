@@ -1,6 +1,6 @@
 import { createSplitRenderSpace } from "@lukekaalim/act-backstage/mod.ts";
 import { createReconciler } from "@lukekaalim/act-recon/mod.ts";
-import { Component, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from "@lukekaalim/act/mod.ts";
+import { Component, createContext, h, primitiveNodeTypes, useContext, useEffect, useMemo, useRef, useState } from "@lukekaalim/act/mod.ts";
 
 import './index.module.css';
 
@@ -75,10 +75,15 @@ const MyComponent: Component = () => {
     ]),
   ];
 }
+
+const renderContext = createContext<three.WebGLRenderer | null>(null);
+
 const Canvas: act.Component<{ speed: number }> = ({ speed }) => {
   const canvasRef = useRef<null | HTMLCanvasElement>(null);
   const sceneRef = useRef<null | three.Scene>(null);
   const cameraRef = useRef<null | three.PerspectiveCamera>(null);
+
+  const [renderer, setRenderer] = useState<three.WebGLRenderer | null>(null)
 
   useEffect(() => {
     const { current: canvas } = canvasRef;
@@ -93,19 +98,32 @@ const Canvas: act.Component<{ speed: number }> = ({ speed }) => {
       id = requestAnimationFrame(render);
     };
     const renderer = new three.WebGLRenderer({ canvas })
+    setRenderer(renderer);
     let id = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(id);
+    return () => {
+      cancelAnimationFrame(id);
+      setRenderer(null);
+      renderer.dispose();
+    }
   }, [])
 
-  return hs('canvas', { ref: canvasRef, height: 400, width: 400, style: { background: "black" } }, [
-    h('scene', { ref: sceneRef }, [
-      h('perspectivecamera', {
-        ref: cameraRef,
-        position: new three.Vector3(0, 0, 5),
-      }),
-      h(SpinMesh, { speed }),
-    ])
-  ])
+  console.log('Canvas', { renderer });
+
+  return h(renderContext.Provider, { value: renderer },
+    useMemo(() => hs('canvas', { ref: canvasRef, height: 400, width: 400, style: { background: "black" } }, [
+      h('scene', { ref: sceneRef }, [
+        h('perspectivecamera', {
+          ref: cameraRef,
+          position: new three.Vector3(0, 0, 5),
+        }),
+        h(MiddleManagement, {}, h(SpinMesh, { speed })),
+      ])
+  ]), [speed]))
+}
+
+const MiddleManagement: act.Component = ({ children }) => {
+  console.log('MiddleManagement');
+  return children;
 }
 
 const geometry = new three.BoxGeometry(1, 1, 1);
@@ -127,6 +145,9 @@ const SpinMesh: act.Component<{ speed: number }> = ({ speed }) => {
     let id = requestAnimationFrame(render);
     return () => cancelAnimationFrame(id);
   }, [speed])
+
+  const renderer = useContext(renderContext);
+  console.log('SpinMesh', {renderer});
 
   return h('mesh', { geometry, material, ref })
 }

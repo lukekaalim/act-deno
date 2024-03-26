@@ -1,5 +1,5 @@
 import { calculateChangedElements } from "./algorithms.ts";
-import { Commit, CommitRef } from "./commit.ts";
+import { Commit, CommitID, CommitRef } from "./commit.ts";
 import { act } from "./deps.ts";
 
 export type Update = {
@@ -60,6 +60,61 @@ export const calculateFastUpdate = (
 
   return [refs, updates];
 };
+
+export const findChildCommits = (
+  parent: CommitRef,
+  prevCommits: Commit[],
+  nextElements: act.Element[],
+) => {
+  const changes = calculateChangedElements(
+    prevCommits,
+    nextElements,
+    (c, e, pi, ni) => c.element.type === e.type && pi === ni,
+  );
+
+  const newOrPersisted = nextElements.map((next, index) => {
+    const prevIndex = changes.nextToPrev[index];
+    const prev = prevIndex !== -1 ? prevCommits[prevIndex] : null;
+    if (prev) {
+      return { prev, next, ref: prev };
+    }
+    const id = act.createId<"CommitID">();
+    const ref = { id, path: [...parent.path, id] };
+    return { prev, next, ref };
+  });
+  const removed = changes.removed.map((index) => {
+    const prev = prevCommits[index];
+    return { prev, next: null , ref: prev };
+  });
+
+  return { newOrPersisted, removed };
+}
+
+export const calcUpdates = (
+  childCommits: ReturnType<typeof findChildCommits>,
+  targets: CommitRef[],
+): Update[] => {
+  return [
+    ...childCommits.removed
+          // Delete commits dont need targets (they always visit all nodes)
+      .map(({ prev, next }) => ({ ref: prev, next, prev, targets: [] })),
+    ...childCommits.newOrPersisted
+      .map(({ prev, next, ref }): Update | null => {
+        if (!prev) {
+          // Create commits dont need targets (they always visit all nodes)
+          return { ref, prev, next, targets: [] };
+        }
+        const validTargets = targets.filter(target => target.path.includes(prev.id));
+        if (prev.element.id === next.id && validTargets.length === 0) {
+          // dont generate updates for nodes that both:
+          //  - havent changed
+          //  - dont need their children re-renderered
+            return null;
+        }
+        return { ref: prev, prev, next, targets: validTargets };
+      }).filter((x): x is Update => !!x),
+  ]
+}
 
 /**
  * Returns a list of all updates that should

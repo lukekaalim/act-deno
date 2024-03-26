@@ -1,7 +1,10 @@
+import { convertNodeToElement } from "@lukekaalim/act/node.ts";
 import { Commit, CommitID, CommitRef, updateCommit } from "./commit.ts";
 import { StateManager } from "./state.ts";
 import { WorkThread } from "./thread.ts";
-import { Update, calculateUpdates } from "./update.ts";
+import { Update, calcUpdates, calculateUpdates, findChildCommits } from "./update.ts";
+import { act } from "./deps.ts";
+import { ContextManager } from "./context.ts";
 
 export type Delta = {
   ref: CommitRef,
@@ -20,6 +23,7 @@ export type TreePatch = {
 export const createDeltaManager = (
   stateManager: StateManager,
   commits: Map<CommitID, Commit>,
+  contextManager: ContextManager | null = null,
 ) => {
   /**
    * Given an Update, compute if there is any
@@ -59,8 +63,15 @@ export const createDeltaManager = (
         thread.completedDeltas.push({ ref, prev, next: commit });
         return;
       }
-      const children = stateManager.calculateCommitChildren(thread, next, ref);
-      const [childRefs, updates] = calculateUpdates(ref, prevChildren, children);
+      const contextTargets = contextManager && contextManager.processContextElement(next, ref.id) || [];
+      const childNode = stateManager.calculateCommitChildren(thread, next, ref);
+
+      const nodes = Array.isArray(childNode) ? childNode : [childNode];
+      const elements = nodes.map(act.convertNodeToElement);
+
+      const childCommits = findChildCommits(ref, prevChildren, elements);
+      const updates = calcUpdates(childCommits, [...targets, ...contextTargets]);
+      const childRefs = childCommits.newOrPersisted.map(n => n.ref);
 
       const commit = updateCommit(ref, next, childRefs);
 

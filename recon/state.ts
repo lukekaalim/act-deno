@@ -1,4 +1,5 @@
 import { CommitRef, CommitID } from "./commit.ts";
+import { ContextManager } from "./context.ts";
 import { act } from "./deps.ts";
 import { EffectManager, EffectID } from "./effects.ts";
 import { WorkThread } from "./thread.ts";
@@ -9,11 +10,13 @@ export type ComponentState = {
   values:   Map<number, unknown>;
   deps:     Map<number, act.Deps>;
   effects:  Map<number, EffectID>;
+  contexts:  Map<number, act.Context<unknown>>;
 };
 
 export const createStateManager = (
   effectManager: EffectManager,
-  rerender: (ref: CommitRef) => unknown
+  rerender: (ref: CommitRef) => unknown,
+  contextManager: ContextManager | null = null
 ) => {
   const states = new Map<CommitID, ComponentState>();
 
@@ -23,6 +26,7 @@ export const createStateManager = (
       values: new Map(),
       effects: new Map(),
       deps: new Map(),
+      contexts: new Map(),
     };
     states.set(ref.id, state);
     return state;
@@ -33,8 +37,12 @@ export const createStateManager = (
       const state = states.get(ref.id) || createState(ref);
       let index = 0;
       return {
-        useContext(context) {
-          throw new act.MagicError();
+        useContext<T>(context: act.Context<T>): T {
+          if (!contextManager)
+            throw new act.MagicError();
+
+          state.contexts.set(index, context as act.Context<unknown>);
+          return contextManager.subscribeContext(ref, context);
         },
         useState<T>(initialValue: act.ValueOrCalculator<T>) {
           const stateIndex = index++;
@@ -96,8 +104,12 @@ export const createStateManager = (
     if (!state)
       return;
     const effects = [...state.effects.values()];
+    const contexts = [...state.contexts.values()];
     for (const effect of effects)
       effectManager.enqueueTeardown(thread, effect);
+    if (contextManager)
+      for (const context of contexts)
+        contextManager.unsubscribeContext(ref, context);
   };
 
   return { calculateCommitChildren, clearCommitState, states };
