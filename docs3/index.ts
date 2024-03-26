@@ -9,11 +9,19 @@ import classes from './index.module.css';
 import readme from './readme.md?raw';
 import { createMarkdownActNodes } from '../extras/markdown/mod';
 
+import { unified } from 'unified';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse'
+
 const { h } = act;
+
+const markdown = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
 
 const DocsApp: act.Component = () => {
   return hs('article', { className: classes.page }, 
-    createMarkdownActNodes(fromMarkdown(readme)))
+    createMarkdownActNodes(markdown.parse(readme)))
 }
 
 createReconciler(h(DocsApp), multi([spider(), finale()]));

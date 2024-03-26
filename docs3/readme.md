@@ -45,3 +45,33 @@ createReconciler(
   multi([spider(), finale()])
 );
 ```
+
+## Features
+
+Completed tasks and todos.
+
+  - [x] core
+    - [x] id
+    - [x] hooks
+  - [x] recon
+    - [x] state
+    - [x] context
+    - [x] effects
+    - [x] element
+    - [ ] suspense
+  - [ ] renderers
+    - [x] HTML
+    - [ ] SVG
+    - [x] threejs
+    - [ ] plastic
+    - [ ] GTK
+    - [ ] QT
+    - [ ] Android
+    - [ ] iOS
+  - [x] extras
+    - [ ] markdown
+      - [x] GFM
+      - [ ] Frontmatter
+      - [ ] TOC
+      - [ ] Code Highlighting
+    - [ ] doctor

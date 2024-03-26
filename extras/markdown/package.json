@@ -2,6 +2,7 @@
   "name": "@lukekaalim/act-markdown",
   "dependencies": {
     "@types/mdast": "^4.0.3",
-    "mdast-util-from-markdown": "^2.0.0"
+    "mdast-util-from-markdown": "^2.0.0",
+    "micromark-extension-gfm": "^3.0.0"
   }
 }
