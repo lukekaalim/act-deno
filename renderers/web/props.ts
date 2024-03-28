@@ -1,7 +1,7 @@
 import { act, recon } from "./deps";
 
 export const setProps = (
-  node: HTMLElement | SVGElement,
+  node: HTMLElement | SVGElement | Text,
   
   next: act.Element,
   prev: null | act.Element
@@ -11,6 +11,10 @@ export const setProps = (
   }
   if (node instanceof SVGElement) {
 
+  }
+  if (node instanceof Text) {
+    if (node.textContent !== next.props.value)
+      node.textContent = next.props.value as string
   }
 }
 

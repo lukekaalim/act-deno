@@ -1,2 +1,2 @@
 export * from './space.ts';
-export * from './utils.ts';
+export * from './props.ts';

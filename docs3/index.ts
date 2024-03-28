@@ -1,5 +1,5 @@
-import { finale } from '@lukekaalim/act-finale/mod.ts';
-import { spider, hs } from '@lukekaalim/act-spider/mod.ts';
+import { finale } from '@lukekaalim/act-three/mod.ts';
+import { spider, hs } from '@lukekaalim/act-web/mod.ts';
 import { multi } from '@lukekaalim/act-backstage/mod.ts';
 import * as act from '@lukekaalim/act/mod.ts';
 import { createReconciler } from '@lukekaalim/act-recon/mod.ts';

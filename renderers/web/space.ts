@@ -16,11 +16,7 @@ export const createWebSpace = (document: Document = window.document) => {
       return document.createElement(tag);
     },
     update(el, next, prev) {
-      if (next.type === primitiveNodeTypes.string) {
-        el.textContent = next.props.value as string;
-      }
-      if (el instanceof HTMLElement)
-        setProps(el, next, prev);
+      setProps(el, next, prev);
     },
     link(el, parent) {
       (parent || document.body).appendChild(el);

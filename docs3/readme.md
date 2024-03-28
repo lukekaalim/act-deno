@@ -19,7 +19,7 @@ npm i @lukekaalim/act-{web,three,terminal,gtk}
 
 ```ts
 import { Component } from '@lukekaalim/act';
-import { hs } from '@lukekaalim/act-spider';
+import { hs } from '@lukekaalim/act-web';
 
 const MyComponent: Component<{ name: string }> = ({ name }) => {
   return hs('p', {}, `Hello, ${name}!`);
@@ -36,8 +36,8 @@ npm i @lukekaalim/act-{recon,backstage}
 import { multi } from '@lukekaalim/act-backstage';
 import { h } from '@lukekaalim/act';
 import { createReconciler } from '@lukekaalim/act-recon';
-import { spider } from '@lukekaalim/act-spider';
-import { finale } from '@lukekaalim/act-finale';
+import { spider } from '@lukekaalim/act-web';
+import { finale } from '@lukekaalim/act-three';
 
 
 createReconciler(
@@ -60,9 +60,11 @@ Completed tasks and todos.
     - [x] element
     - [ ] suspense
   - [ ] renderers
-    - [x] HTML
-    - [ ] SVG
+    - [x] web
+      - [x] HTML
+      - [ ] SVG
     - [x] threejs
+    - [ ] terminal
     - [ ] plastic
     - [ ] GTK
     - [ ] QT
@@ -75,3 +77,4 @@ Completed tasks and todos.
       - [ ] TOC
       - [ ] Code Highlighting
     - [ ] doctor
+    - [ ] curve

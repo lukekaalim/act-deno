@@ -1,3 +1,4 @@
+import { primitiveNodeTypes } from "@lukekaalim/act/node.ts";
 import { recon, act } from "./deps.ts";
 
 /**
@@ -19,7 +20,7 @@ import { recon, act } from "./deps.ts";
  * This is where props are assigned, and children +
  * heirarchial elements can be setup.
  */
-export type RenderSpace = {
+export type RenderSpace<T = unknown> = {
   create(
     deltas: recon.Delta[],
     commits: Map<recon.CommitID, recon.Commit>,
@@ -29,6 +30,8 @@ export type RenderSpace = {
 export type SimpleRenderSpaceArgs<T> = {
   create: (element: act.Element) => null | T,
   link?: (el: T, parent: null | T) => unknown,
+  unlink?: (el: T, parent: null | T) => unknown,
+
   sort?: (el: T, children: readonly T[]) => unknown,
   update?: (el: T, next: act.Element, prev: null | act.Element) => unknown,
   destroy?: (el: T) => unknown, 
@@ -57,13 +60,17 @@ export const multi = createSplitRenderSpace;
 
 export const createSimpleRenderSpace = <T>(
   args: SimpleRenderSpaceArgs<T>,
-): RenderSpace => {
+): RenderSpace<T> & { nodeByCommit: Map<recon.CommitID, T | null> } => {
   const nodeByCommit = new Map<recon.CommitID, T | null>();
   const commitByNode = new Map<T, recon.CommitID>();
 
-
   return {
+    nodeByCommit,
     create(deltas, commits) {
+      /**
+       * Find all the nodes that belong children (in commit order!)
+       * for a particular commit.
+       */
       const findChildren = (id: recon.CommitID, ignoreFirst = false): readonly T[] => {
         const node = nodeByCommit.get(id);
         if (node && !ignoreFirst)
@@ -71,14 +78,26 @@ export const createSimpleRenderSpace = <T>(
         const commit = commits.get(id);
         if (!commit)
           return [];
+        // Special "poison" case - "null" elements can act as kind of border
+        // to force elements to not identify parent-child relationships
+        if (commit.element.type === act.primitiveNodeTypes.null)
+          return [];
         return commit.children.map(c => findChildren(c.id)).flat(1);
       };
-      const findParent = (ref: recon.CommitRef): null | NodeRef<T> => {
-        const id = [...ref.path].reverse().find((id, i) => i !== 0 && nodeByCommit.get(id));
-        const node = id && nodeByCommit.get(id);
-        if (!node || !id)
-          return null;
-        return { id, node };
+      const findParent = (ref: recon.CommitRef): null | NodeRef<T | null> => {
+        for (let i = 1; i < ref.path.length; i++) {
+          const id = ref.path[ref.path.length - i - 1];
+          const commit = commits.get(id) as recon.Commit;
+          // Early exit out of parent lookup if someone on the path is null;
+          if (commit.element.type === primitiveNodeTypes.null)
+            return { id, node: null };
+
+          const node = nodeByCommit.get(id);
+          // If you find an element with a node
+          if (node)
+            return { id, node }
+        }
+        return null;
       }
 
       const newNodes: Set<{ delta: recon.Delta, node: T }> = new Set();
@@ -104,11 +123,12 @@ export const createSimpleRenderSpace = <T>(
             for (const { delta, node } of newNodes) {
               if (delta.next && !delta.prev) {
                 const parent = findParent(delta.ref);
-                if (parent) {
+                const parentNode = parent && parent.node;
+                if (parentNode) {
                   needsReorder.add(parent.id)
                 }
-                if (args.link)
-                  args.link(node, parent ? parent.node : null);
+                if (args.link && (!parent || parentNode))
+                  args.link(node, parentNode);
               }
             }
           }

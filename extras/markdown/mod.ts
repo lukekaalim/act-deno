@@ -1,5 +1,5 @@
 import { Nodes } from 'mdast';
-import { hs } from '@lukekaalim/act-spider/mod.ts';
+import { hs } from '@lukekaalim/act-web/mod.ts';
 import { Node } from '@lukekaalim/act/mod.ts';
 // Add in the ambient types
 import "micromark-extension-gfm";

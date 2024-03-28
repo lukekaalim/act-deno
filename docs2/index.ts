@@ -4,9 +4,9 @@ import { Component, createContext, h, primitiveNodeTypes, useContext, useEffect,
 
 import './index.module.css';
 
-import { createWebSpace, hs } from "../renderers/spider/mod.ts";
+import { createWebSpace, hs } from "../renderers/web/mod.ts";
 import { act, recon, three } from "../mod.ts";
-import { createFinaleSpace } from "../renderers/finale/space.ts";
+import { createFinaleSpace } from "../renderers/three/space.ts";
 import { Subject } from 'rxjs';
 
 const generateGreeting = () => {
@@ -50,6 +50,12 @@ const MyComponent: Component = () => {
 
   const [speed, setSpeed] = useState(0.7);
 
+  const [showSecret, setShowSecret] = useState(true);
+  const secret = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    console.log(secret.current);
+  }, [showSecret])
+
   return [
     h('div', {}, [
       useMemo(() => [
@@ -64,8 +70,12 @@ const MyComponent: Component = () => {
           style: { backgroundColor: 'red', color: 'white', padding: '12px', borderRadius: '8px' }
         }, 'Remove element'),
       ], []),
-      h('ol', {}, Array.from({ length: num }).map((_, i) =>
-        h('li', {}, h(Entry)))),
+      h('button', { onClick: () => setShowSecret(!showSecret) }, 'Toggle secret'),
+      !!showSecret && h(primitiveNodeTypes.null, {}, [
+        hs('h1', { ref: secret }, 'Secret Heading! Not attached to the DOM tree')
+      ]),
+      h('ol', {}, [Array.from({ length: num }).map(() =>
+        h('li', {}, h(Entry))), hs('li', {}, "Goodbye!")]),
       hs('div', { style: { display: 'flex', flexDirection: 'column', maxWidth: '400px' } }, [
         hs('input', { type: 'range', min: 0, max: 20, step: 0.1, value: speed + 10, onInput(ev) {
           setSpeed(Math.round(((ev.target as HTMLInputElement).valueAsNumber - 10) * 10) / 10)
@@ -107,8 +117,6 @@ const Canvas: act.Component<{ speed: number }> = ({ speed }) => {
     }
   }, [])
 
-  console.log('Canvas', { renderer });
-
   return h(renderContext.Provider, { value: renderer },
     useMemo(() => hs('canvas', { ref: canvasRef, height: 400, width: 400, style: { background: "black" } }, [
       h('scene', { ref: sceneRef }, [
@@ -122,7 +130,6 @@ const Canvas: act.Component<{ speed: number }> = ({ speed }) => {
 }
 
 const MiddleManagement: act.Component = ({ children }) => {
-  console.log('MiddleManagement');
   return children;
 }
 
@@ -146,8 +153,7 @@ const SpinMesh: act.Component<{ speed: number }> = ({ speed }) => {
     return () => cancelAnimationFrame(id);
   }, [speed])
 
-  const renderer = useContext(renderContext);
-  console.log('SpinMesh', {renderer});
+  useContext(renderContext);
 
   return h('mesh', { geometry, material, ref })
 }
@@ -213,7 +219,9 @@ const ComponentStateView: act.Component<{ commit: recon.Commit }> = ({ commit })
     h('h4', {}, 'Commit'),
     hs('table', { classList: ['hola', true && false] }, [
       hs('tr', {}, [hs('th', {}, 'CommitID'), hs('td', {}, commit.id.toString())]),
+      hs('tr', {}, [hs('th', {}, 'CommitPath'), hs('td', {}, commit.path.join('.').toString())]),
       hs('tr', {}, [hs('th', {}, 'ElementID'), hs('td', {}, commit.element.id.toString())]),
+      hs('tr', {}, [hs('th', {}, 'Version'), hs('td', {}, commit.version.toString())]),
       hs('tr', {}, [hs('th', {}, 'ComponentType'), hs('td', { style: { fontWeight: 'bold', } }, getCommitType(commit))]),
     ]),
     hs('h4', {}, 'Props'),
