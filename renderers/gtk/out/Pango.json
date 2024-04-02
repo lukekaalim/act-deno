@@ -1,0 +1,758 @@
+{
+  "ANALYSIS_FLAG_CENTERED_BASELINE": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "ANALYSIS_FLAG_CENTERED_BASELINE"
+  },
+  "ANALYSIS_FLAG_IS_ELLIPSIS": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "ANALYSIS_FLAG_IS_ELLIPSIS"
+  },
+  "ANALYSIS_FLAG_NEED_HYPHEN": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "ANALYSIS_FLAG_NEED_HYPHEN"
+  },
+  "ATTR_INDEX_FROM_TEXT_BEGINNING": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "ATTR_INDEX_FROM_TEXT_BEGINNING"
+  },
+  "ATTR_INDEX_TO_TEXT_END": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "ATTR_INDEX_TO_TEXT_END"
+  },
+  "Alignment": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Alignment"
+  },
+  "Analysis": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Analysis"
+  },
+  "AttrClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrClass"
+  },
+  "AttrColor": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrColor"
+  },
+  "AttrDataCopyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "AttrDataCopyFunc"
+  },
+  "AttrFilterFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "AttrFilterFunc"
+  },
+  "AttrFloat": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrFloat"
+  },
+  "AttrFontDesc": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrFontDesc"
+  },
+  "AttrFontFeatures": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrFontFeatures"
+  },
+  "AttrInt": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrInt"
+  },
+  "AttrIterator": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrIterator"
+  },
+  "AttrLanguage": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrLanguage"
+  },
+  "AttrList": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrList"
+  },
+  "AttrShape": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrShape"
+  },
+  "AttrSize": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrSize"
+  },
+  "AttrString": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "AttrString"
+  },
+  "AttrType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "AttrType"
+  },
+  "Attribute": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Attribute"
+  },
+  "BaselineShift": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "BaselineShift"
+  },
+  "BidiType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "BidiType"
+  },
+  "Color": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Color"
+  },
+  "Context": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Context"
+  },
+  "ContextClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ContextClass"
+  },
+  "Coverage": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Coverage"
+  },
+  "CoverageLevel": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "CoverageLevel"
+  },
+  "Direction": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Direction"
+  },
+  "EllipsizeMode": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "EllipsizeMode"
+  },
+  "Font": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Font"
+  },
+  "FontClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontClass"
+  },
+  "FontDescription": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontDescription"
+  },
+  "FontFace": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "FontFace"
+  },
+  "FontFaceClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontFaceClass"
+  },
+  "FontFamily": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "FontFamily"
+  },
+  "FontFamilyClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontFamilyClass"
+  },
+  "FontMap": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "FontMap"
+  },
+  "FontMapClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontMapClass"
+  },
+  "FontMask": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "FontMask"
+  },
+  "FontMetrics": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontMetrics"
+  },
+  "FontScale": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FontScale"
+  },
+  "Fontset": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Fontset"
+  },
+  "FontsetClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontsetClass"
+  },
+  "FontsetForeachFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "FontsetForeachFunc"
+  },
+  "FontsetSimple": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "FontsetSimple"
+  },
+  "FontsetSimpleClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontsetSimpleClass"
+  },
+  "GLYPH_EMPTY": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "GLYPH_EMPTY"
+  },
+  "GLYPH_INVALID_INPUT": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "GLYPH_INVALID_INPUT"
+  },
+  "GLYPH_UNKNOWN_FLAG": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "GLYPH_UNKNOWN_FLAG"
+  },
+  "GlyphGeometry": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphGeometry"
+  },
+  "GlyphInfo": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphInfo"
+  },
+  "GlyphItem": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphItem"
+  },
+  "GlyphItemIter": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphItemIter"
+  },
+  "GlyphString": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphString"
+  },
+  "GlyphVisAttr": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GlyphVisAttr"
+  },
+  "Gravity": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Gravity"
+  },
+  "GravityHint": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "GravityHint"
+  },
+  "Item": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Item"
+  },
+  "Language": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Language"
+  },
+  "Layout": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Layout"
+  },
+  "LayoutClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "LayoutClass"
+  },
+  "LayoutDeserializeError": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "LayoutDeserializeError"
+  },
+  "LayoutDeserializeFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "LayoutDeserializeFlags"
+  },
+  "LayoutIter": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "LayoutIter"
+  },
+  "LayoutLine": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "LayoutLine"
+  },
+  "LayoutSerializeFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "LayoutSerializeFlags"
+  },
+  "LogAttr": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "LogAttr"
+  },
+  "Matrix": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Matrix"
+  },
+  "Overline": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Overline"
+  },
+  "Rectangle": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Rectangle"
+  },
+  "RenderPart": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "RenderPart"
+  },
+  "Renderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Renderer"
+  },
+  "RendererClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "RendererClass"
+  },
+  "RendererPrivate": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "RendererPrivate"
+  },
+  "SCALE": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "SCALE"
+  },
+  "Script": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Script"
+  },
+  "ScriptIter": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ScriptIter"
+  },
+  "ShapeFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "ShapeFlags"
+  },
+  "ShowFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "ShowFlags"
+  },
+  "Stretch": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Stretch"
+  },
+  "Style": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Style"
+  },
+  "TabAlign": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "TabAlign"
+  },
+  "TabArray": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TabArray"
+  },
+  "TextTransform": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "TextTransform"
+  },
+  "Underline": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Underline"
+  },
+  "VERSION_MAJOR": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VERSION_MAJOR"
+  },
+  "VERSION_MICRO": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VERSION_MICRO"
+  },
+  "VERSION_MINOR": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VERSION_MINOR"
+  },
+  "VERSION_STRING": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VERSION_STRING"
+  },
+  "Variant": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Variant"
+  },
+  "Weight": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Weight"
+  },
+  "WrapMode": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "WrapMode"
+  },
+  "attr_allow_breaks_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_allow_breaks_new"
+  },
+  "attr_background_alpha_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_background_alpha_new"
+  },
+  "attr_background_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_background_new"
+  },
+  "attr_baseline_shift_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_baseline_shift_new"
+  },
+  "attr_break": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_break"
+  },
+  "attr_fallback_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_fallback_new"
+  },
+  "attr_family_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_family_new"
+  },
+  "attr_font_desc_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_font_desc_new"
+  },
+  "attr_font_features_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_font_features_new"
+  },
+  "attr_font_scale_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_font_scale_new"
+  },
+  "attr_foreground_alpha_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_foreground_alpha_new"
+  },
+  "attr_foreground_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_foreground_new"
+  },
+  "attr_gravity_hint_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_gravity_hint_new"
+  },
+  "attr_gravity_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_gravity_new"
+  },
+  "attr_insert_hyphens_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_insert_hyphens_new"
+  },
+  "attr_language_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_language_new"
+  },
+  "attr_letter_spacing_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_letter_spacing_new"
+  },
+  "attr_line_height_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_line_height_new"
+  },
+  "attr_line_height_new_absolute": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_line_height_new_absolute"
+  },
+  "attr_list_from_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_list_from_string"
+  },
+  "attr_overline_color_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_overline_color_new"
+  },
+  "attr_overline_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_overline_new"
+  },
+  "attr_rise_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_rise_new"
+  },
+  "attr_scale_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_scale_new"
+  },
+  "attr_sentence_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_sentence_new"
+  },
+  "attr_shape_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_shape_new"
+  },
+  "attr_shape_new_with_data": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_shape_new_with_data"
+  },
+  "attr_show_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_show_new"
+  },
+  "attr_size_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_size_new"
+  },
+  "attr_size_new_absolute": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_size_new_absolute"
+  },
+  "attr_stretch_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_stretch_new"
+  },
+  "attr_strikethrough_color_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_strikethrough_color_new"
+  },
+  "attr_strikethrough_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_strikethrough_new"
+  },
+  "attr_style_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_style_new"
+  },
+  "attr_text_transform_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_text_transform_new"
+  },
+  "attr_type_get_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_type_get_name"
+  },
+  "attr_type_register": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_type_register"
+  },
+  "attr_underline_color_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_underline_color_new"
+  },
+  "attr_underline_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_underline_new"
+  },
+  "attr_variant_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_variant_new"
+  },
+  "attr_weight_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_weight_new"
+  },
+  "attr_word_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "attr_word_new"
+  },
+  "bidi_type_for_unichar": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "bidi_type_for_unichar"
+  },
+  "break": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "break"
+  },
+  "default_break": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "default_break"
+  },
+  "extents_to_pixels": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "extents_to_pixels"
+  },
+  "find_base_dir": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "find_base_dir"
+  },
+  "find_paragraph_boundary": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "find_paragraph_boundary"
+  },
+  "font_description_from_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "font_description_from_string"
+  },
+  "get_log_attrs": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "get_log_attrs"
+  },
+  "get_mirror_char": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "get_mirror_char"
+  },
+  "gravity_get_for_matrix": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "gravity_get_for_matrix"
+  },
+  "gravity_get_for_script": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "gravity_get_for_script"
+  },
+  "gravity_get_for_script_and_width": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "gravity_get_for_script_and_width"
+  },
+  "gravity_to_rotation": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "gravity_to_rotation"
+  },
+  "is_zero_width": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "is_zero_width"
+  },
+  "itemize": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "itemize"
+  },
+  "itemize_with_base_dir": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "itemize_with_base_dir"
+  },
+  "language_from_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "language_from_string"
+  },
+  "language_get_default": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "language_get_default"
+  },
+  "language_get_preferred": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "language_get_preferred"
+  },
+  "layout_deserialize_error_quark": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "layout_deserialize_error_quark"
+  },
+  "log2vis_get_embedding_levels": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "log2vis_get_embedding_levels"
+  },
+  "markup_parser_finish": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "markup_parser_finish"
+  },
+  "markup_parser_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "markup_parser_new"
+  },
+  "parse_enum": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_enum"
+  },
+  "parse_markup": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_markup"
+  },
+  "parse_stretch": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_stretch"
+  },
+  "parse_style": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_style"
+  },
+  "parse_variant": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_variant"
+  },
+  "parse_weight": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "parse_weight"
+  },
+  "quantize_line_geometry": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "quantize_line_geometry"
+  },
+  "read_line": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "read_line"
+  },
+  "reorder_items": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "reorder_items"
+  },
+  "scan_int": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "scan_int"
+  },
+  "scan_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "scan_string"
+  },
+  "scan_word": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "scan_word"
+  },
+  "script_for_unichar": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "script_for_unichar"
+  },
+  "script_get_sample_language": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "script_get_sample_language"
+  },
+  "shape": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "shape"
+  },
+  "shape_full": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "shape_full"
+  },
+  "shape_item": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "shape_item"
+  },
+  "shape_with_flags": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "shape_with_flags"
+  },
+  "skip_space": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "skip_space"
+  },
+  "split_file_list": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "split_file_list"
+  },
+  "tab_array_from_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "tab_array_from_string"
+  },
+  "tailor_break": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "tailor_break"
+  },
+  "trim_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "trim_string"
+  },
+  "unichar_direction": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "unichar_direction"
+  },
+  "units_from_double": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "units_from_double"
+  },
+  "units_to_double": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "units_to_double"
+  },
+  "version": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "version"
+  },
+  "version_check": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "version_check"
+  },
+  "version_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "version_string"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "Font": {
+    "type": "GI_INFO_TYPE_INTERFACE",
+    "name": "Font"
+  },
+  "FontMap": {
+    "type": "GI_INFO_TYPE_INTERFACE",
+    "name": "FontMap"
+  },
+  "ShapeRendererFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ShapeRendererFunc"
+  },
+  "context_get_font_options": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "context_get_font_options"
+  },
+  "context_get_resolution": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "context_get_resolution"
+  },
+  "context_set_font_options": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "context_set_font_options"
+  },
+  "context_set_resolution": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "context_set_resolution"
+  },
+  "context_set_shape_renderer": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "context_set_shape_renderer"
+  },
+  "create_context": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "create_context"
+  },
+  "create_layout": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "create_layout"
+  },
+  "error_underline_path": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "error_underline_path"
+  },
+  "font_map_get_default": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "font_map_get_default"
+  },
+  "font_map_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "font_map_new"
+  },
+  "font_map_new_for_font_type": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "font_map_new_for_font_type"
+  },
+  "glyph_string_path": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "glyph_string_path"
+  },
+  "layout_line_path": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "layout_line_path"
+  },
+  "layout_path": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "layout_path"
+  },
+  "show_error_underline": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "show_error_underline"
+  },
+  "show_glyph_item": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "show_glyph_item"
+  },
+  "show_glyph_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "show_glyph_string"
+  },
+  "show_layout": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "show_layout"
+  },
+  "show_layout_line": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "show_layout_line"
+  },
+  "update_context": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "update_context"
+  },
+  "update_layout": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "update_layout"
+  }
+}

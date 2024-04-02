@@ -1,0 +1,14 @@
+{
+  "Bitmap": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Bitmap"
+  },
+  "Face": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Face"
+  },
+  "Library": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Library"
+  }
+}

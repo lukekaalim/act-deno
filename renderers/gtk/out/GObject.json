@@ -1,0 +1,1250 @@
+{
+  "Array": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Array"
+  },
+  "BaseFinalizeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "BaseFinalizeFunc"
+  },
+  "BaseInitFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "BaseInitFunc"
+  },
+  "Binding": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Binding"
+  },
+  "BindingFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "BindingFlags"
+  },
+  "BindingGroup": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "BindingGroup"
+  },
+  "BindingTransformFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "BindingTransformFunc"
+  },
+  "BookmarkFile": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "BookmarkFile"
+  },
+  "BoxedCopyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "BoxedCopyFunc"
+  },
+  "BoxedFreeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "BoxedFreeFunc"
+  },
+  "ByteArray": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "ByteArray"
+  },
+  "Bytes": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Bytes"
+  },
+  "CClosure": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "CClosure"
+  },
+  "Callback": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "Callback"
+  },
+  "Checksum": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Checksum"
+  },
+  "ClassFinalizeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ClassFinalizeFunc"
+  },
+  "ClassInitFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ClassInitFunc"
+  },
+  "Closure": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Closure"
+  },
+  "ClosureMarshal": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ClosureMarshal"
+  },
+  "ClosureNotify": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ClosureNotify"
+  },
+  "ClosureNotifyData": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ClosureNotifyData"
+  },
+  "ConnectFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "ConnectFlags"
+  },
+  "Date": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Date"
+  },
+  "DateTime": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "DateTime"
+  },
+  "Dir": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Dir"
+  },
+  "EnumClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "EnumClass"
+  },
+  "EnumValue": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "EnumValue"
+  },
+  "Error": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Error"
+  },
+  "FlagsClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FlagsClass"
+  },
+  "FlagsValue": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FlagsValue"
+  },
+  "HashTable": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "HashTable"
+  },
+  "Hmac": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Hmac"
+  },
+  "IOChannel": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "IOChannel"
+  },
+  "IOCondition": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "IOCondition"
+  },
+  "InitiallyUnowned": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "InitiallyUnowned"
+  },
+  "InitiallyUnownedClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "InitiallyUnownedClass"
+  },
+  "InstanceInitFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "InstanceInitFunc"
+  },
+  "InterfaceFinalizeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "InterfaceFinalizeFunc"
+  },
+  "InterfaceInfo": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "InterfaceInfo"
+  },
+  "InterfaceInitFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "InterfaceInitFunc"
+  },
+  "KeyFile": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "KeyFile"
+  },
+  "MainContext": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "MainContext"
+  },
+  "MainLoop": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "MainLoop"
+  },
+  "MappedFile": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "MappedFile"
+  },
+  "MarkupParseContext": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "MarkupParseContext"
+  },
+  "MatchInfo": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "MatchInfo"
+  },
+  "Object": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Object"
+  },
+  "ObjectClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ObjectClass"
+  },
+  "ObjectConstructParam": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ObjectConstructParam"
+  },
+  "ObjectFinalizeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ObjectFinalizeFunc"
+  },
+  "ObjectGetPropertyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ObjectGetPropertyFunc"
+  },
+  "ObjectSetPropertyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ObjectSetPropertyFunc"
+  },
+  "OptionGroup": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "OptionGroup"
+  },
+  "PARAM_MASK": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "PARAM_MASK"
+  },
+  "PARAM_STATIC_STRINGS": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "PARAM_STATIC_STRINGS"
+  },
+  "PARAM_USER_SHIFT": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "PARAM_USER_SHIFT"
+  },
+  "ParamFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "ParamFlags"
+  },
+  "ParamSpec": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpec"
+  },
+  "ParamSpecBoolean": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecBoolean"
+  },
+  "ParamSpecBoxed": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecBoxed"
+  },
+  "ParamSpecChar": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecChar"
+  },
+  "ParamSpecClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ParamSpecClass"
+  },
+  "ParamSpecDouble": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecDouble"
+  },
+  "ParamSpecEnum": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecEnum"
+  },
+  "ParamSpecFlags": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecFlags"
+  },
+  "ParamSpecFloat": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecFloat"
+  },
+  "ParamSpecGType": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecGType"
+  },
+  "ParamSpecInt": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecInt"
+  },
+  "ParamSpecInt64": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecInt64"
+  },
+  "ParamSpecLong": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecLong"
+  },
+  "ParamSpecObject": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecObject"
+  },
+  "ParamSpecOverride": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecOverride"
+  },
+  "ParamSpecParam": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecParam"
+  },
+  "ParamSpecPointer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecPointer"
+  },
+  "ParamSpecPool": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ParamSpecPool"
+  },
+  "ParamSpecString": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecString"
+  },
+  "ParamSpecTypeInfo": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ParamSpecTypeInfo"
+  },
+  "ParamSpecUChar": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecUChar"
+  },
+  "ParamSpecUInt": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecUInt"
+  },
+  "ParamSpecUInt64": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecUInt64"
+  },
+  "ParamSpecULong": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecULong"
+  },
+  "ParamSpecUnichar": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecUnichar"
+  },
+  "ParamSpecValueArray": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecValueArray"
+  },
+  "ParamSpecVariant": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ParamSpecVariant"
+  },
+  "Parameter": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Parameter"
+  },
+  "PatternSpec": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "PatternSpec"
+  },
+  "PollFD": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "PollFD"
+  },
+  "PtrArray": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "PtrArray"
+  },
+  "Rand": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Rand"
+  },
+  "Regex": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Regex"
+  },
+  "SIGNAL_FLAGS_MASK": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "SIGNAL_FLAGS_MASK"
+  },
+  "SIGNAL_MATCH_MASK": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "SIGNAL_MATCH_MASK"
+  },
+  "SignalAccumulator": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "SignalAccumulator"
+  },
+  "SignalEmissionHook": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "SignalEmissionHook"
+  },
+  "SignalFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "SignalFlags"
+  },
+  "SignalGroup": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "SignalGroup"
+  },
+  "SignalInvocationHint": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "SignalInvocationHint"
+  },
+  "SignalMatchType": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "SignalMatchType"
+  },
+  "SignalQuery": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "SignalQuery"
+  },
+  "Source": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Source"
+  },
+  "String": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "String"
+  },
+  "Strv": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Strv"
+  },
+  "StrvBuilder": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "StrvBuilder"
+  },
+  "TYPE_FLAG_RESERVED_ID_BIT": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_FLAG_RESERVED_ID_BIT"
+  },
+  "TYPE_FUNDAMENTAL_MAX": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_FUNDAMENTAL_MAX"
+  },
+  "TYPE_FUNDAMENTAL_SHIFT": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_FUNDAMENTAL_SHIFT"
+  },
+  "TYPE_RESERVED_BSE_FIRST": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_RESERVED_BSE_FIRST"
+  },
+  "TYPE_RESERVED_BSE_LAST": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_RESERVED_BSE_LAST"
+  },
+  "TYPE_RESERVED_GLIB_FIRST": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_RESERVED_GLIB_FIRST"
+  },
+  "TYPE_RESERVED_GLIB_LAST": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_RESERVED_GLIB_LAST"
+  },
+  "TYPE_RESERVED_USER_FIRST": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "TYPE_RESERVED_USER_FIRST"
+  },
+  "Thread": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Thread"
+  },
+  "TimeZone": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "TimeZone"
+  },
+  "ToggleNotify": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ToggleNotify"
+  },
+  "Tree": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Tree"
+  },
+  "TypeCValue": {
+    "type": "GI_INFO_TYPE_UNION",
+    "name": "TypeCValue"
+  },
+  "TypeClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeClass"
+  },
+  "TypeClassCacheFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeClassCacheFunc"
+  },
+  "TypeDebugFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "TypeDebugFlags"
+  },
+  "TypeFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "TypeFlags"
+  },
+  "TypeFundamentalFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "TypeFundamentalFlags"
+  },
+  "TypeFundamentalInfo": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeFundamentalInfo"
+  },
+  "TypeInfo": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeInfo"
+  },
+  "TypeInstance": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeInstance"
+  },
+  "TypeInterface": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeInterface"
+  },
+  "TypeInterfaceCheckFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeInterfaceCheckFunc"
+  },
+  "TypeModule": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "TypeModule"
+  },
+  "TypeModuleClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeModuleClass"
+  },
+  "TypePlugin": {
+    "type": "GI_INFO_TYPE_INTERFACE",
+    "name": "TypePlugin"
+  },
+  "TypePluginClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypePluginClass"
+  },
+  "TypePluginCompleteInterfaceInfo": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypePluginCompleteInterfaceInfo"
+  },
+  "TypePluginCompleteTypeInfo": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypePluginCompleteTypeInfo"
+  },
+  "TypePluginUnuse": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypePluginUnuse"
+  },
+  "TypePluginUse": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypePluginUse"
+  },
+  "TypeQuery": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeQuery"
+  },
+  "TypeValueCollectFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValueCollectFunc"
+  },
+  "TypeValueCopyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValueCopyFunc"
+  },
+  "TypeValueFreeFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValueFreeFunc"
+  },
+  "TypeValueInitFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValueInitFunc"
+  },
+  "TypeValueLCopyFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValueLCopyFunc"
+  },
+  "TypeValuePeekPointerFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "TypeValuePeekPointerFunc"
+  },
+  "TypeValueTable": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "TypeValueTable"
+  },
+  "Uri": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "Uri"
+  },
+  "VALUE_COLLECT_FORMAT_MAX_LENGTH": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VALUE_COLLECT_FORMAT_MAX_LENGTH"
+  },
+  "VALUE_INTERNED_STRING": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VALUE_INTERNED_STRING"
+  },
+  "VALUE_NOCOPY_CONTENTS": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "VALUE_NOCOPY_CONTENTS"
+  },
+  "Value": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Value"
+  },
+  "ValueArray": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ValueArray"
+  },
+  "ValueTransform": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ValueTransform"
+  },
+  "VariantBuilder": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "VariantBuilder"
+  },
+  "VariantDict": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "VariantDict"
+  },
+  "VariantType": {
+    "type": "GI_INFO_TYPE_BOXED",
+    "name": "VariantType"
+  },
+  "WeakNotify": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "WeakNotify"
+  },
+  "WeakRef": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "WeakRef"
+  },
+  "_Value__data__union": {
+    "type": "GI_INFO_TYPE_UNION",
+    "name": "_Value__data__union"
+  },
+  "boxed_copy": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "boxed_copy"
+  },
+  "boxed_free": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "boxed_free"
+  },
+  "boxed_type_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "boxed_type_register_static"
+  },
+  "cclosure_marshal_BOOLEAN__BOXED_BOXED": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_BOOLEAN__BOXED_BOXED"
+  },
+  "cclosure_marshal_BOOLEAN__FLAGS": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_BOOLEAN__FLAGS"
+  },
+  "cclosure_marshal_STRING__OBJECT_POINTER": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_STRING__OBJECT_POINTER"
+  },
+  "cclosure_marshal_VOID__BOOLEAN": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__BOOLEAN"
+  },
+  "cclosure_marshal_VOID__BOXED": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__BOXED"
+  },
+  "cclosure_marshal_VOID__CHAR": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__CHAR"
+  },
+  "cclosure_marshal_VOID__DOUBLE": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__DOUBLE"
+  },
+  "cclosure_marshal_VOID__ENUM": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__ENUM"
+  },
+  "cclosure_marshal_VOID__FLAGS": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__FLAGS"
+  },
+  "cclosure_marshal_VOID__FLOAT": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__FLOAT"
+  },
+  "cclosure_marshal_VOID__INT": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__INT"
+  },
+  "cclosure_marshal_VOID__LONG": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__LONG"
+  },
+  "cclosure_marshal_VOID__OBJECT": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__OBJECT"
+  },
+  "cclosure_marshal_VOID__PARAM": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__PARAM"
+  },
+  "cclosure_marshal_VOID__POINTER": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__POINTER"
+  },
+  "cclosure_marshal_VOID__STRING": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__STRING"
+  },
+  "cclosure_marshal_VOID__UCHAR": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__UCHAR"
+  },
+  "cclosure_marshal_VOID__UINT": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__UINT"
+  },
+  "cclosure_marshal_VOID__UINT_POINTER": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__UINT_POINTER"
+  },
+  "cclosure_marshal_VOID__ULONG": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__ULONG"
+  },
+  "cclosure_marshal_VOID__VARIANT": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__VARIANT"
+  },
+  "cclosure_marshal_VOID__VOID": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_VOID__VOID"
+  },
+  "cclosure_marshal_generic": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "cclosure_marshal_generic"
+  },
+  "clear_signal_handler": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "clear_signal_handler"
+  },
+  "enum_complete_type_info": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_complete_type_info"
+  },
+  "enum_get_value": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_get_value"
+  },
+  "enum_get_value_by_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_get_value_by_name"
+  },
+  "enum_get_value_by_nick": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_get_value_by_nick"
+  },
+  "enum_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_register_static"
+  },
+  "enum_to_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "enum_to_string"
+  },
+  "flags_complete_type_info": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_complete_type_info"
+  },
+  "flags_get_first_value": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_get_first_value"
+  },
+  "flags_get_value_by_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_get_value_by_name"
+  },
+  "flags_get_value_by_nick": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_get_value_by_nick"
+  },
+  "flags_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_register_static"
+  },
+  "flags_to_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "flags_to_string"
+  },
+  "gtype_get_type": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "gtype_get_type"
+  },
+  "param_spec_boolean": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_boolean"
+  },
+  "param_spec_boxed": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_boxed"
+  },
+  "param_spec_char": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_char"
+  },
+  "param_spec_double": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_double"
+  },
+  "param_spec_enum": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_enum"
+  },
+  "param_spec_flags": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_flags"
+  },
+  "param_spec_float": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_float"
+  },
+  "param_spec_gtype": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_gtype"
+  },
+  "param_spec_int": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_int"
+  },
+  "param_spec_int64": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_int64"
+  },
+  "param_spec_long": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_long"
+  },
+  "param_spec_object": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_object"
+  },
+  "param_spec_param": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_param"
+  },
+  "param_spec_pointer": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_pointer"
+  },
+  "param_spec_string": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_string"
+  },
+  "param_spec_uchar": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_uchar"
+  },
+  "param_spec_uint": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_uint"
+  },
+  "param_spec_uint64": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_uint64"
+  },
+  "param_spec_ulong": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_ulong"
+  },
+  "param_spec_unichar": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_unichar"
+  },
+  "param_spec_variant": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_spec_variant"
+  },
+  "param_type_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_type_register_static"
+  },
+  "param_value_convert": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_value_convert"
+  },
+  "param_value_defaults": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_value_defaults"
+  },
+  "param_value_is_valid": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_value_is_valid"
+  },
+  "param_value_set_default": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_value_set_default"
+  },
+  "param_value_validate": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_value_validate"
+  },
+  "param_values_cmp": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "param_values_cmp"
+  },
+  "pointer_type_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "pointer_type_register_static"
+  },
+  "signal_accumulator_first_wins": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_accumulator_first_wins"
+  },
+  "signal_accumulator_true_handled": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_accumulator_true_handled"
+  },
+  "signal_add_emission_hook": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_add_emission_hook"
+  },
+  "signal_chain_from_overridden": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_chain_from_overridden"
+  },
+  "signal_connect_closure": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_connect_closure"
+  },
+  "signal_connect_closure_by_id": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_connect_closure_by_id"
+  },
+  "signal_emitv": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_emitv"
+  },
+  "signal_get_invocation_hint": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_get_invocation_hint"
+  },
+  "signal_handler_block": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handler_block"
+  },
+  "signal_handler_disconnect": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handler_disconnect"
+  },
+  "signal_handler_find": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handler_find"
+  },
+  "signal_handler_is_connected": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handler_is_connected"
+  },
+  "signal_handler_unblock": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handler_unblock"
+  },
+  "signal_handlers_block_matched": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handlers_block_matched"
+  },
+  "signal_handlers_destroy": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handlers_destroy"
+  },
+  "signal_handlers_disconnect_matched": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handlers_disconnect_matched"
+  },
+  "signal_handlers_unblock_matched": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_handlers_unblock_matched"
+  },
+  "signal_has_handler_pending": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_has_handler_pending"
+  },
+  "signal_is_valid_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_is_valid_name"
+  },
+  "signal_list_ids": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_list_ids"
+  },
+  "signal_lookup": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_lookup"
+  },
+  "signal_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_name"
+  },
+  "signal_newv": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_newv"
+  },
+  "signal_override_class_closure": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_override_class_closure"
+  },
+  "signal_override_class_handler": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_override_class_handler"
+  },
+  "signal_parse_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_parse_name"
+  },
+  "signal_query": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_query"
+  },
+  "signal_remove_emission_hook": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_remove_emission_hook"
+  },
+  "signal_set_va_marshaller": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_set_va_marshaller"
+  },
+  "signal_stop_emission": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_stop_emission"
+  },
+  "signal_stop_emission_by_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_stop_emission_by_name"
+  },
+  "signal_type_cclosure_new": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "signal_type_cclosure_new"
+  },
+  "source_set_closure": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "source_set_closure"
+  },
+  "source_set_dummy_callback": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "source_set_dummy_callback"
+  },
+  "strdup_value_contents": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "strdup_value_contents"
+  },
+  "type_add_class_private": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_add_class_private"
+  },
+  "type_add_instance_private": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_add_instance_private"
+  },
+  "type_add_interface_dynamic": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_add_interface_dynamic"
+  },
+  "type_add_interface_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_add_interface_static"
+  },
+  "type_check_class_is_a": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_class_is_a"
+  },
+  "type_check_instance": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_instance"
+  },
+  "type_check_instance_is_a": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_instance_is_a"
+  },
+  "type_check_instance_is_fundamentally_a": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_instance_is_fundamentally_a"
+  },
+  "type_check_is_value_type": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_is_value_type"
+  },
+  "type_check_value": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_value"
+  },
+  "type_check_value_holds": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_check_value_holds"
+  },
+  "type_children": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_children"
+  },
+  "type_class_adjust_private_offset": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_class_adjust_private_offset"
+  },
+  "type_class_peek": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_class_peek"
+  },
+  "type_class_peek_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_class_peek_static"
+  },
+  "type_class_ref": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_class_ref"
+  },
+  "type_default_interface_peek": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_default_interface_peek"
+  },
+  "type_default_interface_ref": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_default_interface_ref"
+  },
+  "type_default_interface_unref": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_default_interface_unref"
+  },
+  "type_depth": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_depth"
+  },
+  "type_ensure": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_ensure"
+  },
+  "type_free_instance": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_free_instance"
+  },
+  "type_from_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_from_name"
+  },
+  "type_fundamental": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_fundamental"
+  },
+  "type_fundamental_next": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_fundamental_next"
+  },
+  "type_get_instance_count": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_get_instance_count"
+  },
+  "type_get_plugin": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_get_plugin"
+  },
+  "type_get_qdata": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_get_qdata"
+  },
+  "type_get_type_registration_serial": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_get_type_registration_serial"
+  },
+  "type_init": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_init"
+  },
+  "type_init_with_debug_flags": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_init_with_debug_flags"
+  },
+  "type_interface_add_prerequisite": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interface_add_prerequisite"
+  },
+  "type_interface_get_plugin": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interface_get_plugin"
+  },
+  "type_interface_instantiatable_prerequisite": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interface_instantiatable_prerequisite"
+  },
+  "type_interface_peek": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interface_peek"
+  },
+  "type_interface_prerequisites": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interface_prerequisites"
+  },
+  "type_interfaces": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_interfaces"
+  },
+  "type_is_a": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_is_a"
+  },
+  "type_name": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_name"
+  },
+  "type_name_from_class": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_name_from_class"
+  },
+  "type_name_from_instance": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_name_from_instance"
+  },
+  "type_next_base": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_next_base"
+  },
+  "type_parent": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_parent"
+  },
+  "type_qname": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_qname"
+  },
+  "type_query": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_query"
+  },
+  "type_register_dynamic": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_register_dynamic"
+  },
+  "type_register_fundamental": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_register_fundamental"
+  },
+  "type_register_static": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_register_static"
+  },
+  "type_set_qdata": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_set_qdata"
+  },
+  "type_test_flags": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "type_test_flags"
+  },
+  "value_type_compatible": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_type_compatible"
+  },
+  "value_type_transformable": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_type_transformable"
+  },
+  "variant_get_gtype": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "variant_get_gtype"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "MODULE_IMPL_AR": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "MODULE_IMPL_AR"
+  },
+  "MODULE_IMPL_DL": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "MODULE_IMPL_DL"
+  },
+  "MODULE_IMPL_NONE": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "MODULE_IMPL_NONE"
+  },
+  "MODULE_IMPL_WIN32": {
+    "type": "GI_INFO_TYPE_CONSTANT",
+    "name": "MODULE_IMPL_WIN32"
+  },
+  "Module": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Module"
+  },
+  "ModuleCheckInit": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ModuleCheckInit"
+  },
+  "ModuleError": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "ModuleError"
+  },
+  "ModuleFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "ModuleFlags"
+  },
+  "ModuleUnload": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ModuleUnload"
+  },
+  "module_build_path": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "module_build_path"
+  },
+  "module_error": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "module_error"
+  },
+  "module_error_quark": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "module_error_quark"
+  },
+  "module_supported": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "module_supported"
+  }
+}

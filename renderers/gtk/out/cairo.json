@@ -1,0 +1,142 @@
+{
+  "Context": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Context"
+  },
+  "Device": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Device"
+  },
+  "Surface": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Surface"
+  },
+  "Matrix": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Matrix"
+  },
+  "Pattern": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Pattern"
+  },
+  "Region": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Region"
+  },
+  "Status": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Status"
+  },
+  "Content": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Content"
+  },
+  "Operator": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Operator"
+  },
+  "Antialias": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Antialias"
+  },
+  "FillRule": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FillRule"
+  },
+  "LineCap": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "LineCap"
+  },
+  "LineJoin": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "LineJoin"
+  },
+  "TextClusterFlags": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "TextClusterFlags"
+  },
+  "FontSlant": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FontSlant"
+  },
+  "FontWeight": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FontWeight"
+  },
+  "SubpixelOrder": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "SubpixelOrder"
+  },
+  "HintStyle": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "HintStyle"
+  },
+  "HintMetrics": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "HintMetrics"
+  },
+  "FontOptions": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontOptions"
+  },
+  "FontType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FontType"
+  },
+  "PathDataType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "PathDataType"
+  },
+  "DeviceType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "DeviceType"
+  },
+  "SurfaceType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "SurfaceType"
+  },
+  "Format": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Format"
+  },
+  "PatternType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "PatternType"
+  },
+  "Extend": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Extend"
+  },
+  "Filter": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Filter"
+  },
+  "RegionOverlap": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "RegionOverlap"
+  },
+  "FontFace": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "FontFace"
+  },
+  "ScaledFont": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ScaledFont"
+  },
+  "Path": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Path"
+  },
+  "Rectangle": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Rectangle"
+  },
+  "RectangleInt": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "RectangleInt"
+  },
+  "image_surface_create": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "image_surface_create"
+  }
+}

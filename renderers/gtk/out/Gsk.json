@@ -1,0 +1,310 @@
+{
+  "BlendMode": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "BlendMode"
+  },
+  "BlendNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "BlendNode"
+  },
+  "BlurNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "BlurNode"
+  },
+  "BorderNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "BorderNode"
+  },
+  "CairoNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "CairoNode"
+  },
+  "CairoRenderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "CairoRenderer"
+  },
+  "CairoRendererClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "CairoRendererClass"
+  },
+  "ClipNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ClipNode"
+  },
+  "ColorMatrixNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ColorMatrixNode"
+  },
+  "ColorNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ColorNode"
+  },
+  "ColorStop": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ColorStop"
+  },
+  "ConicGradientNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ConicGradientNode"
+  },
+  "ContainerNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ContainerNode"
+  },
+  "Corner": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "Corner"
+  },
+  "CrossFadeNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "CrossFadeNode"
+  },
+  "DebugNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "DebugNode"
+  },
+  "FillNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "FillNode"
+  },
+  "FillRule": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "FillRule"
+  },
+  "GLRenderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "GLRenderer"
+  },
+  "GLRendererClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GLRendererClass"
+  },
+  "GLShader": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "GLShader"
+  },
+  "GLShaderClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "GLShaderClass"
+  },
+  "GLShaderNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "GLShaderNode"
+  },
+  "GLUniformType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "GLUniformType"
+  },
+  "InsetShadowNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "InsetShadowNode"
+  },
+  "LineCap": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "LineCap"
+  },
+  "LineJoin": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "LineJoin"
+  },
+  "LinearGradientNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "LinearGradientNode"
+  },
+  "MaskMode": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "MaskMode"
+  },
+  "MaskNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "MaskNode"
+  },
+  "NglRenderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "NglRenderer"
+  },
+  "OpacityNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "OpacityNode"
+  },
+  "OutsetShadowNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "OutsetShadowNode"
+  },
+  "ParseErrorFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "ParseErrorFunc"
+  },
+  "ParseLocation": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ParseLocation"
+  },
+  "Path": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Path"
+  },
+  "PathBuilder": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "PathBuilder"
+  },
+  "PathDirection": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "PathDirection"
+  },
+  "PathForeachFlags": {
+    "type": "GI_INFO_TYPE_FLAGS",
+    "name": "PathForeachFlags"
+  },
+  "PathForeachFunc": {
+    "type": "GI_INFO_TYPE_CALLBACK",
+    "name": "PathForeachFunc"
+  },
+  "PathMeasure": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "PathMeasure"
+  },
+  "PathOperation": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "PathOperation"
+  },
+  "PathPoint": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "PathPoint"
+  },
+  "RadialGradientNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RadialGradientNode"
+  },
+  "RenderNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RenderNode"
+  },
+  "RenderNodeType": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "RenderNodeType"
+  },
+  "Renderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "Renderer"
+  },
+  "RendererClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "RendererClass"
+  },
+  "RepeatNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RepeatNode"
+  },
+  "RepeatingLinearGradientNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RepeatingLinearGradientNode"
+  },
+  "RepeatingRadialGradientNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RepeatingRadialGradientNode"
+  },
+  "RoundedClipNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "RoundedClipNode"
+  },
+  "RoundedRect": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "RoundedRect"
+  },
+  "ScalingFilter": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "ScalingFilter"
+  },
+  "SerializationError": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "SerializationError"
+  },
+  "ShaderArgsBuilder": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "ShaderArgsBuilder"
+  },
+  "Shadow": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Shadow"
+  },
+  "ShadowNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "ShadowNode"
+  },
+  "Stroke": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Stroke"
+  },
+  "StrokeNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "StrokeNode"
+  },
+  "SubsurfaceNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "SubsurfaceNode"
+  },
+  "TextNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "TextNode"
+  },
+  "TextureNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "TextureNode"
+  },
+  "TextureScaleNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "TextureScaleNode"
+  },
+  "Transform": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "Transform"
+  },
+  "TransformCategory": {
+    "type": "GI_INFO_TYPE_ENUM",
+    "name": "TransformCategory"
+  },
+  "TransformNode": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "TransformNode"
+  },
+  "VulkanRenderer": {
+    "type": "GI_INFO_TYPE_OBJECT",
+    "name": "VulkanRenderer"
+  },
+  "VulkanRendererClass": {
+    "type": "GI_INFO_TYPE_STRUCT",
+    "name": "VulkanRendererClass"
+  },
+  "path_parse": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "path_parse"
+  },
+  "serialization_error_quark": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "serialization_error_quark"
+  },
+  "stroke_equal": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "stroke_equal"
+  },
+  "transform_parse": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "transform_parse"
+  },
+  "value_dup_render_node": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_dup_render_node"
+  },
+  "value_get_render_node": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_get_render_node"
+  },
+  "value_set_render_node": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_set_render_node"
+  },
+  "value_take_render_node": {
+    "type": "GI_INFO_TYPE_FUNCTION",
+    "name": "value_take_render_node"
+  }
+}
