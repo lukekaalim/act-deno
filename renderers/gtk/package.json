@@ -7,6 +7,7 @@
     "ffi-napi": "^4.0.3",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^3.0.3",
-    "ref-struct-di": "^1.1.1"
+    "ref-struct-di": "^1.1.1",
+    "ts-morph": "^22.0.0"
   }
 }
