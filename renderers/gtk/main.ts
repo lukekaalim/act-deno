@@ -7,7 +7,7 @@ import { generate } from "./codegen";
 
 export const writeMyNamespace = async () => {
   console.log("Starting namespace write");
-  addNamespace("Gtk", "4.0");
+  addNamespace("GLib", "2.0");
   for (const namespace of getAllLoadedNamespaces()) {
     await writeNamespace(namespace);
     console.log(`Finished namespace "${namespace}" write`)
@@ -16,7 +16,7 @@ export const writeMyNamespace = async () => {
 };
 
 export const readMyNamespace = async () => {
-  addNamespace("Gtk", "4.0");
+  addNamespace("GLib", "2.0");
   const allNamespaces = new Map<string, NamespaceInfo>();
   for (const namespace of getAllLoadedNamespaces()) {
     allNamespaces.set(namespace, await readNamespace(namespace))

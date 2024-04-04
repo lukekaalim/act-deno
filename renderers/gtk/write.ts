@@ -1,7 +1,10 @@
 import ref from "ref-napi";
 import {
+  GiFunctionInfoFlag,
   InfoRef, baseInfoType, baseInfoTypes, callableInfo, g_error,
-  g_error_pointer2, g_repo_struct, gi, gi_function_info_flag_masks, gi_function_info_flags, gi_type_tag, gi_type_tags, libgi, objectInfo, repo
+  g_error_pointer2, g_repo_struct, gi, gi_function_info_flag_masks,
+  
+  gi_function_info_flags, gi_type_tag, gi_type_tags, libgi, objectInfo, repo
  } from "./lib";
 
 import { writeFile, readFile } from 'node:fs/promises';
@@ -47,7 +50,8 @@ export const getNamespaceInfo = (namespace: string, filter?: (info: InfoRef) => 
   const infos = Array.from({ length: infoCount })
     .map((_, i) => (gi.lib.g_irepository_get_info(repo, namespace, i)))
     .filter(filter || (() => true))
-    .map(unrefPassthrough(getBaseInfo));
+    .map(unrefPassthrough(getBaseInfo))
+    .filter((b): b is BaseInfo => !!b)
 
   return {
     lib: gi.lib.g_irepository_get_shared_library(repo, namespace),
@@ -55,7 +59,7 @@ export const getNamespaceInfo = (namespace: string, filter?: (info: InfoRef) => 
   }
 }
 
-export const getBaseInfo = (info: InfoRef): BaseInfo => {
+export const getBaseInfo = (info: InfoRef): null | BaseInfo => {
   const type = libgi.g_base_info_get_type(info);
   switch (type) {
     case baseInfoType.GI_INFO_TYPE_OBJECT:
@@ -63,6 +67,7 @@ export const getBaseInfo = (info: InfoRef): BaseInfo => {
     case baseInfoType.GI_INFO_TYPE_STRUCT:
       return { type: 'GI_INFO_TYPE_STRUCT', struct: getStructInfo(info) };
     default:
+      return null;
       const name = libgi.g_base_info_get_name(info) || 'UnknownInfo';
       return { type: 'unknown', value: { type: baseInfoTypes[type], name } };
   }
@@ -71,7 +76,7 @@ export const getBaseInfo = (info: InfoRef): BaseInfo => {
 export type ObjectInfo = {
   name: string,
   fields: FieldInfo[],
-  methods: MethodInfo[],
+  methods: FunctionInfo[],
 }
 
 export const getObjectInfo = (info: InfoRef): ObjectInfo => {
@@ -84,7 +89,7 @@ export const getObjectInfo = (info: InfoRef): ObjectInfo => {
   const methodCount = objectInfo.g_object_info_get_n_methods(info);
   const methods = Array.from({ length: methodCount })
     .map((_, i) => objectInfo.g_object_info_get_method(info, i))
-    .map(unrefPassthrough(getMethodInfo))
+    .map(unrefPassthrough(getFunctionInfo))
 
   return {
     name,
@@ -96,7 +101,7 @@ export const getObjectInfo = (info: InfoRef): ObjectInfo => {
 export type StructInfo = {
   name: string,
   fields: FieldInfo[],
-  methods: MethodInfo[],
+  methods: FunctionInfo[],
 }
 
 export const getStructInfo = (info: InfoRef): StructInfo => {
@@ -109,7 +114,7 @@ export const getStructInfo = (info: InfoRef): StructInfo => {
     .map(unrefPassthrough(getFieldInfo));
   const methods = Array.from({ length: methodCount })
     .map((_, i) =>  gi.structInfo.g_struct_info_get_method(info, i))
-    .map(unrefPassthrough(getMethodInfo))
+    .map(unrefPassthrough(getFunctionInfo))
 
   return {
     name,
@@ -118,15 +123,16 @@ export const getStructInfo = (info: InfoRef): StructInfo => {
   }
 }
 
-export type MethodInfo = {
+export type FunctionInfo = {
   name: string,
   flags: number,
-  flagNames: string[],
+  flagNames: GiFunctionInfoFlag[],
   symbol: null | string,
   args: ArgInfo[],
+  returnType: TypeInfo,
 };
 
-export const getMethodInfo = (method: InfoRef): MethodInfo => {
+export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
   const name = gi.lib.g_base_info_get_name(method) || 'UnknownMethod';
 
   const symbol = gi.functionInfo.g_function_info_get_symbol(method);
@@ -140,8 +146,9 @@ export const getMethodInfo = (method: InfoRef): MethodInfo => {
     const mask = gi_function_info_flag_masks[flag];
     return ((mask & flags) !== 0)
   })
+  const returnType = getTypeInfo(gi.callableInfo.g_callable_info_get_return_type(method));
 
-  console.log('    method:', name, flagNames);
+  console.log('    method:', name);
   
   return {
     name,
@@ -149,6 +156,7 @@ export const getMethodInfo = (method: InfoRef): MethodInfo => {
     flagNames,
     symbol,
     args,
+    returnType,
   } as const;
 }
 

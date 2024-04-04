@@ -106,6 +106,8 @@ export const functionInfo = Library(libPath, {
 export const callableInfo = Library(libPath, {
   'g_callable_info_get_n_args': [types.int32, [gi_callable_info]],
   'g_callable_info_get_arg': [gi_arg_info, [gi_callable_info, types.int32]],
+
+  'g_callable_info_get_return_type': [gi_type_info, [gi_callable_info]],
 });
 
 export const argInfo = Library(libPath, {
@@ -181,6 +183,7 @@ export const gi_function_info_flags = [
   'GI_FUNCTION_WRAPS_VFUNC',
   'GI_FUNCTION_THROWS',
 ] as const;
+export type GiFunctionInfoFlag = typeof gi_function_info_flags[number];
 
 export const gi_function_info_flag_masks = Object.fromEntries(gi_function_info_flags.map((flag, index) => {
   return [flag, 1 << index];
