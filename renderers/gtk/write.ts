@@ -21,6 +21,10 @@ export type NamespaceInfo = {
 export type BaseInfo =
   | { type: 'GI_INFO_TYPE_OBJECT', object: ObjectInfo }
   | { type: 'GI_INFO_TYPE_STRUCT', struct: StructInfo }
+  | { type: 'GI_INFO_TYPE_ENUM', enum: EnumInfo }
+  | { type: 'GI_INFO_TYPE_FLAGS', flags: EnumInfo }
+  | { type: 'GI_INFO_TYPE_FUNCTION', func: FunctionInfo }
+  | { type: 'GI_INFO_TYPE_CONSTANT', const: ConstantInfo }
   | { type: 'unknown', value: { type: string, name: string } }
 
 export const writeNamespace = async (namespace: string, filter?: (info: InfoRef) => boolean) => {
@@ -66,9 +70,18 @@ export const getBaseInfo = (info: InfoRef): null | BaseInfo => {
       return { type: 'GI_INFO_TYPE_OBJECT', object: getObjectInfo(info) };
     case baseInfoType.GI_INFO_TYPE_STRUCT:
       return { type: 'GI_INFO_TYPE_STRUCT', struct: getStructInfo(info) };
+    case baseInfoType.GI_INFO_TYPE_ENUM:
+      return { type: 'GI_INFO_TYPE_ENUM', enum: getEnumInfo(info) };
+    case baseInfoType.GI_INFO_TYPE_FLAGS:
+      return { type: 'GI_INFO_TYPE_FLAGS', flags: getEnumInfo(info) };
+    case baseInfoType.GI_INFO_TYPE_FUNCTION:
+      return { type: 'GI_INFO_TYPE_FUNCTION', func: getFunctionInfo(info) };
+    case baseInfoType.GI_INFO_TYPE_CONSTANT:
+      return { type: 'GI_INFO_TYPE_CONSTANT', const: getConstantInfo(info) }
     default:
       return null;
       const name = libgi.g_base_info_get_name(info) || 'UnknownInfo';
+      console.log(`  ${baseInfoTypes[type]}:`, name);
       return { type: 'unknown', value: { type: baseInfoTypes[type], name } };
   }
 }
@@ -123,7 +136,26 @@ export const getStructInfo = (info: InfoRef): StructInfo => {
   }
 }
 
-export type FunctionInfo = {
+export type CallableInfo = {
+  args: ArgInfo[],
+  returnType: TypeInfo,
+}
+export const getCallbackInfo = (method: InfoRef): CallableInfo => {
+  const argCount = gi.callableInfo.g_callable_info_get_n_args(method);
+  const args = Array.from({ length: argCount })
+    .map((_, i) => callableInfo.g_callable_info_get_arg(method, i))
+    .map(unrefPassthrough(getArgInfo));
+  const returnType = getTypeInfo(
+    gi.callableInfo.g_callable_info_get_return_type(method)
+  );
+
+  return {
+    args,
+    returnType,
+  }
+}
+
+export type FunctionInfo = CallableInfo & {
   name: string,
   flags: number,
   flagNames: GiFunctionInfoFlag[],
@@ -139,10 +171,6 @@ export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
   const name = gi.lib.g_base_info_get_name(method) || 'UnknownMethod';
 
   const symbol = gi.functionInfo.g_function_info_get_symbol(method);
-  const argCount = gi.callableInfo.g_callable_info_get_n_args(method);
-  const args = Array.from({ length: argCount })
-    .map((_, i) => callableInfo.g_callable_info_get_arg(method, i))
-    .map(unrefPassthrough(getArgInfo));
   
   const flags = gi.functionInfo.g_function_info_get_flags(method);
   const flagNames = gi_function_info_flags.filter(flag => {
@@ -153,17 +181,14 @@ export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
   const isMethod = gi.callableInfo.g_callable_info_is_method(method);
   const isNullable = gi.callableInfo.g_callable_info_may_return_null(method);
 
-  console.log('    method:', name);
+  console.log('    function:', name, flagNames);
   
   return {
     name,
     flags,
     flagNames,
     symbol,
-    args,
-    returnType,
-    isMethod,
-    isNullable
+    ...getCallbackInfo(method),
   } as const;
 }
 
@@ -199,9 +224,9 @@ export const getArgInfo = (arg: InfoRef): ArgInfo => {
 }
 
 export type TypeInfo = {
-  name: string,
   tag: number,
   tagName: typeof gi_type_tags[number],
+  interfaceName: string | null,
   namespace: string | null,
 }
 
@@ -212,7 +237,7 @@ export const getTypeInfo = (type: InfoRef): TypeInfo => {
   if (tagName === 'GI_TYPE_TAG_INTERFACE') {
     const interfaceType = gi.typeInfo.g_type_info_get_interface(type);
     return {
-      name: gi.baseInfo.g_base_info_get_name(interfaceType) || 'UnknownInterface',
+      interfaceName: gi.baseInfo.g_base_info_get_name(interfaceType) || 'UnknownInterface',
       tag,
       tagName,
       namespace: gi.baseInfo.g_base_info_get_namespace(interfaceType),
@@ -220,9 +245,59 @@ export const getTypeInfo = (type: InfoRef): TypeInfo => {
   }
 
   return {
-    name: gi.lib.g_base_info_get_name(type) || 'UnknownType',
+    interfaceName: null,
     tag,
     tagName,
     namespace: null,
   } as const;
+}
+
+export type EnumInfo = {
+  name: string,
+  values: ValueInfo[],
+  methods: FunctionInfo[],
+}
+
+export const getEnumInfo = (enumRef: InfoRef): EnumInfo => {
+  const name = gi.baseInfo.g_base_info_get_name(enumRef) || 'UnknownEnum';
+  const methodCount = gi.enum.g_enum_info_get_n_methods(enumRef);
+  const valueCount = gi.enum.g_enum_info_get_n_values(enumRef);
+  const methods = Array.from({ length: methodCount })
+    .map((_, i) => gi.enum.g_enum_info_get_method(enumRef, i))
+    .map(unrefPassthrough(getFunctionInfo));
+  const values = Array.from({ length: valueCount })
+    .map((_, i) => gi.enum.g_enum_info_get_value(enumRef, i))
+    .map(unrefPassthrough((value) => ({
+      name: gi.baseInfo.g_base_info_get_name(value) || 'UnknownValue',
+      value: gi.enum.g_value_info_get_value(value),
+    })));
+
+  console.log('  enum:', name);
+
+  return {
+    name,
+    values,
+    methods,
+  }
+}
+
+export type ValueInfo = {
+  name: string,
+  value: number | string,
+}
+
+export type ConstantInfo = {
+  name: string,
+  type: TypeInfo,
+}
+
+export const getConstantInfo = (constRef: InfoRef): ConstantInfo => {
+  const name = gi.baseInfo.g_base_info_get_name(constRef) || 'UnknownConstant';
+  const type = getTypeInfo(gi.const.g_constant_info_get_type(constRef));
+  console.log('  const:', name);
+
+  return {
+    name,
+    type,
+  }
 }

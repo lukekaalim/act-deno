@@ -28,13 +28,7 @@ export type InfoRef = ref.Pointer<ref.UnderlyingType<typeof g_infos_struct>>
 
 export const g_error_pointer2 = refType(g_error)
 
-export const libglib = Library('/opt/homebrew/lib/libglib-2.0.dylib', {
-  'g_list_foreach': [types.void, [g_list_generic('pointer'), 'pointer', 'pointer']],
-  'g_list_length': [types.uint32, [g_list_generic('pointer')]],
-});
-
-
-const libPath = '/opt/homebrew/lib/libgirepository-1.0.1.dylib';
+const libPath = '/usr/lib/x86_64-linux-gnu/libgirepository-1.0.so.1';
 
 //const g_error_pointer = refType(g_error);
 export const libgi = Library(libPath, {
@@ -61,6 +55,9 @@ export const gi_type_info = ref.refType(createStructType({}));
 export const gi_function_info = ref.refType(createStructType({}));
 export const gi_callable_info = ref.refType(createStructType({}));
 export const gi_arg_info = ref.refType(createStructType({}));
+export const gi_enum_info = ref.refType(createStructType({}));
+export const gi_value_info = ref.refType(createStructType({}));
+export const gi_constant_info = ref.refType(createStructType({}));
 
 export const baseInfo = Library(libPath, {
   'g_base_info_unref': [types.void, [gi_base_info]],
@@ -116,6 +113,18 @@ export const argInfo = Library(libPath, {
   'g_arg_info_get_type': [gi_type_info, [gi_arg_info]],
 });
 
+export const enumLib = Library(libPath, {
+  'g_enum_info_get_n_values': [types.int32, [gi_enum_info]],
+  'g_enum_info_get_value': [gi_value_info, [gi_enum_info, types.int32]],
+  'g_enum_info_get_n_methods': [types.int32, [gi_enum_info]],
+  'g_enum_info_get_method': [gi_function_info, [gi_enum_info, types.int32]],
+  'g_enum_info_get_storage_type': [types.uint64, [gi_enum_info]],
+  'g_value_info_get_value': [types.uint64, [gi_value_info]]
+});
+
+export const constLib = Library(libPath, {
+  'g_constant_info_get_type': [gi_type_info, [gi_constant_info]],
+});
 
 export const gi = {
   lib: libgi,
@@ -127,6 +136,8 @@ export const gi = {
   argInfo,
   structInfo,
   baseInfo,
+  enum: enumLib,
+  const: constLib,
 }
 
 export const baseInfoType = {

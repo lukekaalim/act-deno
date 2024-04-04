@@ -6,9 +6,10 @@ import { createFFILibraryNode } from './generation/ffiLibrary';
 import { createGObjectStructNode } from './generation/gobjectStruct';
 import { createGObjectNode } from './generation/gobjectObject';
 
-type PromiseOf<T> = T extends Promise<infer X> ? X : never;
+import ts from 'typescript';
 
 export const generate = async (namespace: string, namespaceMap: Map<string, NamespaceInfo>) => {
+  console.log('Start')
   const project = new Project();
   const printer = ts.createPrinter();
   const namespaceInfo = namespaceMap.get(namespace) as NamespaceInfo;

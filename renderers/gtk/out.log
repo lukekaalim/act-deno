@@ -1,0 +1,1555 @@
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2375
+            throw new ManipulationError(sourceFile.getFilePath(), oldFileText, newFileText, message);
+                  ^
+
+ManipulationError: Manipulation error: A syntax error was inserted.
+
+[96mgen/GLib.ts[0m:[93m1207[0m:[93m35[0m - [91merror[0m[90m TS1390: [0m'function' is not allowed as a parameter name.
+
+[7m1207[0m     invoke_full(priority: number, function: unknown): void {
+[7m    [0m [91m                                  ~~~~~~~~[0m
+[96mgen/GLib.ts[0m:[93m1207[0m:[93m52[0m - [91merror[0m[90m TS1442: [0mExpected '=' for property initializer.
+
+[7m1207[0m     invoke_full(priority: number, function: unknown): void {
+[7m    [0m [91m                                                   ~[0m
+[96mgen/GLib.ts[0m:[93m1207[0m:[93m53[0m - [91merror[0m[90m TS1068: [0mUnexpected token. A constructor, method, accessor, or property was expected.
+
+[7m1207[0m     invoke_full(priority: number, function: unknown): void {
+[7m    [0m [91m                                                    ~[0m
+[96mgen/GLib.ts[0m:[93m1207[0m:[93m55[0m - [91merror[0m[90m TS1068: [0mUnexpected token. A constructor, method, accessor, or property was expected.
+
+[7m1207[0m     invoke_full(priority: number, function: unknown): void {
+[7m    [0m [91m                                                      ~~~~[0m
+[96mgen/GLib.ts[0m:[93m1209[0m:[93m1[0m - [91merror[0m[90m TS1128: [0mDeclaration or statement expected.
+
+[7m1209[0m }
+[7m    [0m [91m~[0m
+
+Error replacing tree: The children of the old and new trees were expected to have the same count (25:27).
+
+-- Details --
+Path: /home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts
+Text: "...source_id: number): unknown {\n    }\n\n    find_source_by_user_data(user_data: void): unknown {\n    }\n\n    invoke_full(priority: number, function: unknown): void {\n    }\n}\n"
+Stack: Error: Error replacing tree: The children of the old and new trees were expected to have the same count (25:27).
+    at #handleChildren (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1467:19)
+    at ParentFinderReplacementNodeHandler.handleNode (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1461:33)
+    at ParentFinderReplacementNodeHandler.handleNode (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1618:19)
+    at NodeHandlerHelper.handleForValues (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1402:21)
+    at #handleChildren (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1471:25)
+    at ParentFinderReplacementNodeHandler.handleNode (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1461:33)
+    at ParentFinderReplacementNodeHandler.handleNode (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:1618:19)
+    at doManipulation (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2359:21)
+    at insertIntoParentTextRange (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2393:5)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2437:9)
+    at throwError (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2375:19)
+    at doManipulation (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2369:13)
+    at insertIntoParentTextRange (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2393:5)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2437:9)
+    at MethodDeclaration.insertParameters (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:9702:13)
+    at MethodDeclaration.addParameters (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:9688:25)
+    at MethodDeclaration.addParameter (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:9685:25)
+    at generateMethodInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:76:12)
+    at generateStructInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:65:7)
+    at generateInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:40:16) {
+  filePath: '/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts',
+  oldText: 'import { Library } from "ffi-napi";\n' +
+    '\n' +
+    'export class Array {\n' +
+    '    /** GI_TYPE_TAG_UTF8 */\n' +
+    '    data: string;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    len: number;\n' +
+    '}\n' +
+    '\n' +
+    'export class AsyncQueue {\n' +
+    '    length(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    length_unlocked(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    lock(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    pop(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    pop_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push(data: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_front(item: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_front_unlocked(item: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_unlocked(data: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    ref_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove(item: void): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_unlocked(item: void): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    timed_pop(end_time: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timed_pop_unlocked(end_time: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timeout_pop(timeout: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timeout_pop_unlocked(timeout: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    try_pop(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    try_pop_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unlock(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_and_unlock(): void {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class BookmarkFile {\n' +
+    '    add_application(uri: string, name: string, exec: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_group(uri: string, group: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_added(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_added_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_app_info(uri: string, name: string, exec: string, count: number, stamp: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_application_info(uri: string, name: string, exec: string, count: number, stamp: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_applications(uri: string, length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_description(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_groups(uri: string, length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_icon(uri: string, href: string, mime_type: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_is_private(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_mime_type(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_modified(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_modified_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_size(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_title(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_uris(length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_visited(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_visited_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_application(uri: string, name: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_group(uri: string, group: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_item(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_data(data: unknown[], length: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_data_dirs(file: string, full_path: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_file(filename: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    move_item(old_uri: string, new_uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_application(uri: string, name: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_group(uri: string, group: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_item(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_added(uri: string, added: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_added_date_time(uri: string, added: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_app_info(uri: string, name: string, exec: string, count: number, stamp: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_application_info(uri: string, name: string, exec: string, count: number, stamp: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_description(uri: string, description: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_groups(uri: string, groups: unknown[], length: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_icon(uri: string, href: string, mime_type: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_is_private(uri: string, is_private: boolean): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_mime_type(uri: string, mime_type: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_modified(uri: string, modified: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_modified_date_time(uri: string, modified: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_title(uri: string, title: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_visited(uri: string, visited: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_visited_date_time(uri: string, visited: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_data(length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_file(filename: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    error_quark(): number {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class ByteArray {\n' +
+    '    /** GI_TYPE_TAG_UINT8 */\n' +
+    '    data: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    len: number;\n' +
+    '\n' +
+    '    free(array: unknown[], free_segment: boolean): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    free_to_bytes(array: unknown[]): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new(): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_take(data: unknown[], len: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    steal(array: unknown[], len: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(array: unknown[]): void {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Bytes {\n' +
+    '    new(data: unknown[], size: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_take(data: unknown[], size: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(bytes2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    equal(bytes2: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_data(size: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_region(element_size: number, offset: number, n_elements: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_size(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    hash(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_bytes(offset: number, length: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    ref(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_to_array(): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_to_data(size: number): unknown[] {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Checksum {\n' +
+    '    new(checksum_type: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    copy(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_string(): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    reset(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    update(data: unknown[], length: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    type_get_length(checksum_type: unknown): number {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Cond {\n' +
+    '    /** GI_TYPE_TAG_VOID */\n' +
+    '    p: void;\n' +
+    '    /** GI_TYPE_TAG_ARRAY */\n' +
+    '    i: unknown[];\n' +
+    '\n' +
+    '    broadcast(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clear(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    init(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    signal(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    wait(mutex: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    wait_until(mutex: unknown, end_time: number): boolean {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Data {\n' +
+    '}\n' +
+    '\n' +
+    'export class Date {\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    julian_days: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    julian: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    dmy: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    day: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    month: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    year: number;\n' +
+    '\n' +
+    '    new(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_dmy(day: number, month: unknown, year: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_julian(julian_day: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_days(n_days: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_months(n_months: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_years(n_years: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clamp(min_date: unknown, max_date: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clear(n_dates: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(rhs: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    copy(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    days_between(date2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_iso8601_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_julian(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_monday_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_month(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_sunday_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_weekday(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_first_of_month(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_last_of_month(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    order(date2: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_day(day: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_dmy(day: number, month: unknown, y: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_julian(julian_date: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_month(month: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_parse(str: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time(time_: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time_t(timet: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time_val(timeval: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_year(year: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_days(n_days: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_months(n_months: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_years(n_years: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_struct_tm(tm: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_days_in_month(month: unknown, year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_monday_weeks_in_year(year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_sunday_weeks_in_year(year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_leap_year(year: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    strftime(s: string, slen: number, format: string, date: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_day(day: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_dmy(day: number, month: unknown, year: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_julian(julian_date: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_month(month: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_weekday(weekday: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_year(year: number): boolean {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class DateTime {\n' +
+    '    new(tz: unknown, year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_iso8601(text: string, default_tz: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_timeval_local(tv: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_timeval_utc(tv: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_unix_local(t: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_unix_utc(t: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_local(year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now(tz: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now_local(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now_utc(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_utc(year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add(timespan: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_days(days: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_full(years: number, months: number, days: number, hours: number, minutes: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_hours(hours: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_minutes(minutes: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_months(months: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_seconds(seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_weeks(weeks: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_years(years: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(dt2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    difference(begin: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    equal(dt2: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    format(format: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    format_iso8601(): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_month(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_week(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_year(): number {\n' +
+    '    }\n'... 12246 more characters,
+  newText: 'import { Library } from "ffi-napi";\n' +
+    '\n' +
+    'export class Array {\n' +
+    '    /** GI_TYPE_TAG_UTF8 */\n' +
+    '    data: string;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    len: number;\n' +
+    '}\n' +
+    '\n' +
+    'export class AsyncQueue {\n' +
+    '    length(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    length_unlocked(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    lock(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    pop(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    pop_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push(data: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_front(item: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_front_unlocked(item: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    push_unlocked(data: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    ref_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove(item: void): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_unlocked(item: void): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    timed_pop(end_time: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timed_pop_unlocked(end_time: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timeout_pop(timeout: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    timeout_pop_unlocked(timeout: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    try_pop(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    try_pop_unlocked(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unlock(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_and_unlock(): void {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class BookmarkFile {\n' +
+    '    add_application(uri: string, name: string, exec: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_group(uri: string, group: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_added(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_added_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_app_info(uri: string, name: string, exec: string, count: number, stamp: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_application_info(uri: string, name: string, exec: string, count: number, stamp: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_applications(uri: string, length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_description(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_groups(uri: string, length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_icon(uri: string, href: string, mime_type: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_is_private(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_mime_type(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_modified(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_modified_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_size(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_title(uri: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_uris(length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_visited(uri: string): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_visited_date_time(uri: string): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_application(uri: string, name: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_group(uri: string, group: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    has_item(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_data(data: unknown[], length: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_data_dirs(file: string, full_path: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    load_from_file(filename: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    move_item(old_uri: string, new_uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_application(uri: string, name: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_group(uri: string, group: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    remove_item(uri: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_added(uri: string, added: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_added_date_time(uri: string, added: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_app_info(uri: string, name: string, exec: string, count: number, stamp: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_application_info(uri: string, name: string, exec: string, count: number, stamp: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_description(uri: string, description: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_groups(uri: string, groups: unknown[], length: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_icon(uri: string, href: string, mime_type: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_is_private(uri: string, is_private: boolean): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_mime_type(uri: string, mime_type: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_modified(uri: string, modified: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_modified_date_time(uri: string, modified: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_title(uri: string, title: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_visited(uri: string, visited: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_visited_date_time(uri: string, visited: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_data(length: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_file(filename: string): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    error_quark(): number {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class ByteArray {\n' +
+    '    /** GI_TYPE_TAG_UINT8 */\n' +
+    '    data: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    len: number;\n' +
+    '\n' +
+    '    free(array: unknown[], free_segment: boolean): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    free_to_bytes(array: unknown[]): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new(): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_take(data: unknown[], len: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    steal(array: unknown[], len: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(array: unknown[]): void {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Bytes {\n' +
+    '    new(data: unknown[], size: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_take(data: unknown[], size: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(bytes2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    equal(bytes2: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_data(size: number): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_region(element_size: number, offset: number, n_elements: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_size(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    hash(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_bytes(offset: number, length: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    ref(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_to_array(): unknown[] {\n' +
+    '    }\n' +
+    '\n' +
+    '    unref_to_data(size: number): unknown[] {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Checksum {\n' +
+    '    new(checksum_type: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    copy(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_string(): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    reset(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    update(data: unknown[], length: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    type_get_length(checksum_type: unknown): number {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Cond {\n' +
+    '    /** GI_TYPE_TAG_VOID */\n' +
+    '    p: void;\n' +
+    '    /** GI_TYPE_TAG_ARRAY */\n' +
+    '    i: unknown[];\n' +
+    '\n' +
+    '    broadcast(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clear(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    init(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    signal(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    wait(mutex: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    wait_until(mutex: unknown, end_time: number): boolean {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class Data {\n' +
+    '}\n' +
+    '\n' +
+    'export class Date {\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    julian_days: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    julian: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    dmy: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    day: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    month: number;\n' +
+    '    /** GI_TYPE_TAG_UINT32 */\n' +
+    '    year: number;\n' +
+    '\n' +
+    '    new(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_dmy(day: number, month: unknown, year: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_julian(julian_day: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_days(n_days: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_months(n_months: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_years(n_years: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clamp(min_date: unknown, max_date: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    clear(n_dates: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(rhs: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    copy(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    days_between(date2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    free(): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_iso8601_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_julian(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_monday_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_month(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_sunday_week_of_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_weekday(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_year(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_first_of_month(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_last_of_month(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    order(date2: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_day(day: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_dmy(day: number, month: unknown, y: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_julian(julian_date: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_month(month: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_parse(str: string): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time(time_: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time_t(timet: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_time_val(timeval: unknown): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    set_year(year: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_days(n_days: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_months(n_months: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    subtract_years(n_years: number): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    to_struct_tm(tm: void): void {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid(): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_days_in_month(month: unknown, year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_monday_weeks_in_year(year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_sunday_weeks_in_year(year: number): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    is_leap_year(year: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    strftime(s: string, slen: number, format: string, date: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_day(day: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_dmy(day: number, month: unknown, year: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_julian(julian_date: number): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_month(month: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_weekday(weekday: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    valid_year(year: number): boolean {\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    'export class DateTime {\n' +
+    '    new(tz: unknown, year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_iso8601(text: string, default_tz: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_timeval_local(tv: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_timeval_utc(tv: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_unix_local(t: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_from_unix_utc(t: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_local(year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now(tz: unknown): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now_local(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_now_utc(): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    new_utc(year: number, month: number, day: number, hour: number, minute: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add(timespan: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_days(days: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_full(years: number, months: number, days: number, hours: number, minutes: number, seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_hours(hours: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_minutes(minutes: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_months(months: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_seconds(seconds: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_weeks(weeks: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    add_years(years: number): unknown {\n' +
+    '    }\n' +
+    '\n' +
+    '    compare(dt2: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    difference(begin: unknown): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    equal(dt2: unknown): boolean {\n' +
+    '    }\n' +
+    '\n' +
+    '    format(format: string): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    format_iso8601(): string {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_month(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_week(): number {\n' +
+    '    }\n' +
+    '\n' +
+    '    get_day_of_year(): number {\n' +
+    '    }\n'... 12265 more characters
+}
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:70:34)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:81:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:70:34)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:81:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:70:34)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:81:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:71:34)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:34)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:83:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:81:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:70:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:79:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:81:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441
+            throw new InvalidOperationError(typeof errorMessage === "string" ? errorMessage : errorMessage(), node);
+                  ^
+
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+
+Node.js v20.10.0
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:72:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:82:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:73:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:83:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:73:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:84:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:73:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:84:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:73:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:84:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+InvalidOperationError: Could not find the next sibling.
+
+/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/gen/GLib.ts:6:6
+> 6 | const ;
+    at Object.throwIfNullOrUndefined (/home/lukekaalim/Projects/atlas/act-deno/node_modules/@ts-morph/common/dist/ts-morph-common.js:441:19)
+    at SyntaxList.getNextSiblingOrThrow (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:3243:30)
+    at insertIntoCommaSeparatedNodes (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:2474:45)
+    at VariableDeclarationList.insertDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17081:9)
+    at VariableDeclarationList.addDeclarations (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17070:21)
+    at VariableDeclarationList.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:17067:21)
+    at VariableStatement.addDeclaration (/home/lukekaalim/Projects/atlas/act-deno/node_modules/ts-morph/dist/ts-morph.js:13803:42)
+    at generateStructFromInfo (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:73:32)
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:84:5)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+ReferenceError: E is not defined
+    at generate (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:92:20)
+    at readMyNamespace (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:25:11)
+    at main (/home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/main.ts:33:14)
+[esbuild Error]: Expected ")" but found "true"
+    at /home/lukekaalim/Projects/atlas/act-deno/renderers/gtk/codegen.ts:100:6
