@@ -130,6 +130,9 @@ export type FunctionInfo = {
   symbol: null | string,
   args: ArgInfo[],
   returnType: TypeInfo,
+
+  isMethod: boolean,
+  isNullable: boolean,
 };
 
 export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
@@ -147,6 +150,8 @@ export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
     return ((mask & flags) !== 0)
   })
   const returnType = getTypeInfo(gi.callableInfo.g_callable_info_get_return_type(method));
+  const isMethod = gi.callableInfo.g_callable_info_is_method(method);
+  const isNullable = gi.callableInfo.g_callable_info_may_return_null(method);
 
   console.log('    method:', name);
   
@@ -157,6 +162,8 @@ export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
     symbol,
     args,
     returnType,
+    isMethod,
+    isNullable
   } as const;
 }
 

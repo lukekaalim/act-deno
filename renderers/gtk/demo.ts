@@ -1,11 +1,9 @@
-import { Rand } from "./gen/GLib";
+import * as glib from "./gen/GLib.ts";
+import * as gtk from './gen/Gtk.ts';
 
 try {
-  console.log("ABOUT TO CREATE RAND RAND");
-  const r = Rand.new();
-  console.log("CALLED RAND INT");
-
-  console.log("RAND:", r.int());
+  const app = gtk.Application.new("MyApp", 0);
+  console.log('Created App');
 } catch (error) {
   console.error(error);
 }

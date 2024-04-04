@@ -30,7 +30,21 @@ export const createFFITypeNode = (info: TypeInfo) => {
       return ts.factory.createStringLiteral('uint16');
     case 'GI_TYPE_TAG_UINT32':
       return ts.factory.createStringLiteral('uint32');
+    case 'GI_TYPE_TAG_UINT64':
+      return ts.factory.createStringLiteral('uint64');
+    case 'GI_TYPE_TAG_INT8':
+      return ts.factory.createStringLiteral('int8');
+    case 'GI_TYPE_TAG_INT16':
+      return ts.factory.createStringLiteral('int16');
+    case 'GI_TYPE_TAG_INT32':
+      return ts.factory.createStringLiteral('int32');
+    case 'GI_TYPE_TAG_INT64':
+    case 'GI_TYPE_TAG_GTYPE':
+      return ts.factory.createStringLiteral('int64');
+    case 'GI_TYPE_TAG_UTF8':
+      return ts.factory.createStringLiteral('CString');
     case 'GI_TYPE_TAG_INTERFACE':
+    case 'GI_TYPE_TAG_ERROR':
       return ts.factory.createStringLiteral('pointer');
     case 'GI_TYPE_TAG_BOOLEAN':
       return ts.factory.createStringLiteral('bool');

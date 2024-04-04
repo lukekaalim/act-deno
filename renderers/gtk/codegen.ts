@@ -4,6 +4,7 @@ import { baseInfoType, baseInfoTypes, gi, gi_function_info_flag_masks, gi_functi
 import ts from 'typescript';
 import { createFFILibraryNode } from './generation/ffiLibrary';
 import { createGObjectStructNode } from './generation/gobjectStruct';
+import { createGObjectNode } from './generation/gobjectObject';
 
 type PromiseOf<T> = T extends Promise<infer X> ? X : never;
 
@@ -65,6 +66,11 @@ export const generate = async (namespace: string, namespaceMap: Map<string, Name
     for (const struct of structures) {
       file.addStatements([
         printer.printNode(ts.EmitHint.Unspecified, createGObjectStructNode(namespace, struct), file.compilerNode)
+      ])
+    }
+    for (const object of objects) {
+      file.addStatements([
+        printer.printNode(ts.EmitHint.Unspecified, createGObjectNode(namespace, object), file.compilerNode)
       ])
     }
   }

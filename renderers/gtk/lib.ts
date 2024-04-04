@@ -108,6 +108,8 @@ export const callableInfo = Library(libPath, {
   'g_callable_info_get_arg': [gi_arg_info, [gi_callable_info, types.int32]],
 
   'g_callable_info_get_return_type': [gi_type_info, [gi_callable_info]],
+  'g_callable_info_may_return_null': [types.bool, [gi_callable_info]],
+  'g_callable_info_is_method': [types.bool, [gi_callable_info]],
 });
 
 export const argInfo = Library(libPath, {
