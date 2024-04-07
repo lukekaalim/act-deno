@@ -28,7 +28,8 @@ export type InfoRef = ref.Pointer<ref.UnderlyingType<typeof g_infos_struct>>
 
 export const g_error_pointer2 = refType(g_error)
 
-const libPath = '/usr/lib/x86_64-linux-gnu/libgirepository-1.0.so.1';
+const libDir = '/opt/homebrew/lib/'
+const libPath = libDir + 'libgirepository-1.0';
 
 //const g_error_pointer = refType(g_error);
 export const libgi = Library(libPath, {
@@ -58,12 +59,31 @@ export const gi_arg_info = ref.refType(createStructType({}));
 export const gi_enum_info = ref.refType(createStructType({}));
 export const gi_value_info = ref.refType(createStructType({}));
 export const gi_constant_info = ref.refType(createStructType({}));
+export const gi_interface_info = ref.refType(createStructType({}));
+export const gi_signal_into = ref.refType(createStructType({}));
+export const gi_vfunc_info = ref.refType(createStructType({}));
+export const gi_property_info = ref.refType(createStructType({}));
 
 export const baseInfo = Library(libPath, {
   'g_base_info_unref': [types.void, [gi_base_info]],
   'g_base_info_get_name': [types.CString, [gi_base_info]],
   'g_base_info_get_type': [types.int, [gi_base_info]],
   'g_base_info_get_namespace': [types.CString, [gi_base_info]]
+})
+export const repositoryLib = Library(libPath, {
+  'g_irepository_get_loaded_namespaces': [refType(types.CString), [g_repo_struct]],
+  'g_irepository_get_shared_library': [types.CString, [g_repo_struct, types.CString]],
+
+  'g_irepository_get_default': [g_repo_struct, []],
+  'g_irepository_get_n_infos': [types.int32, [g_repo_struct, types.CString]],
+  'g_irepository_get_info': [g_infos, [g_repo_struct, types.CString, types.int]],
+
+  'g_irepository_require': [types.void, [g_repo_struct, types.CString, types.CString, types.int, g_error_pointer2]],
+  "g_irepository_find_by_name": [g_infos, [g_repo_struct, types.CString, types.CString]],
+  'g_irepository_prepend_search_path': [types.void, [types.CString]],
+  'g_irepository_get_search_path': [g_list_generic(types.CString), []],
+
+  'g_irepository_get_version': [types.CString, [g_repo_struct, types.CString]],
 })
 
 export const objectInfo = Library(libPath, {
@@ -72,6 +92,24 @@ export const objectInfo = Library(libPath, {
 
   'g_object_info_get_n_methods': [types.int32, [g_infos]],
   'g_object_info_get_method': [gi_function_info, [g_infos, types.int32]],
+
+  'g_object_info_get_parent': [g_infos, [g_infos]],
+  'g_object_info_get_final': [types.bool, [g_infos]],
+  'g_object_info_get_fundamental': [types.bool, [g_infos]],
+  'g_object_info_get_abstract': [types.bool, [g_infos]],
+
+  'g_object_info_get_n_interfaces': [types.int32, [g_infos]],
+  'g_object_info_get_interface': [gi_interface_info, [g_infos, types.int32]],
+
+  'g_object_info_get_n_signals': [types.int32, [g_infos]],
+  'g_object_info_get_signal': [gi_signal_into, [g_infos, types.int32]],
+
+  'g_object_info_get_n_properties': [types.int32, [g_infos]],
+  'g_object_info_get_property': [gi_property_info, [g_infos, types.int32]],
+
+  'g_object_info_get_n_vfuncs': [types.int32, [g_infos]],
+  'g_object_info_get_vfunc': [gi_vfunc_info, [g_infos,types.int32]],
+
 });
 export const structInfo = Library(libPath, {
   'g_struct_info_get_n_fields': [types.int32, [gi_struct_info]],
@@ -92,7 +130,8 @@ export const fieldInfo = Library(libPath, {
 
 export const typeInfo = Library(libPath, {
   'g_type_info_get_tag': [types.int32, [gi_type_info]],
-  'g_type_info_get_interface': [gi_base_info, [gi_type_info]]
+  'g_type_info_get_interface': [gi_base_info, [gi_type_info]],
+  'g_type_info_get_array_type': [types.int32, [gi_type_info]],
 });
 
 export const functionInfo = Library(libPath, {
@@ -128,6 +167,7 @@ export const constLib = Library(libPath, {
 
 export const gi = {
   lib: libgi,
+  repo: repositoryLib,
   objectInfo,
   typeInfo,
   fieldInfo,
@@ -197,6 +237,17 @@ export const gi_function_info_flags = [
   'GI_FUNCTION_THROWS',
 ] as const;
 export type GiFunctionInfoFlag = typeof gi_function_info_flags[number];
+
+export const gi_array_types = [
+  'GI_ARRAY_TYPE_C',
+  'GI_ARRAY_TYPE_ARRAY',
+  'GI_ARRAY_TYPE_PTR_ARRAY',
+  'GI_ARRAY_TYPE_BYTE_ARRAY'
+]
+export type GiArrayType = typeof gi_array_types[number];
+
+export const arrayTypesByIndex = Object
+  .fromEntries(gi_array_types.map((t, i) => [i, t])) as Record<number, GiArrayType>
 
 export const gi_function_info_flag_masks = Object.fromEntries(gi_function_info_flags.map((flag, index) => {
   return [flag, 1 << index];

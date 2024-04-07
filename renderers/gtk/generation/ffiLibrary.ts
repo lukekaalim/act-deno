@@ -1,27 +1,22 @@
 import ts from "typescript";
-import { NamespaceInfo, ObjectInfo, StructInfo } from "../write";
+import { NamespaceInfo, StructInfo } from "../write";
 import { createFFIFunctionSignatureNode } from "./ffiSignature";
+import { NamespaceLookup, NamespaceMap, TypeProvider } from "../infos/namespace";
+import { ObjectInfo } from "../infos/object";
 
-export const createFFILibraryNode = (namespace: NamespaceInfo) => {
-  if (!namespace.lib)
+const skipSymbols = new Set(["g_io_module_query"]);
+
+export const createFFILibraryNode = (namespace: NamespaceLookup, types: TypeProvider) => {
+  if (!namespace.info.lib)
     return null;
 
-  const objects: ObjectInfo[] = [];
-  const structures: StructInfo[] = [];
-
-  for (const info of namespace.infos) {
-    if (info.type === 'GI_INFO_TYPE_OBJECT')
-      objects.push(info.object)
-    else if (info.type === 'GI_INFO_TYPE_STRUCT')
-      structures.push(info.struct)
-  }
-
   const allFunctions = [
-    objects.map(o => o.methods),
-    structures.map(s => s.methods),
-  ].flat(2);
+    namespace.objects.map(o => o.abstract ? [] : o.methods),
+    namespace.structs.map(s => s.methods),
+    namespace.functions,
+  ].flat(2).filter(f => f.symbol && !skipSymbols.has(f.symbol));
 
-  const sharedObjectName = namespace.lib.split(',')[0];
+  const sharedObjectName = namespace.info.lib.split(',')[0];
 
   return ts.factory.createNewExpression(
     ts.factory.createIdentifier('Library'),
@@ -33,7 +28,7 @@ export const createFFILibraryNode = (namespace: NamespaceInfo) => {
           .map(func => {
             if (!func.symbol)
               return null;
-            return ts.factory.createPropertyAssignment(func.symbol, createFFIFunctionSignatureNode(func))
+            return ts.factory.createPropertyAssignment(func.symbol, createFFIFunctionSignatureNode(func, types))
           })
           .filter((f): f is ts.PropertyAssignment => !!f),
         true

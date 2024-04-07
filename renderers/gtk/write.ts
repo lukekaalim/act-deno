@@ -1,4 +1,4 @@
-import ref from "ref-napi";
+import ref, { NULL, NULL_POINTER } from "ref-napi";
 import {
   GiFunctionInfoFlag,
   InfoRef, baseInfoType, baseInfoTypes, callableInfo, g_error,
@@ -8,6 +8,8 @@ import {
  } from "./lib";
 
 import { writeFile, readFile } from 'node:fs/promises';
+import { CallbackInfo, getCallbackInfo } from "./infos/callback";
+import { InterfaceInfo, ObjectInfo, getInterfaceInfo, getObjectInfo } from "./infos/object";
 
 type OutputInfo =
   | { name: string | null, type: Exclude<keyof typeof baseInfoType, "GI_INFO_TYPE_OBJECT"> }
@@ -15,6 +17,8 @@ type OutputInfo =
 
 export type NamespaceInfo = {
   infos: BaseInfo[],
+  version: string,
+
   lib: string | null,
 }
 
@@ -24,7 +28,9 @@ export type BaseInfo =
   | { type: 'GI_INFO_TYPE_ENUM', enum: EnumInfo }
   | { type: 'GI_INFO_TYPE_FLAGS', flags: EnumInfo }
   | { type: 'GI_INFO_TYPE_FUNCTION', func: FunctionInfo }
+  | { type: 'GI_INFO_TYPE_CALLBACK', callback: CallbackInfo }
   | { type: 'GI_INFO_TYPE_CONSTANT', const: ConstantInfo }
+  | { type: 'GI_INFO_TYPE_INTERFACE', interface: InterfaceInfo }
   | { type: 'unknown', value: { type: string, name: string } }
 
 export const writeNamespace = async (namespace: string, filter?: (info: InfoRef) => boolean) => {
@@ -42,7 +48,7 @@ export const readNamespace = async (namespace: string): Promise<NamespaceInfo> =
   return JSON.parse(file);
 }
 
-const unrefPassthrough = <T>(map: (value: InfoRef) => T) => (info: InfoRef): T => {
+export const unrefPassthrough = <T>(map: (value: InfoRef) => T) => (info: InfoRef): T => {
   const result = map(info);
   gi.baseInfo.g_base_info_unref(info);
   return result;
@@ -54,16 +60,17 @@ export const getNamespaceInfo = (namespace: string, filter?: (info: InfoRef) => 
   const infos = Array.from({ length: infoCount })
     .map((_, i) => (gi.lib.g_irepository_get_info(repo, namespace, i)))
     .filter(filter || (() => true))
-    .map(unrefPassthrough(getBaseInfo))
-    .filter((b): b is BaseInfo => !!b)
+    .map(unrefPassthrough(getBaseInfo));
+  const version = gi.repo.g_irepository_get_version(repo, namespace) || 'UnknownVersion';
 
   return {
+    version,
     lib: gi.lib.g_irepository_get_shared_library(repo, namespace),
     infos,
   }
 }
 
-export const getBaseInfo = (info: InfoRef): null | BaseInfo => {
+export const getBaseInfo = (info: InfoRef): BaseInfo => {
   const type = libgi.g_base_info_get_type(info);
   switch (type) {
     case baseInfoType.GI_INFO_TYPE_OBJECT:
@@ -76,39 +83,17 @@ export const getBaseInfo = (info: InfoRef): null | BaseInfo => {
       return { type: 'GI_INFO_TYPE_FLAGS', flags: getEnumInfo(info) };
     case baseInfoType.GI_INFO_TYPE_FUNCTION:
       return { type: 'GI_INFO_TYPE_FUNCTION', func: getFunctionInfo(info) };
+    case baseInfoType.GI_INFO_TYPE_CALLBACK:
+      return { type: 'GI_INFO_TYPE_CALLBACK', callback: getCallbackInfo(info) }
     case baseInfoType.GI_INFO_TYPE_CONSTANT:
       return { type: 'GI_INFO_TYPE_CONSTANT', const: getConstantInfo(info) }
+    case baseInfoType.GI_INFO_TYPE_INTERFACE:
+      return { type: 'GI_INFO_TYPE_INTERFACE', interface: getInterfaceInfo(info) }
     default:
-      return null;
       const name = libgi.g_base_info_get_name(info) || 'UnknownInfo';
-      console.log(`  ${baseInfoTypes[type]}:`, name);
+      console.log(`  ${baseInfoTypes[type]}(unknown):`, name);
       return { type: 'unknown', value: { type: baseInfoTypes[type], name } };
   }
-}
-
-export type ObjectInfo = {
-  name: string,
-  fields: FieldInfo[],
-  methods: FunctionInfo[],
-}
-
-export const getObjectInfo = (info: InfoRef): ObjectInfo => {
-  const name = libgi.g_base_info_get_name(info) || 'UnknownObject';
-  console.log('  object:', name);
-  const fieldCount = objectInfo.g_object_info_get_n_fields(info);
-  const fields = Array.from({ length: fieldCount })
-    .map((_, i) => objectInfo.g_object_info_get_field(info, i))
-    .map(unrefPassthrough(getFieldInfo));
-  const methodCount = objectInfo.g_object_info_get_n_methods(info);
-  const methods = Array.from({ length: methodCount })
-    .map((_, i) => objectInfo.g_object_info_get_method(info, i))
-    .map(unrefPassthrough(getFunctionInfo))
-
-  return {
-    name,
-    fields,
-    methods,
-  } as const;
 }
 
 export type StructInfo = {
@@ -139,8 +124,11 @@ export const getStructInfo = (info: InfoRef): StructInfo => {
 export type CallableInfo = {
   args: ArgInfo[],
   returnType: TypeInfo,
+
+  isMethod: boolean,
+  isReturnTypeNullable: boolean,
 }
-export const getCallbackInfo = (method: InfoRef): CallableInfo => {
+export const getCallableInfo = (method: InfoRef): CallableInfo => {
   const argCount = gi.callableInfo.g_callable_info_get_n_args(method);
   const args = Array.from({ length: argCount })
     .map((_, i) => callableInfo.g_callable_info_get_arg(method, i))
@@ -148,10 +136,14 @@ export const getCallbackInfo = (method: InfoRef): CallableInfo => {
   const returnType = getTypeInfo(
     gi.callableInfo.g_callable_info_get_return_type(method)
   );
+  const isMethod = gi.callableInfo.g_callable_info_is_method(method);
+  const isReturnTypeNullable = gi.callableInfo.g_callable_info_may_return_null(method);
 
   return {
     args,
     returnType,
+    isReturnTypeNullable,
+    isMethod,
   }
 }
 
@@ -162,9 +154,6 @@ export type FunctionInfo = CallableInfo & {
   symbol: null | string,
   args: ArgInfo[],
   returnType: TypeInfo,
-
-  isMethod: boolean,
-  isNullable: boolean,
 };
 
 export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
@@ -177,18 +166,15 @@ export const getFunctionInfo = (method: InfoRef): FunctionInfo => {
     const mask = gi_function_info_flag_masks[flag];
     return ((mask & flags) !== 0)
   })
-  const returnType = getTypeInfo(gi.callableInfo.g_callable_info_get_return_type(method));
-  const isMethod = gi.callableInfo.g_callable_info_is_method(method);
-  const isNullable = gi.callableInfo.g_callable_info_may_return_null(method);
 
-  console.log('    function:', name, flagNames);
+  console.log('    function:', name);
   
   return {
     name,
     flags,
     flagNames,
     symbol,
-    ...getCallbackInfo(method),
+    ...getCallableInfo(method),
   } as const;
 }
 

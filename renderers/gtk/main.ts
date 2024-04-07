@@ -3,11 +3,17 @@ import { readUntilNull } from "./ffi";
 import { addNamespace, libgi, repo } from "./lib";
 import { NamespaceInfo, readNamespace, writeNamespace } from "./write";
 import { generate } from "./codegen";
+import { createNamespaceLookups } from "./infos/namespace";
 
+
+const lib = {
+  name: "Gtk",
+  ver: "4.0"
+}
 
 export const writeMyNamespace = async () => {
   console.log("Starting namespace write");
-  addNamespace("GLib", "2.0");
+  addNamespace(lib.name, lib.ver);
   for (const namespace of getAllLoadedNamespaces()) {
     await writeNamespace(namespace);
     console.log(`Finished namespace "${namespace}" write`)
@@ -16,13 +22,14 @@ export const writeMyNamespace = async () => {
 };
 
 export const readMyNamespace = async () => {
-  addNamespace("GLib", "2.0");
+  addNamespace(lib.name, lib.ver);
   const allNamespaces = new Map<string, NamespaceInfo>();
   for (const namespace of getAllLoadedNamespaces()) {
     allNamespaces.set(namespace, await readNamespace(namespace))
   }
+  const lookup = createNamespaceLookups(allNamespaces)
   for (const [name, info] of allNamespaces) {
-    await generate(name, allNamespaces);
+    await generate(name, lookup);
   }
 }
 

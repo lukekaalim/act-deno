@@ -1,9 +1,13 @@
 {
   "private": true,
   "type": "module",
+  "scripts": {
+    "build": "esbuild demo.ts --bundle --outfile=demo.js --platform=node --target=node20 --packages=external --format=esm"
+  },
   "dependencies": {
     "@types/ffi-napi": "^4.0.10",
     "@types/ref-array-di": "^1.2.8",
+    "esbuild": "^0.20.2",
     "ffi-napi": "^4.0.3",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^3.0.3",

@@ -1,0 +1,94 @@
+Start Gtk
+Writing Imports
+Writing Library
+Writing 247 Structs
+Writing 265 Objects
+Writing 81 Functions
+Done
+Start PangoCairo
+Writing Imports
+Writing Library
+Writing 0 Structs
+Writing 0 Objects
+Writing 21 Functions
+Done
+Start Gsk
+Writing Imports
+Writing Library
+Writing 16 Structs
+Writing 37 Objects
+Writing 8 Functions
+Done
+Start GdkPixbuf
+Writing Imports
+Writing Library
+Writing 7 Structs
+Writing 7 Objects
+Writing 1 Functions
+Done
+Start GObject
+Writing Imports
+Writing Library
+Writing 29 Structs
+Writing 30 Objects
+Writing 157 Functions
+Done
+Start Gio
+Writing Imports
+Writing Library
+Writing 225 Structs
+Writing 109 Objects
+Writing 146 Functions
+Done
+Start freetype2
+Writing Imports
+Done
+Start GLib
+Writing Imports
+Writing Library
+Writing 84 Structs
+Writing 0 Objects
+Writing 622 Functions
+Done
+Start cairo
+Writing Imports
+Writing Library
+Writing 12 Structs
+Writing 0 Objects
+Writing 1 Functions
+Done
+Start Gdk
+Writing Imports
+Writing Library
+Writing 32 Structs
+Writing 41 Objects
+Writing 37 Functions
+Done
+Start Graphene
+Writing Imports
+Writing Library
+Writing 19 Structs
+Writing 0 Objects
+Writing 26 Functions
+Done
+Start HarfBuzz
+Writing Imports
+Writing Library
+Writing 31 Structs
+Writing 0 Objects
+Writing 451 Functions
+Done
+Start Pango
+Writing Imports
+Writing Library
+Writing 42 Structs
+Writing 10 Objects
+Writing 94 Functions
+Done
+Start GModule
+Writing Imports
+Writing Library
+Writing 1 Structs
+Writing 0 Objects
+Writing 4 Functions
+Done
