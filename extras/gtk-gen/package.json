@@ -1,0 +1,28 @@
+{
+  "name": "@lukekaalim/gtk-gen",
+  "version": "0.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "native/gtk"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "ava": "^6.0.1"
+  },
+  "ava": {
+    "timeout": "3m"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --release --dts \"native/gtk.d.ts\"",
+    "build:debug": "napi build",
+    "postinstall": "npm run build",
+    "test": "ava",
+    "version": "napi version"
+  }
+}

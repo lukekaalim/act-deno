@@ -4,6 +4,23 @@
     "__hash_table": "cpp",
     "string": "cpp",
     "string_view": "cpp",
-    "unordered_map": "cpp"
-  }
+    "unordered_map": "cpp",
+    "gbinding.h": "c",
+    "glib.h": "c",
+    "galloca.h": "c",
+    "gtypes.h": "c",
+    "glibconfig.h": "c"
+  },
+  "rust-analyzer.linkedProjects": [
+    "./extras/gtk-gen/Cargo.toml"
+  ],
+  "cSpell.words": [
+    "baseinfo",
+    "bindgen",
+    "codegen",
+    "gobject",
+    "napi",
+    "rustc",
+    "unref"
+  ]
 }

@@ -1,6 +1,9 @@
 import { TypeProvider } from '../infos/namespace';
+import { SignalInfo } from '../infos/object';
 import { FunctionInfo, TypeInfo } from '../write'
 import ts from 'typescript';
+
+const { factory } = ts;
 
 export const createFFIFunctionSignatureNode = (info: FunctionInfo, types: TypeProvider) => {
 
@@ -19,5 +22,3 @@ export const createFFIFunctionSignatureNode = (info: FunctionInfo, types: TypePr
     ts.factory.createArrayLiteralExpression(providedArgs),
   ]);
 }
-
-

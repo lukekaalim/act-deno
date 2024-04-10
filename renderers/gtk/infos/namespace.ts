@@ -1,8 +1,10 @@
 import ts from "typescript";
-import { BaseInfo, EnumInfo, FunctionInfo, NamespaceInfo, StructInfo, TypeInfo } from "../write.ts";
+import { BaseInfo, CallableInfo, EnumInfo, FunctionInfo, NamespaceInfo, StructInfo, TypeInfo } from "../write.ts";
 import { InterfaceInfo } from "./inter.ts";
 import { CallbackInfo } from "./callback.ts";
-import { ObjectInfo } from "./object.ts";
+import { ObjectInfo, SignalInfo } from "./object.ts";
+
+const { factory } = ts;
 
 export type NamespaceMap = Map<string, NamespaceLookup>;
 
@@ -77,7 +79,7 @@ export const createNamespaceLookups = (ns: Map<string, NamespaceInfo>) => {
 
 export type TypeProvider = ReturnType<typeof createNamespaceTypeProvider>;
 
-export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
+export const createNamespaceTypeProvider = (namespace: string, nss: NamespaceMap) => {
 
   const createFFITypeNode = (info: TypeInfo) => {
     switch (info.tagName) {
@@ -91,6 +93,7 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
       case 'GI_TYPE_TAG_UINT32':
         return ts.factory.createStringLiteral('uint32');
       case 'GI_TYPE_TAG_UINT64':
+      case 'GI_TYPE_TAG_GTYPE':
         return ts.factory.createStringLiteral('uint64');
       case 'GI_TYPE_TAG_INT8':
         return ts.factory.createStringLiteral('int8');
@@ -99,7 +102,6 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
       case 'GI_TYPE_TAG_INT32':
         return ts.factory.createStringLiteral('int32');
       case 'GI_TYPE_TAG_INT64':
-      case 'GI_TYPE_TAG_GTYPE':
         return ts.factory.createStringLiteral('int64');
       case 'GI_TYPE_TAG_UTF8':
         return ts.factory.createStringLiteral('CString');
@@ -119,6 +121,7 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
         switch (interfaceInfo.type) {
           case 'GI_INFO_TYPE_OBJECT':
           case 'GI_INFO_TYPE_STRUCT':
+          case 'GI_INFO_TYPE_INTERFACE':
             return ts.factory.createStringLiteral('pointer');
           case 'unknown':
             return ts.factory.createStringLiteral('pointer');
@@ -140,16 +143,42 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
       default:
         return interopValue;
       case 'GI_TYPE_TAG_ERROR':
+        if (namespace === 'GLib')
+          return ts.factory.createNewExpression(
+            ts.factory.createIdentifier('Error'),
+            [],
+            [interopValue]
+          );
         return ts.factory.createNewExpression(
-          ts.factory.createIdentifier('Error'),
+          ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier('GLib'),
+            ts.factory.createIdentifier('Error')
+          ),
           [],
           [interopValue]
         );
       case 'GI_TYPE_TAG_INTERFACE':
-        if (!typeInfo.interfaceName)
+        if (!typeInfo.interfaceName || !typeInfo.namespace)
           throw new Error();
+        const ns = nss.get(typeInfo.namespace);
+        const baseInfo = ns && ns.byName.get(typeInfo.interfaceName);
+        if (!baseInfo)
+          throw new Error();
+        let name = typeInfo.interfaceName;
+        if (baseInfo.type === "GI_INFO_TYPE_INTERFACE")
+          name += "Stub";
+
+        if (typeInfo.namespace === namespace)
+          return ts.factory.createNewExpression(
+            ts.factory.createIdentifier(name),
+            [],
+            [interopValue]
+          );
         return ts.factory.createNewExpression(
-          ts.factory.createIdentifier(typeInfo.interfaceName),
+          ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(typeInfo.namespace),
+            ts.factory.createIdentifier(name)
+          ),
           [],
           [interopValue]
         );
@@ -172,6 +201,7 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
         switch (interfaceInfo.type) {
           case 'GI_INFO_TYPE_OBJECT':
           case 'GI_INFO_TYPE_STRUCT':
+          case 'GI_INFO_TYPE_INTERFACE':
             return ts.factory.createPropertyAccessExpression(jsValue, "pointer")
           case 'GI_INFO_TYPE_ENUM':
           case 'GI_INFO_TYPE_FLAGS':
@@ -179,54 +209,113 @@ export const createNamespaceTypeProvider = (nss: NamespaceMap) => {
             return jsValue;
         }
     }
-  };  
+  };
+
+  const createFunctionTypeNodeForCallable = (signal: CallableInfo) => {
+    const args = signal.args.map(a =>
+      factory.createParameterDeclaration([], undefined, a.name, undefined, getTypeNodeForType(a.type)));
+    const returnType = getTypeNodeForType(signal.returnType)
+    return factory.createFunctionTypeNode([], args, returnType);
+  }
+
+  const getTypeNodeForType = ( type: TypeInfo) => {
+    switch (type.tagName) {
+      case 'GI_TYPE_TAG_INTERFACE': {
+        if (!type.interfaceName || !type.namespace)
+          throw new Error();
+        const ns = nss.get(type.namespace) as NamespaceLookup;
+        if (namespace !== ns.name) {
+          return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(
+            ts.factory.createIdentifier(ns.name),
+            type.interfaceName
+          ));
+        }
+        // Assume the relevant interface is just handing around in here somewhere
+        return ts.factory.createTypeReferenceNode(type.interfaceName);
+      }
+      case 'GI_TYPE_TAG_ERROR':
+        if (namespace === 'GLib')
+          return ts.factory.createTypeReferenceNode('Error');
+        return ts.factory.createTypeReferenceNode(
+          ts.factory.createQualifiedName(ts.factory.createIdentifier('GLib'), 'Error'),
+        );
+      case 'GI_TYPE_TAG_UINT8':
+      case 'GI_TYPE_TAG_UINT16':
+      case 'GI_TYPE_TAG_UINT32':
+      case 'GI_TYPE_TAG_INT8':
+      case 'GI_TYPE_TAG_INT16':
+      case 'GI_TYPE_TAG_INT32':
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
+      case 'GI_TYPE_TAG_BOOLEAN':
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+      case 'GI_TYPE_TAG_INT64':
+      case 'GI_TYPE_TAG_UINT64':
+      case 'GI_TYPE_TAG_GTYPE':
+        return ts.factory.createUnionTypeNode([
+          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+          ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+        ])
+      case 'GI_TYPE_TAG_UTF8':
+        return ts.factory.createUnionTypeNode([
+          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+          ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+        ])
+      default:
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
+      case 'GI_TYPE_TAG_VOID':
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+    }
+  }
+
+  const createTypeReferenceNode = (typeName: string, typeNamespace: string) => {
+    if (namespace !== typeNamespace) {
+      return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(
+        ts.factory.createIdentifier(typeNamespace),
+        typeName
+      ));
+    }
+    // Assume the relevant interface is just handing around in here somewhere
+    return ts.factory.createTypeReferenceNode(typeName);
+  }
+
+  const findTypeByName = (namespace: string, name: string) => {
+    const ns = nss.get(namespace);
+    if (!ns)
+      return null;
+    return ns.byName.get(name);
+  }
+
+  const createIdentifierNode = (typeName: string, typeNamespace: string) => {
+    if (namespace !== typeNamespace) {
+      return ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier(typeNamespace),
+        ts.factory.createIdentifier(typeName),
+      );
+    }
+    // Assume the relevant interface is just handing around in here somewhere
+    return ts.factory.createIdentifier(typeName);
+  }
 
   return {
     createFFITypeNode,
     createJSValueToInteropNode,
     createInteropToJSValueNode,
-    getTypeNodeForType(currentNamespace: string, type: TypeInfo) {
-      switch (type.tagName) {
-        case 'GI_TYPE_TAG_INTERFACE': {
-          if (!type.interfaceName || !type.namespace)
-            throw new Error();
-          const ns = nss.get(type.namespace) as NamespaceLookup;
-          if (currentNamespace !== ns.name) {
-            return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(
-              ts.factory.createIdentifier(ns.name),
-              type.interfaceName
-            ));
-          }
-          // Assume the relevant interface is just handing around in here somewhere
-          return ts.factory.createTypeReferenceNode(type.interfaceName);
-        }
-        case 'GI_TYPE_TAG_ERROR':
-          return ts.factory.createTypeReferenceNode('Error');
-        case 'GI_TYPE_TAG_UINT8':
-        case 'GI_TYPE_TAG_UINT16':
-        case 'GI_TYPE_TAG_UINT32':
-        case 'GI_TYPE_TAG_INT8':
-        case 'GI_TYPE_TAG_INT16':
-        case 'GI_TYPE_TAG_INT32':
-          return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
-        case 'GI_TYPE_TAG_BOOLEAN':
-          return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
-        case 'GI_TYPE_TAG_INT64':
-        case 'GI_TYPE_TAG_UINT64':
-          return ts.factory.createUnionTypeNode([
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-          ])
-        case 'GI_TYPE_TAG_UTF8':
-          return ts.factory.createUnionTypeNode([
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-            ts.factory.createLiteralTypeNode(ts.factory.createNull()),
-          ])
-        default:
-          return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
-        case 'GI_TYPE_TAG_VOID':
-          return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
-      }
-    }
+    createTypeReferenceNode,
+    createFunctionTypeNodeForCallable,
+    getTypeNodeForType,
+    findTypeByName,
+    createIdentifierNode,
   }
+}
+
+
+export type TypeInfoGenerator = {
+  toTypeNode: () => ts.TypeNode,
+  toNode: () => ts.Node,
+  /** Build an expression that represents the FFI signature of this node */
+  toFFISignatureNode: () => ts.Node,
+  /** Build an expression that return the Typescript equivalent of the interop value */
+  toTypescriptExpressionNode: (value: ts.Node) => ts.Node,
+  /** Build an expression that return the Interop equivalent of the Typescript value */
+  toInteropExpressionNode: (value: ts.Node) => ts.Node,
 }

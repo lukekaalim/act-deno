@@ -4,7 +4,7 @@ import { TypeProvider } from "../infos/namespace";
 
 export const createGObjectStructNode = (namespace: string, struct: StructInfo, types: TypeProvider) => {
   const staticMethods = [
-    struct.methods.filter(m => m.flagNames.includes("GI_FUNCTION_IS_CONSTRUCTOR"))
+    struct.methods.filter(m => !m.isMethod)
   ].flat(1);
 
   const instanceFunctions = [
@@ -27,10 +27,10 @@ export const createGObjectStructNode = (namespace: string, struct: StructInfo, t
       undefined,
       arg.name,
       undefined,
-      types.getTypeNodeForType(namespace, arg.type),
+      types.getTypeNodeForType(arg.type),
     )),
-    types.getTypeNodeForType(namespace, method.returnType),
-    createGStructConstructorBody(namespace, struct, method, types),
+    types.getTypeNodeForType(method.returnType),
+    createStructFuncBody(namespace, method, types, false),
   ))
 
   const unknownPointerType = ts.factory.createTypeReferenceNode(
@@ -73,47 +73,28 @@ export const createGObjectStructNode = (namespace: string, struct: StructInfo, t
   return ts.factory.createClassDeclaration(modifiers, name, [], [], members);
 };
 
-export const createGStructConstructorBody = (namespace: string, struct: StructInfo, func: FunctionInfo, types: TypeProvider) => {
-  if (!func.symbol) {
-    return ts.factory.createBlock([
-      ts.factory.createThrowStatement(
-        ts.factory.createNewExpression(
-          ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('global'), 'Error'),
-          [],
-          [ts.factory.createStringLiteral(`Can't find symbol for ${struct.name}.${func.name}`)]
-        )
-      )
-    ])
-  }
+export const createStructFuncBody = (namespace: string, func: FunctionInfo, types: TypeProvider, pointer: boolean = true) => {
 
-  const callLibFunctionNode = ts.factory.createCallExpression(
-    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), func.symbol || ''),
-    [],
-    func.args.map(arg => types.createJSValueToInteropNode(arg.type, ts.factory.createIdentifier(arg.name)))
-  )
+  const args = [
+    ...pointer ? [ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "pointer")] : [],
+    ...func.args.map(a => types.createJSValueToInteropNode(a.type, ts.factory.createIdentifier(processName(a.name))))
+  ];
 
-  const createInstanceNode = ts.factory.createNewExpression(
-    ts.factory.createIdentifier(struct.name),
+  const funcNode = ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), func.symbol || '');
+
+  const callNode = ts.factory.createCallExpression(
+    funcNode ,
     [],
-    [callLibFunctionNode]
+    args,
   );
   
   return ts.factory.createBlock([
-    ts.factory.createReturnStatement(createInstanceNode),
-  ], true)
+    ts.factory.createReturnStatement(types.createInteropToJSValueNode(func.returnType, callNode)),
+  ], true);
 }
 
 export const createGStructMethod = (namespace: string, struct: StructInfo, func: FunctionInfo, types: TypeProvider) => {
-  const body = ts.factory.createBlock([
-    ts.factory.createReturnStatement(types.createInteropToJSValueNode(func.returnType, ts.factory.createCallExpression(
-      ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), func.symbol || ''),
-      [],
-      [
-        ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "pointer"),
-        ...func.args.map(a => types.createJSValueToInteropNode(a.type, ts.factory.createIdentifier(processName(a.name))))
-      ],
-    ))),
-  ], true);
+  const body = createStructFuncBody(namespace, func, types);
 
   return ts.factory.createMethodDeclaration(
     [],
@@ -126,9 +107,9 @@ export const createGStructMethod = (namespace: string, struct: StructInfo, func:
       undefined,
       processName(arg.name),
       undefined,
-      types.getTypeNodeForType(namespace, arg.type),
+      types.getTypeNodeForType(arg.type),
     )),
-    types.getTypeNodeForType(namespace, func.returnType),
+    types.getTypeNodeForType(func.returnType),
     body,
   )
 }

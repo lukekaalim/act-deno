@@ -1,0 +1,15 @@
+[package]
+name = "gobject_introspection"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+
+[build-dependencies]
+prettyplease = "0.2.17"
+bindgen = "0.69.4"
+system-deps = "2.0"
+
+[package.metadata.system-deps]
+"girepository-2.0" = "2.80.0"
+"gobject-2.0" = "2.80.0"

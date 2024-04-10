@@ -29,7 +29,7 @@ export type InfoRef = ref.Pointer<ref.UnderlyingType<typeof g_infos_struct>>
 export const g_error_pointer2 = refType(g_error)
 
 const libDir = '/opt/homebrew/lib/'
-const libPath = libDir + 'libgirepository-1.0';
+const libPath = libDir + 'libgirepository-2.0';
 
 //const g_error_pointer = refType(g_error);
 export const libgi = Library(libPath, {
@@ -73,6 +73,8 @@ export const baseInfo = Library(libPath, {
 export const repositoryLib = Library(libPath, {
   'g_irepository_get_loaded_namespaces': [refType(types.CString), [g_repo_struct]],
   'g_irepository_get_shared_library': [types.CString, [g_repo_struct, types.CString]],
+  'g_irepository_get_immediate_dependencies': ['pointer', [g_repo_struct, types.CString]],
+  'g_irepository_get_dependencies': ['pointer', [g_repo_struct, types.CString]],
 
   'g_irepository_get_default': [g_repo_struct, []],
   'g_irepository_get_n_infos': [types.int32, [g_repo_struct, types.CString]],

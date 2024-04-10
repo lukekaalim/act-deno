@@ -1,5 +1,5 @@
 import { InfoRef, gi, objectInfo } from "../lib";
-import { FieldInfo, FunctionInfo, getFieldInfo, getFunctionInfo, unrefPassthrough } from "../write";
+import { CallableInfo, FieldInfo, FunctionInfo, getCallableInfo, getFieldInfo, getFunctionInfo, unrefPassthrough } from "../write";
 
 export type ObjectInfo = {
   parent: { name: string, namespace: string } | null,
@@ -19,7 +19,7 @@ export type PropertyInfo = {
 export type VFuncInfo = {
   name: string,
 }
-export type SignalInfo = {
+export type SignalInfo = CallableInfo & {
   name: string,
 }
 export type InterfaceInfo = {
@@ -77,9 +77,11 @@ export const getPropertyInfo = (info: InfoRef): PropertyInfo => {
   }
 }
 export const getSignalInfo = (info: InfoRef): SignalInfo => {
-
+  const name = gi.baseInfo.g_base_info_get_name(info) || 'UnknownSignal';
+  console.log('    signal:', name);
   return {
-    name: gi.baseInfo.g_base_info_get_name(info) || 'UnknownSignal',
+    name,
+    ...getCallableInfo(info),
   }
 }
 export const getVFuncInfo = (info: InfoRef): VFuncInfo => {

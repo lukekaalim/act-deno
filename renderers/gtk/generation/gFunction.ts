@@ -7,7 +7,7 @@ export const createFunctionNode = (namespace: string, funcInfo: FunctionInfo, ty
     ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), funcInfo.symbol || ''),
     [],
     funcInfo.args
-      .map(a => types.createJSValueToInteropNode(a.type, ts.factory.createIdentifier(processName(a.name))))
+      .map(a => types.createJSValueToInteropNode(a.type, ts.factory.createIdentifier(processFuncName(a.name))))
   );
 
   const body = ts.factory.createBlock([
@@ -21,31 +21,36 @@ export const createFunctionNode = (namespace: string, funcInfo: FunctionInfo, ty
   const func = ts.factory.createFunctionDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     undefined,
-    funcInfo.name,
+    processFuncName(funcInfo.name),
     [],
     funcInfo.args.map(arg => ts.factory.createParameterDeclaration(
       [],
       undefined,
-      processName(arg.name),
+      processFuncName(arg.name),
       undefined,
-      types.getTypeNodeForType(namespace, arg.type),
+      types.getTypeNodeForType(arg.type),
     )),
-    types.getTypeNodeForType(namespace, funcInfo.returnType),
+    types.getTypeNodeForType(funcInfo.returnType),
     body,
   );
 
   return func;
 };
 
-export const processName = (name: string) => {
-  switch (name) {
-    case 'function':
-      return '_function';
-    case 'arguments':
-      return '_arguments';
-    case 'eval':
-      return '_eval';
-    default:
-      return name;
-  }
+const evilNames = new Set([
+  'function',
+  'arguments',
+  'eval',
+  'in',
+  'out',
+  'break',
+  'continue',
+  'return',
+])
+
+export const processFuncName = (name: string) => {
+  if (evilNames.has(name))
+    return '_' + name;
+  
+  return name;
 }

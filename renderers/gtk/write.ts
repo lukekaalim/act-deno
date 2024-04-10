@@ -10,6 +10,7 @@ import {
 import { writeFile, readFile } from 'node:fs/promises';
 import { CallbackInfo, getCallbackInfo } from "./infos/callback";
 import { InterfaceInfo, ObjectInfo, getInterfaceInfo, getObjectInfo } from "./infos/object";
+import { readUntilNull } from "./ffi";
 
 type OutputInfo =
   | { name: string | null, type: Exclude<keyof typeof baseInfoType, "GI_INFO_TYPE_OBJECT"> }
@@ -18,6 +19,7 @@ type OutputInfo =
 export type NamespaceInfo = {
   infos: BaseInfo[],
   version: string,
+  deps: string[],
 
   lib: string | null,
 }
@@ -62,12 +64,30 @@ export const getNamespaceInfo = (namespace: string, filter?: (info: InfoRef) => 
     .filter(filter || (() => true))
     .map(unrefPassthrough(getBaseInfo));
   const version = gi.repo.g_irepository_get_version(repo, namespace) || 'UnknownVersion';
+  const deps = getNamespaceDeps(namespace);
 
   return {
+    deps,
     version,
     lib: gi.lib.g_irepository_get_shared_library(repo, namespace),
     infos,
   }
+}
+
+const getNamespaceDeps = (namespace: string) => {
+  const pointer = gi.repo.g_irepository_get_dependencies(repo, namespace);
+  const namespaceArray = readUntilNull(pointer.address());
+
+  const namespaces = [] as string[];
+
+  for (let i = 0; i < (namespaceArray.byteLength / 8) - 1; i++) {
+    const address = namespaceArray.readUInt64LE(i * 8);
+    const stringBuffer = readUntilNull(address, 1);
+    const string = ref.readCString(stringBuffer);
+    namespaces.push(string);
+  }
+
+  return namespaces;
 }
 
 export const getBaseInfo = (info: InfoRef): BaseInfo => {

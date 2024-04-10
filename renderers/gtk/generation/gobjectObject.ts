@@ -2,33 +2,61 @@ import ts from "typescript";
 import { FunctionInfo, StructInfo } from "../write";
 import { TypeProvider } from "../infos/namespace";
 import { ObjectInfo } from "../infos/object";
+import { createSignalGenerator } from "./gSignal";
 
-export const createGObjectNode = (namespace: string, object: ObjectInfo, types: TypeProvider) => {
+const calcIsGoObject = (object: ObjectInfo, types: TypeProvider): boolean => {
+  if (object.name === "Object")
+    return true;
+  if (!object.parent)
+    return false;
+  const parent = types.findTypeByName(object.parent.namespace, object.parent.name);
+  if (!parent || parent.type !== "GI_INFO_TYPE_OBJECT")
+    return false;
+
+  return calcIsGoObject(parent.object, types);
+}
+
+export const createGObjectStatements = (
+  namespace: string, object: ObjectInfo, types: TypeProvider
+) => {
+  const signalGen = createSignalGenerator(namespace, types);
+  const isGObject = calcIsGoObject(object, types);
+  
+  return [
+    isGObject ? [signalGen.createSignalTypeMap(object)] : [],
+    createGObjectNode(namespace, object, isGObject, types),
+  ].flat(1);
+}
+
+export const createGObjectNode = (namespace: string, object: ObjectInfo, isGObject: boolean, types: TypeProvider) => {
   const { parent, abstract } = object;
 
+  const signalGen = createSignalGenerator(namespace, types);
+
+  const instanceFlags = new Set([
+    'GI_FUNCTION_IS_METHOD',
+    'GI_FUNCTION_IS_GETTER',
+    'GI_FUNCTION_IS_SETTER',
+    'GI_FUNCTION_WRAPS_VFUNC',
+  ]);
+
   const staticMethods = [
-    object.methods.filter(m => !m.flagNames.some(f => new Set([
-      'GI_FUNCTION_IS_METHOD',
-      'GI_FUNCTION_IS_GETTER',
-      'GI_FUNCTION_IS_SETTER',
-      'GI_FUNCTION_WRAPS_VFUNC',
-    ]).has(f)))
+    object.methods.filter(m => !m.flagNames.some(f => instanceFlags.has(f)))
   ].flat(1);
 
   const instanceFunctions = [
     object.methods.filter(m => m.flagNames.includes("GI_FUNCTION_IS_METHOD"))
-  ].flat(1).map(func => createGStructMethod(namespace, object, func, types));
+      .map(func => createGStructMethod(namespace, object, func, types)),
+    ...(isGObject ? signalGen.createSignalMethods(object) : []),
+  ].flat(1);
 
   const modifiers = [
     ts.factory.createModifier(ts.SyntaxKind.ExportKeyword),
-    ...(abstract ? [ts.factory.createModifier(ts.SyntaxKind.AbstractKeyword)] : []),
+    //...(abstract ? [ts.factory.createModifier(ts.SyntaxKind.AbstractKeyword)] : []),
   ]
   const name = object.name;
 
   const createStaticMethod = (func: FunctionInfo) => {
-    const returnType = func.flagNames.includes("GI_FUNCTION_IS_CONSTRUCTOR")
-      ? ts.factory.createTypeReferenceNode(object.name)
-      : types.getTypeNodeForType(namespace, func.returnType);
     return ts.factory.createMethodDeclaration(
       [ts.factory.createModifier(ts.SyntaxKind.StaticKeyword)],
       undefined,
@@ -40,10 +68,10 @@ export const createGObjectNode = (namespace: string, object: ObjectInfo, types: 
         undefined,
         arg.name,
         undefined,
-        types.getTypeNodeForType(namespace, arg.type),
+        types.getTypeNodeForType(arg.type),
       )),
-      returnType,
-      createGStructConstructorBody(namespace, object, func, types),
+      types.getTypeNodeForType(func.returnType),
+      createMethodBody(namespace, object, func, types),
     )
   }
 
@@ -76,12 +104,16 @@ export const createGObjectNode = (namespace: string, object: ObjectInfo, types: 
     : ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(parent.namespace), parent.name));
 
   const fields = [
-    ...(parentNode ? [] : [ts.factory.createPropertyDeclaration(
-      [],
-      'pointer', undefined, unknownPointerType,
-      ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('ref'), 'NULL')
-    )]),
-  ];
+    (parentNode ? [] : [
+      ts.factory.createPropertyDeclaration(
+        [],
+        'pointer', undefined, unknownPointerType,
+        ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('ref'), 'NULL')
+      ),
+      isGObject ? signalGen.createSignalProperties() : [],
+    ].flat(1)),
+    signalGen.createStaticSignalProperties(object.signals, parent),
+  ].flat(1);
   const members = [
     fields,
     ...(parentNode ? [] : [privateConstructor]),
@@ -98,47 +130,20 @@ export const createGObjectNode = (namespace: string, object: ObjectInfo, types: 
   ], members);
 };
 
-export const createGStructConstructorBody = (namespace: string, object: ObjectInfo, func: FunctionInfo, types: TypeProvider) => {
-  if (!func.symbol) {
-    return ts.factory.createBlock([
-      ts.factory.createThrowStatement(
-        ts.factory.createNewExpression(
-          ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('global'), 'Error'),
-          [],
-          [ts.factory.createStringLiteral(`Can't find symbol for ${object.name}.${func.name}`)]
-        )
-      )
-    ])
-  }
-
-  const callLibFunctionNode = ts.factory.createCallExpression(
-    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), func.symbol || ''),
-    [],
-    func.args.map(arg => types.createJSValueToInteropNode(arg.type, ts.factory.createIdentifier(arg.name)))
-  )
-
-  const createInstanceNode = ts.factory.createNewExpression(
-    ts.factory.createIdentifier(object.name),
-    [],
-    [callLibFunctionNode]
-  );
-  
+export const createMethodBody = (namespace: string, object: ObjectInfo, func: FunctionInfo, types: TypeProvider) => {
   return ts.factory.createBlock([
-    ts.factory.createReturnStatement(createInstanceNode),
-  ], true)
-}
-
-export const createGStructMethod = (namespace: string, object: ObjectInfo, func: FunctionInfo, types: TypeProvider) => {
-  const body = ts.factory.createBlock([
     ts.factory.createReturnStatement(types.createInteropToJSValueNode(func.returnType, ts.factory.createCallExpression(
       ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(namespace), func.symbol || ''),
       [],
       [
-        ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "pointer"),
+        ...(func.isMethod ? [ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "pointer")] : []),
         ...func.args.map(a => types.createJSValueToInteropNode(a.type, ts.factory.createIdentifier(processName(a.name))))
       ],
     ))),
   ], true);
+}
+
+export const createGStructMethod = (namespace: string, object: ObjectInfo, func: FunctionInfo, types: TypeProvider) => {
 
   return ts.factory.createMethodDeclaration(
     [],
@@ -151,10 +156,10 @@ export const createGStructMethod = (namespace: string, object: ObjectInfo, func:
       undefined,
       processName(arg.name),
       undefined,
-      types.getTypeNodeForType(namespace, arg.type),
+      types.getTypeNodeForType(arg.type),
     )),
-    types.getTypeNodeForType(namespace, func.returnType),
-    body,
+    types.getTypeNodeForType(func.returnType),
+    createMethodBody(namespace, object, func, types),
   )
 }
 

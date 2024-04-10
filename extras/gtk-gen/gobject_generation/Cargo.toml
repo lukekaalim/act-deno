@@ -1,0 +1,8 @@
+[package]
+edition = "2021"
+name = "gobject_generation"
+version = "0.0.0"
+
+[dependencies]
+gobject_introspection = { path = "../gobject_introspection" }
+codegen = "0.2.0"

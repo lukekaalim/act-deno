@@ -1,0 +1,3279 @@
+mod GLib {
+    struct Allocator;
+
+    struct Array;
+
+    struct AsyncQueue;
+
+    struct BookmarkFile;
+
+    struct ByteArray;
+
+    struct Bytes;
+
+    struct Cache;
+
+    struct Checksum;
+
+    struct Completion;
+
+    struct Cond;
+
+    struct Data;
+
+    struct Date;
+
+    struct DateTime;
+
+    struct DebugKey;
+
+    struct Dir;
+
+    struct Error;
+
+    struct HashTable;
+
+    struct HashTableIter;
+
+    struct Hmac;
+
+    struct Hook;
+
+    struct HookList;
+
+    struct IOChannel;
+
+    struct IOFuncs;
+
+    struct KeyFile;
+
+    struct List;
+
+    struct LogField;
+
+    struct MainContext;
+
+    struct MainLoop;
+
+    struct MappedFile;
+
+    struct MarkupParseContext;
+
+    struct MarkupParser;
+
+    struct MatchInfo;
+
+    struct MemChunk;
+
+    struct MemVTable;
+
+    struct Node;
+
+    struct Once;
+
+    struct OptionContext;
+
+    struct OptionEntry;
+
+    struct OptionGroup;
+
+    struct PathBuf;
+
+    struct PatternSpec;
+
+    struct PollFD;
+
+    struct Private;
+
+    struct PtrArray;
+
+    struct Queue;
+
+    struct RWLock;
+
+    struct Rand;
+
+    struct RecMutex;
+
+    struct Regex;
+
+    struct Relation;
+
+    struct SList;
+
+    struct Scanner;
+
+    struct ScannerConfig;
+
+    struct Sequence;
+
+    struct SequenceIter;
+
+    struct Source;
+
+    struct SourceCallbackFuncs;
+
+    struct SourceFuncs;
+
+    struct SourcePrivate;
+
+    struct StatBuf;
+
+    struct String;
+
+    struct StringChunk;
+
+    struct StrvBuilder;
+
+    struct TestCase;
+
+    struct TestConfig;
+
+    struct TestLogBuffer;
+
+    struct TestLogMsg;
+
+    struct TestSuite;
+
+    struct Thread;
+
+    struct ThreadPool;
+
+    struct TimeVal;
+
+    struct TimeZone;
+
+    struct Timer;
+
+    struct TrashStack;
+
+    struct Tree;
+
+    struct TreeNode;
+
+    struct Tuples;
+
+    struct UnixPipe;
+
+    struct Uri;
+
+    struct UriParamsIter;
+
+    struct Variant;
+
+    struct VariantBuilder;
+
+    struct VariantDict;
+
+    struct VariantType;
+
+    #[napi]
+    fn access() {
+        return access(filename,mode)
+    }
+
+    #[napi]
+    fn aligned_alloc() {
+        return aligned_alloc(n_blocks,n_block_bytes,alignment)
+    }
+
+    #[napi]
+    fn aligned_alloc0() {
+        return aligned_alloc0(n_blocks,n_block_bytes,alignment)
+    }
+
+    #[napi]
+    fn aligned_free() {
+        return aligned_free(mem)
+    }
+
+    #[napi]
+    fn aligned_free_sized() {
+        return aligned_free_sized(mem,alignment,size)
+    }
+
+    #[napi]
+    fn ascii_digit_value() {
+        return ascii_digit_value(c)
+    }
+
+    #[napi]
+    fn ascii_dtostr() {
+        return ascii_dtostr(buffer,buf_len,d)
+    }
+
+    #[napi]
+    fn ascii_formatd() {
+        return ascii_formatd(buffer,buf_len,format,d)
+    }
+
+    #[napi]
+    fn ascii_strcasecmp() {
+        return ascii_strcasecmp(s1,s2)
+    }
+
+    #[napi]
+    fn ascii_strdown() {
+        return ascii_strdown(str,len)
+    }
+
+    #[napi]
+    fn ascii_string_to_signed() {
+        return ascii_string_to_signed(str,base,min,max,out_num)
+    }
+
+    #[napi]
+    fn ascii_string_to_unsigned() {
+        return ascii_string_to_unsigned(str,base,min,max,out_num)
+    }
+
+    #[napi]
+    fn ascii_strncasecmp() {
+        return ascii_strncasecmp(s1,s2,n)
+    }
+
+    #[napi]
+    fn ascii_strtod() {
+        return ascii_strtod(nptr,endptr)
+    }
+
+    #[napi]
+    fn ascii_strtoll() {
+        return ascii_strtoll(nptr,endptr,base)
+    }
+
+    #[napi]
+    fn ascii_strtoull() {
+        return ascii_strtoull(nptr,endptr,base)
+    }
+
+    #[napi]
+    fn ascii_strup() {
+        return ascii_strup(str,len)
+    }
+
+    #[napi]
+    fn ascii_tolower() {
+        return ascii_tolower(c)
+    }
+
+    #[napi]
+    fn ascii_toupper() {
+        return ascii_toupper(c)
+    }
+
+    #[napi]
+    fn ascii_xdigit_value() {
+        return ascii_xdigit_value(c)
+    }
+
+    #[napi]
+    fn assert_warning() {
+        return assert_warning(log_domain,file,line,pretty_function,expression)
+    }
+
+    #[napi]
+    fn assertion_message() {
+        return assertion_message(domain,file,line,func,message)
+    }
+
+    #[napi]
+    fn assertion_message_cmpint() {
+        return assertion_message_cmpint(domain,file,line,func,expr,arg1,cmp,arg2,numtype)
+    }
+
+    #[napi]
+    fn assertion_message_cmpstr() {
+        return assertion_message_cmpstr(domain,file,line,func,expr,arg1,cmp,arg2)
+    }
+
+    #[napi]
+    fn assertion_message_cmpstrv() {
+        return assertion_message_cmpstrv(domain,file,line,func,expr,arg1,arg2,first_wrong_idx)
+    }
+
+    #[napi]
+    fn assertion_message_error() {
+        return assertion_message_error(domain,file,line,func,expr,error,error_domain,error_code)
+    }
+
+    #[napi]
+    fn atexit() {
+        return atexit(func)
+    }
+
+    #[napi]
+    fn atomic_int_add() {
+        return atomic_int_add(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_int_and() {
+        return atomic_int_and(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_int_compare_and_exchange() {
+        return atomic_int_compare_and_exchange(atomic,oldval,newval)
+    }
+
+    #[napi]
+    fn atomic_int_compare_and_exchange_full() {
+        return atomic_int_compare_and_exchange_full(atomic,oldval,newval,preval)
+    }
+
+    #[napi]
+    fn atomic_int_dec_and_test() {
+        return atomic_int_dec_and_test(atomic)
+    }
+
+    #[napi]
+    fn atomic_int_exchange() {
+        return atomic_int_exchange(atomic,newval)
+    }
+
+    #[napi]
+    fn atomic_int_exchange_and_add() {
+        return atomic_int_exchange_and_add(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_int_get() {
+        return atomic_int_get(atomic)
+    }
+
+    #[napi]
+    fn atomic_int_inc() {
+        return atomic_int_inc(atomic)
+    }
+
+    #[napi]
+    fn atomic_int_or() {
+        return atomic_int_or(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_int_set() {
+        return atomic_int_set(atomic,newval)
+    }
+
+    #[napi]
+    fn atomic_int_xor() {
+        return atomic_int_xor(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_pointer_add() {
+        return atomic_pointer_add(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_pointer_and() {
+        return atomic_pointer_and(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_pointer_compare_and_exchange() {
+        return atomic_pointer_compare_and_exchange(atomic,oldval,newval)
+    }
+
+    #[napi]
+    fn atomic_pointer_compare_and_exchange_full() {
+        return atomic_pointer_compare_and_exchange_full(atomic,oldval,newval,preval)
+    }
+
+    #[napi]
+    fn atomic_pointer_exchange() {
+        return atomic_pointer_exchange(atomic,newval)
+    }
+
+    #[napi]
+    fn atomic_pointer_get() {
+        return atomic_pointer_get(atomic)
+    }
+
+    #[napi]
+    fn atomic_pointer_or() {
+        return atomic_pointer_or(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_pointer_set() {
+        return atomic_pointer_set(atomic,newval)
+    }
+
+    #[napi]
+    fn atomic_pointer_xor() {
+        return atomic_pointer_xor(atomic,val)
+    }
+
+    #[napi]
+    fn atomic_rc_box_acquire() {
+        return atomic_rc_box_acquire(mem_block)
+    }
+
+    #[napi]
+    fn atomic_rc_box_alloc() {
+        return atomic_rc_box_alloc(block_size)
+    }
+
+    #[napi]
+    fn atomic_rc_box_alloc0() {
+        return atomic_rc_box_alloc0(block_size)
+    }
+
+    #[napi]
+    fn atomic_rc_box_dup() {
+        return atomic_rc_box_dup(block_size,mem_block)
+    }
+
+    #[napi]
+    fn atomic_rc_box_get_size() {
+        return atomic_rc_box_get_size(mem_block)
+    }
+
+    #[napi]
+    fn atomic_rc_box_release() {
+        return atomic_rc_box_release(mem_block)
+    }
+
+    #[napi]
+    fn atomic_rc_box_release_full() {
+        return atomic_rc_box_release_full(mem_block,clear_func)
+    }
+
+    #[napi]
+    fn atomic_ref_count_compare() {
+        return atomic_ref_count_compare(arc,val)
+    }
+
+    #[napi]
+    fn atomic_ref_count_dec() {
+        return atomic_ref_count_dec(arc)
+    }
+
+    #[napi]
+    fn atomic_ref_count_inc() {
+        return atomic_ref_count_inc(arc)
+    }
+
+    #[napi]
+    fn atomic_ref_count_init() {
+        return atomic_ref_count_init(arc)
+    }
+
+    #[napi]
+    fn base64_decode() {
+        return base64_decode(text,out_len)
+    }
+
+    #[napi]
+    fn base64_decode_inplace() {
+        return base64_decode_inplace(text,out_len)
+    }
+
+    #[napi]
+    fn base64_encode() {
+        return base64_encode(data,len)
+    }
+
+    #[napi]
+    fn base64_encode_close() {
+        return base64_encode_close(break_lines,out,state,save)
+    }
+
+    #[napi]
+    fn base64_encode_step() {
+        return base64_encode_step(in,len,break_lines,out,state,save)
+    }
+
+    #[napi]
+    fn basename() {
+        return basename(file_name)
+    }
+
+    #[napi]
+    fn bit_lock() {
+        return bit_lock(address,lock_bit)
+    }
+
+    #[napi]
+    fn bit_nth_lsf() {
+        return bit_nth_lsf(mask,nth_bit)
+    }
+
+    #[napi]
+    fn bit_nth_msf() {
+        return bit_nth_msf(mask,nth_bit)
+    }
+
+    #[napi]
+    fn bit_storage() {
+        return bit_storage(number)
+    }
+
+    #[napi]
+    fn bit_trylock() {
+        return bit_trylock(address,lock_bit)
+    }
+
+    #[napi]
+    fn bit_unlock() {
+        return bit_unlock(address,lock_bit)
+    }
+
+    #[napi]
+    fn blow_chunks() {
+        return blow_chunks()
+    }
+
+    #[napi]
+    fn bookmark_file_error_quark() {
+        return bookmark_file_error_quark()
+    }
+
+    #[napi]
+    fn build_filenamev() {
+        return build_filenamev(args)
+    }
+
+    #[napi]
+    fn build_pathv() {
+        return build_pathv(separator,args)
+    }
+
+    #[napi]
+    fn byte_array_append() {
+        return byte_array_append(array,data,len)
+    }
+
+    #[napi]
+    fn byte_array_free() {
+        return byte_array_free(array,free_segment)
+    }
+
+    #[napi]
+    fn byte_array_free_to_bytes() {
+        return byte_array_free_to_bytes(array)
+    }
+
+    #[napi]
+    fn byte_array_new() {
+        return byte_array_new()
+    }
+
+    #[napi]
+    fn byte_array_new_take() {
+        return byte_array_new_take(data,len)
+    }
+
+    #[napi]
+    fn byte_array_prepend() {
+        return byte_array_prepend(array,data,len)
+    }
+
+    #[napi]
+    fn byte_array_ref() {
+        return byte_array_ref(array)
+    }
+
+    #[napi]
+    fn byte_array_remove_index() {
+        return byte_array_remove_index(array,index_)
+    }
+
+    #[napi]
+    fn byte_array_remove_index_fast() {
+        return byte_array_remove_index_fast(array,index_)
+    }
+
+    #[napi]
+    fn byte_array_remove_range() {
+        return byte_array_remove_range(array,index_,length)
+    }
+
+    #[napi]
+    fn byte_array_set_size() {
+        return byte_array_set_size(array,length)
+    }
+
+    #[napi]
+    fn byte_array_sized_new() {
+        return byte_array_sized_new(reserved_size)
+    }
+
+    #[napi]
+    fn byte_array_sort() {
+        return byte_array_sort(array,compare_func)
+    }
+
+    #[napi]
+    fn byte_array_sort_with_data() {
+        return byte_array_sort_with_data(array,compare_func,user_data)
+    }
+
+    #[napi]
+    fn byte_array_steal() {
+        return byte_array_steal(array,len)
+    }
+
+    #[napi]
+    fn byte_array_unref() {
+        return byte_array_unref(array)
+    }
+
+    #[napi]
+    fn canonicalize_filename() {
+        return canonicalize_filename(filename,relative_to)
+    }
+
+    #[napi]
+    fn chdir() {
+        return chdir(path)
+    }
+
+    #[napi]
+    fn check_version() {
+        return check_version(required_major,required_minor,required_micro)
+    }
+
+    #[napi]
+    fn checksum_type_get_length() {
+        return checksum_type_get_length(checksum_type)
+    }
+
+    #[napi]
+    fn child_watch_add() {
+        return child_watch_add(priority,pid,function,data,notify)
+    }
+
+    #[napi]
+    fn child_watch_source_new() {
+        return child_watch_source_new(pid)
+    }
+
+    #[napi]
+    fn chmod() {
+        return chmod(filename,mode)
+    }
+
+    #[napi]
+    fn clear_error() {
+        return clear_error()
+    }
+
+    #[napi]
+    fn close() {
+        return close(fd)
+    }
+
+    #[napi]
+    fn closefrom() {
+        return closefrom(lowfd)
+    }
+
+    #[napi]
+    fn compute_checksum_for_bytes() {
+        return compute_checksum_for_bytes(checksum_type,data)
+    }
+
+    #[napi]
+    fn compute_checksum_for_data() {
+        return compute_checksum_for_data(checksum_type,data,length)
+    }
+
+    #[napi]
+    fn compute_checksum_for_string() {
+        return compute_checksum_for_string(checksum_type,str,length)
+    }
+
+    #[napi]
+    fn compute_hmac_for_bytes() {
+        return compute_hmac_for_bytes(digest_type,key,data)
+    }
+
+    #[napi]
+    fn compute_hmac_for_data() {
+        return compute_hmac_for_data(digest_type,key,key_len,data,length)
+    }
+
+    #[napi]
+    fn compute_hmac_for_string() {
+        return compute_hmac_for_string(digest_type,key,key_len,str,length)
+    }
+
+    #[napi]
+    fn convert() {
+        return convert(str,len,to_codeset,from_codeset,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn convert_error_quark() {
+        return convert_error_quark()
+    }
+
+    #[napi]
+    fn convert_with_fallback() {
+        return convert_with_fallback(str,len,to_codeset,from_codeset,fallback,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn creat() {
+        return creat(filename,mode)
+    }
+
+    #[napi]
+    fn datalist_foreach() {
+        return datalist_foreach(datalist,func,user_data)
+    }
+
+    #[napi]
+    fn datalist_get_data() {
+        return datalist_get_data(datalist,key)
+    }
+
+    #[napi]
+    fn datalist_get_flags() {
+        return datalist_get_flags(datalist)
+    }
+
+    #[napi]
+    fn datalist_id_get_data() {
+        return datalist_id_get_data(datalist,key_id)
+    }
+
+    #[napi]
+    fn datalist_id_remove_multiple() {
+        return datalist_id_remove_multiple(datalist,keys,n_keys)
+    }
+
+    #[napi]
+    fn datalist_set_flags() {
+        return datalist_set_flags(datalist,flags)
+    }
+
+    #[napi]
+    fn datalist_unset_flags() {
+        return datalist_unset_flags(datalist,flags)
+    }
+
+    #[napi]
+    fn dataset_destroy() {
+        return dataset_destroy(dataset_location)
+    }
+
+    #[napi]
+    fn dataset_foreach() {
+        return dataset_foreach(dataset_location,func,user_data)
+    }
+
+    #[napi]
+    fn dataset_id_get_data() {
+        return dataset_id_get_data(dataset_location,key_id)
+    }
+
+    #[napi]
+    fn date_get_days_in_month() {
+        return date_get_days_in_month(month,year)
+    }
+
+    #[napi]
+    fn date_get_monday_weeks_in_year() {
+        return date_get_monday_weeks_in_year(year)
+    }
+
+    #[napi]
+    fn date_get_sunday_weeks_in_year() {
+        return date_get_sunday_weeks_in_year(year)
+    }
+
+    #[napi]
+    fn date_is_leap_year() {
+        return date_is_leap_year(year)
+    }
+
+    #[napi]
+    fn date_strftime() {
+        return date_strftime(s,slen,format,date)
+    }
+
+    #[napi]
+    fn date_valid_day() {
+        return date_valid_day(day)
+    }
+
+    #[napi]
+    fn date_valid_dmy() {
+        return date_valid_dmy(day,month,year)
+    }
+
+    #[napi]
+    fn date_valid_julian() {
+        return date_valid_julian(julian_date)
+    }
+
+    #[napi]
+    fn date_valid_month() {
+        return date_valid_month(month)
+    }
+
+    #[napi]
+    fn date_valid_weekday() {
+        return date_valid_weekday(weekday)
+    }
+
+    #[napi]
+    fn date_valid_year() {
+        return date_valid_year(year)
+    }
+
+    #[napi]
+    fn dcgettext() {
+        return dcgettext(domain,msgid,category)
+    }
+
+    #[napi]
+    fn dgettext() {
+        return dgettext(domain,msgid)
+    }
+
+    #[napi]
+    fn dir_make_tmp() {
+        return dir_make_tmp(tmpl)
+    }
+
+    #[napi]
+    fn direct_equal() {
+        return direct_equal(v1,v2)
+    }
+
+    #[napi]
+    fn direct_hash() {
+        return direct_hash(v)
+    }
+
+    #[napi]
+    fn dngettext() {
+        return dngettext(domain,msgid,msgid_plural,n)
+    }
+
+    #[napi]
+    fn double_equal() {
+        return double_equal(v1,v2)
+    }
+
+    #[napi]
+    fn double_hash() {
+        return double_hash(v)
+    }
+
+    #[napi]
+    fn dpgettext() {
+        return dpgettext(domain,msgctxtid,msgidoffset)
+    }
+
+    #[napi]
+    fn dpgettext2() {
+        return dpgettext2(domain,context,msgid)
+    }
+
+    #[napi]
+    fn environ_getenv() {
+        return environ_getenv(envp,variable)
+    }
+
+    #[napi]
+    fn environ_setenv() {
+        return environ_setenv(envp,variable,value,overwrite)
+    }
+
+    #[napi]
+    fn environ_unsetenv() {
+        return environ_unsetenv(envp,variable)
+    }
+
+    #[napi]
+    fn error_domain_register() {
+        return error_domain_register(error_type_name,error_type_private_size,error_type_init,error_type_copy,error_type_clear)
+    }
+
+    #[napi]
+    fn error_domain_register_static() {
+        return error_domain_register_static(error_type_name,error_type_private_size,error_type_init,error_type_copy,error_type_clear)
+    }
+
+    #[napi]
+    fn fdwalk_set_cloexec() {
+        return fdwalk_set_cloexec(lowfd)
+    }
+
+    #[napi]
+    fn file_error_from_errno() {
+        return file_error_from_errno(err_no)
+    }
+
+    #[napi]
+    fn file_error_quark() {
+        return file_error_quark()
+    }
+
+    #[napi]
+    fn file_get_contents() {
+        return file_get_contents(filename,contents,length)
+    }
+
+    #[napi]
+    fn file_open_tmp() {
+        return file_open_tmp(tmpl,name_used)
+    }
+
+    #[napi]
+    fn file_read_link() {
+        return file_read_link(filename)
+    }
+
+    #[napi]
+    fn file_set_contents() {
+        return file_set_contents(filename,contents,length)
+    }
+
+    #[napi]
+    fn file_set_contents_full() {
+        return file_set_contents_full(filename,contents,length,flags,mode)
+    }
+
+    #[napi]
+    fn file_test() {
+        return file_test(filename,test)
+    }
+
+    #[napi]
+    fn filename_display_basename() {
+        return filename_display_basename(filename)
+    }
+
+    #[napi]
+    fn filename_display_name() {
+        return filename_display_name(filename)
+    }
+
+    #[napi]
+    fn filename_from_uri() {
+        return filename_from_uri(uri,hostname)
+    }
+
+    #[napi]
+    fn filename_from_utf8() {
+        return filename_from_utf8(utf8string,len,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn filename_to_uri() {
+        return filename_to_uri(filename,hostname)
+    }
+
+    #[napi]
+    fn filename_to_utf8() {
+        return filename_to_utf8(opsysstring,len,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn find_program_in_path() {
+        return find_program_in_path(program)
+    }
+
+    #[napi]
+    fn fopen() {
+        return fopen(filename,mode)
+    }
+
+    #[napi]
+    fn format_size() {
+        return format_size(size)
+    }
+
+    #[napi]
+    fn format_size_for_display() {
+        return format_size_for_display(size)
+    }
+
+    #[napi]
+    fn format_size_full() {
+        return format_size_full(size,flags)
+    }
+
+    #[napi]
+    fn free() {
+        return free(mem)
+    }
+
+    #[napi]
+    fn free_sized() {
+        return free_sized(mem,size)
+    }
+
+    #[napi]
+    fn freopen() {
+        return freopen(filename,mode,stream)
+    }
+
+    #[napi]
+    fn fsync() {
+        return fsync(fd)
+    }
+
+    #[napi]
+    fn get_application_name() {
+        return get_application_name()
+    }
+
+    #[napi]
+    fn get_charset() {
+        return get_charset(charset)
+    }
+
+    #[napi]
+    fn get_codeset() {
+        return get_codeset()
+    }
+
+    #[napi]
+    fn get_console_charset() {
+        return get_console_charset(charset)
+    }
+
+    #[napi]
+    fn get_current_dir() {
+        return get_current_dir()
+    }
+
+    #[napi]
+    fn get_current_time() {
+        return get_current_time(result)
+    }
+
+    #[napi]
+    fn get_environ() {
+        return get_environ()
+    }
+
+    #[napi]
+    fn get_filename_charsets() {
+        return get_filename_charsets(filename_charsets)
+    }
+
+    #[napi]
+    fn get_home_dir() {
+        return get_home_dir()
+    }
+
+    #[napi]
+    fn get_host_name() {
+        return get_host_name()
+    }
+
+    #[napi]
+    fn get_language_names() {
+        return get_language_names()
+    }
+
+    #[napi]
+    fn get_language_names_with_category() {
+        return get_language_names_with_category(category_name)
+    }
+
+    #[napi]
+    fn get_locale_variants() {
+        return get_locale_variants(locale)
+    }
+
+    #[napi]
+    fn get_monotonic_time() {
+        return get_monotonic_time()
+    }
+
+    #[napi]
+    fn get_num_processors() {
+        return get_num_processors()
+    }
+
+    #[napi]
+    fn get_os_info() {
+        return get_os_info(key_name)
+    }
+
+    #[napi]
+    fn get_prgname() {
+        return get_prgname()
+    }
+
+    #[napi]
+    fn get_real_name() {
+        return get_real_name()
+    }
+
+    #[napi]
+    fn get_real_time() {
+        return get_real_time()
+    }
+
+    #[napi]
+    fn get_system_config_dirs() {
+        return get_system_config_dirs()
+    }
+
+    #[napi]
+    fn get_system_data_dirs() {
+        return get_system_data_dirs()
+    }
+
+    #[napi]
+    fn get_tmp_dir() {
+        return get_tmp_dir()
+    }
+
+    #[napi]
+    fn get_user_cache_dir() {
+        return get_user_cache_dir()
+    }
+
+    #[napi]
+    fn get_user_config_dir() {
+        return get_user_config_dir()
+    }
+
+    #[napi]
+    fn get_user_data_dir() {
+        return get_user_data_dir()
+    }
+
+    #[napi]
+    fn get_user_name() {
+        return get_user_name()
+    }
+
+    #[napi]
+    fn get_user_runtime_dir() {
+        return get_user_runtime_dir()
+    }
+
+    #[napi]
+    fn get_user_special_dir() {
+        return get_user_special_dir(directory)
+    }
+
+    #[napi]
+    fn get_user_state_dir() {
+        return get_user_state_dir()
+    }
+
+    #[napi]
+    fn getenv() {
+        return getenv(variable)
+    }
+
+    #[napi]
+    fn hash_table_add() {
+        return hash_table_add(hash_table,key)
+    }
+
+    #[napi]
+    fn hash_table_contains() {
+        return hash_table_contains(hash_table,key)
+    }
+
+    #[napi]
+    fn hash_table_destroy() {
+        return hash_table_destroy(hash_table)
+    }
+
+    #[napi]
+    fn hash_table_find() {
+        return hash_table_find(hash_table,predicate,user_data)
+    }
+
+    #[napi]
+    fn hash_table_foreach() {
+        return hash_table_foreach(hash_table,func,user_data)
+    }
+
+    #[napi]
+    fn hash_table_foreach_remove() {
+        return hash_table_foreach_remove(hash_table,func,user_data)
+    }
+
+    #[napi]
+    fn hash_table_foreach_steal() {
+        return hash_table_foreach_steal(hash_table,func,user_data)
+    }
+
+    #[napi]
+    fn hash_table_insert() {
+        return hash_table_insert(hash_table,key,value)
+    }
+
+    #[napi]
+    fn hash_table_lookup() {
+        return hash_table_lookup(hash_table,key)
+    }
+
+    #[napi]
+    fn hash_table_lookup_extended() {
+        return hash_table_lookup_extended(hash_table,lookup_key,orig_key,value)
+    }
+
+    #[napi]
+    fn hash_table_new_similar() {
+        return hash_table_new_similar(other_hash_table)
+    }
+
+    #[napi]
+    fn hash_table_ref() {
+        return hash_table_ref(hash_table)
+    }
+
+    #[napi]
+    fn hash_table_remove() {
+        return hash_table_remove(hash_table,key)
+    }
+
+    #[napi]
+    fn hash_table_remove_all() {
+        return hash_table_remove_all(hash_table)
+    }
+
+    #[napi]
+    fn hash_table_replace() {
+        return hash_table_replace(hash_table,key,value)
+    }
+
+    #[napi]
+    fn hash_table_size() {
+        return hash_table_size(hash_table)
+    }
+
+    #[napi]
+    fn hash_table_steal() {
+        return hash_table_steal(hash_table,key)
+    }
+
+    #[napi]
+    fn hash_table_steal_all() {
+        return hash_table_steal_all(hash_table)
+    }
+
+    #[napi]
+    fn hash_table_steal_extended() {
+        return hash_table_steal_extended(hash_table,lookup_key,stolen_key,stolen_value)
+    }
+
+    #[napi]
+    fn hash_table_unref() {
+        return hash_table_unref(hash_table)
+    }
+
+    #[napi]
+    fn hook_destroy() {
+        return hook_destroy(hook_list,hook_id)
+    }
+
+    #[napi]
+    fn hook_destroy_link() {
+        return hook_destroy_link(hook_list,hook)
+    }
+
+    #[napi]
+    fn hook_free() {
+        return hook_free(hook_list,hook)
+    }
+
+    #[napi]
+    fn hook_insert_before() {
+        return hook_insert_before(hook_list,sibling,hook)
+    }
+
+    #[napi]
+    fn hook_insert_sorted() {
+        return hook_insert_sorted(hook_list,hook,func)
+    }
+
+    #[napi]
+    fn hook_prepend() {
+        return hook_prepend(hook_list,hook)
+    }
+
+    #[napi]
+    fn hook_unref() {
+        return hook_unref(hook_list,hook)
+    }
+
+    #[napi]
+    fn hostname_is_ascii_encoded() {
+        return hostname_is_ascii_encoded(hostname)
+    }
+
+    #[napi]
+    fn hostname_is_ip_address() {
+        return hostname_is_ip_address(hostname)
+    }
+
+    #[napi]
+    fn hostname_is_non_ascii() {
+        return hostname_is_non_ascii(hostname)
+    }
+
+    #[napi]
+    fn hostname_to_ascii() {
+        return hostname_to_ascii(hostname)
+    }
+
+    #[napi]
+    fn hostname_to_unicode() {
+        return hostname_to_unicode(hostname)
+    }
+
+    #[napi]
+    fn idle_add() {
+        return idle_add(priority,function,data,notify)
+    }
+
+    #[napi]
+    fn idle_remove_by_data() {
+        return idle_remove_by_data(data)
+    }
+
+    #[napi]
+    fn idle_source_new() {
+        return idle_source_new()
+    }
+
+    #[napi]
+    fn int64_equal() {
+        return int64_equal(v1,v2)
+    }
+
+    #[napi]
+    fn int64_hash() {
+        return int64_hash(v)
+    }
+
+    #[napi]
+    fn int_equal() {
+        return int_equal(v1,v2)
+    }
+
+    #[napi]
+    fn int_hash() {
+        return int_hash(v)
+    }
+
+    #[napi]
+    fn intern_static_string() {
+        return intern_static_string(string)
+    }
+
+    #[napi]
+    fn intern_string() {
+        return intern_string(string)
+    }
+
+    #[napi]
+    fn io_add_watch() {
+        return io_add_watch(channel,priority,condition,func,user_data,notify)
+    }
+
+    #[napi]
+    fn io_channel_error_from_errno() {
+        return io_channel_error_from_errno(en)
+    }
+
+    #[napi]
+    fn io_channel_error_quark() {
+        return io_channel_error_quark()
+    }
+
+    #[napi]
+    fn io_create_watch() {
+        return io_create_watch(channel,condition)
+    }
+
+    #[napi]
+    fn key_file_error_quark() {
+        return key_file_error_quark()
+    }
+
+    #[napi]
+    fn list_pop_allocator() {
+        return list_pop_allocator()
+    }
+
+    #[napi]
+    fn list_push_allocator() {
+        return list_push_allocator(allocator)
+    }
+
+    #[napi]
+    fn listenv() {
+        return listenv()
+    }
+
+    #[napi]
+    fn locale_from_utf8() {
+        return locale_from_utf8(utf8string,len,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn locale_to_utf8() {
+        return locale_to_utf8(opsysstring,len,bytes_read,bytes_written)
+    }
+
+    #[napi]
+    fn log_default_handler() {
+        return log_default_handler(log_domain,log_level,message,unused_data)
+    }
+
+    #[napi]
+    fn log_get_debug_enabled() {
+        return log_get_debug_enabled()
+    }
+
+    #[napi]
+    fn log_remove_handler() {
+        return log_remove_handler(log_domain,handler_id)
+    }
+
+    #[napi]
+    fn log_set_always_fatal() {
+        return log_set_always_fatal(fatal_mask)
+    }
+
+    #[napi]
+    fn log_set_debug_enabled() {
+        return log_set_debug_enabled(enabled)
+    }
+
+    #[napi]
+    fn log_set_fatal_mask() {
+        return log_set_fatal_mask(log_domain,fatal_mask)
+    }
+
+    #[napi]
+    fn log_set_handler() {
+        return log_set_handler(log_domain,log_levels,log_func,user_data,destroy)
+    }
+
+    #[napi]
+    fn log_set_writer_func() {
+        return log_set_writer_func(func,user_data,user_data_free)
+    }
+
+    #[napi]
+    fn log_structured_array() {
+        return log_structured_array(log_level,fields,n_fields)
+    }
+
+    #[napi]
+    fn log_variant() {
+        return log_variant(log_domain,log_level,fields)
+    }
+
+    #[napi]
+    fn log_writer_default() {
+        return log_writer_default(log_level,fields,n_fields,user_data)
+    }
+
+    #[napi]
+    fn log_writer_default_set_debug_domains() {
+        return log_writer_default_set_debug_domains(domains)
+    }
+
+    #[napi]
+    fn log_writer_default_set_use_stderr() {
+        return log_writer_default_set_use_stderr(use_stderr)
+    }
+
+    #[napi]
+    fn log_writer_default_would_drop() {
+        return log_writer_default_would_drop(log_level,log_domain)
+    }
+
+    #[napi]
+    fn log_writer_format_fields() {
+        return log_writer_format_fields(log_level,fields,n_fields,use_color)
+    }
+
+    #[napi]
+    fn log_writer_is_journald() {
+        return log_writer_is_journald(output_fd)
+    }
+
+    #[napi]
+    fn log_writer_journald() {
+        return log_writer_journald(log_level,fields,n_fields,user_data)
+    }
+
+    #[napi]
+    fn log_writer_standard_streams() {
+        return log_writer_standard_streams(log_level,fields,n_fields,user_data)
+    }
+
+    #[napi]
+    fn log_writer_supports_color() {
+        return log_writer_supports_color(output_fd)
+    }
+
+    #[napi]
+    fn log_writer_syslog() {
+        return log_writer_syslog(log_level,fields,n_fields,user_data)
+    }
+
+    #[napi]
+    fn lstat() {
+        return lstat(filename,buf)
+    }
+
+    #[napi]
+    fn main_context_default() {
+        return main_context_default()
+    }
+
+    #[napi]
+    fn main_context_get_thread_default() {
+        return main_context_get_thread_default()
+    }
+
+    #[napi]
+    fn main_context_ref_thread_default() {
+        return main_context_ref_thread_default()
+    }
+
+    #[napi]
+    fn main_current_source() {
+        return main_current_source()
+    }
+
+    #[napi]
+    fn main_depth() {
+        return main_depth()
+    }
+
+    #[napi]
+    fn malloc() {
+        return malloc(n_bytes)
+    }
+
+    #[napi]
+    fn malloc0() {
+        return malloc0(n_bytes)
+    }
+
+    #[napi]
+    fn malloc0_n() {
+        return malloc0_n(n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn malloc_n() {
+        return malloc_n(n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn markup_error_quark() {
+        return markup_error_quark()
+    }
+
+    #[napi]
+    fn markup_escape_text() {
+        return markup_escape_text(text,length)
+    }
+
+    #[napi]
+    fn mem_chunk_info() {
+        return mem_chunk_info()
+    }
+
+    #[napi]
+    fn mem_is_system_malloc() {
+        return mem_is_system_malloc()
+    }
+
+    #[napi]
+    fn mem_profile() {
+        return mem_profile()
+    }
+
+    #[napi]
+    fn mem_set_vtable() {
+        return mem_set_vtable(vtable)
+    }
+
+    #[napi]
+    fn memdup() {
+        return memdup(mem,byte_size)
+    }
+
+    #[napi]
+    fn memdup2() {
+        return memdup2(mem,byte_size)
+    }
+
+    #[napi]
+    fn mkdir() {
+        return mkdir(filename,mode)
+    }
+
+    #[napi]
+    fn mkdir_with_parents() {
+        return mkdir_with_parents(pathname,mode)
+    }
+
+    #[napi]
+    fn node_pop_allocator() {
+        return node_pop_allocator()
+    }
+
+    #[napi]
+    fn node_push_allocator() {
+        return node_push_allocator(allocator)
+    }
+
+    #[napi]
+    fn nullify_pointer() {
+        return nullify_pointer(nullify_location)
+    }
+
+    #[napi]
+    fn number_parser_error_quark() {
+        return number_parser_error_quark()
+    }
+
+    #[napi]
+    fn on_error_query() {
+        return on_error_query(prg_name)
+    }
+
+    #[napi]
+    fn on_error_stack_trace() {
+        return on_error_stack_trace(prg_name)
+    }
+
+    #[napi]
+    fn once_init_enter() {
+        return once_init_enter(location)
+    }
+
+    #[napi]
+    fn once_init_enter_impl() {
+        return once_init_enter_impl(location)
+    }
+
+    #[napi]
+    fn once_init_enter_pointer() {
+        return once_init_enter_pointer(location)
+    }
+
+    #[napi]
+    fn once_init_leave() {
+        return once_init_leave(location,result)
+    }
+
+    #[napi]
+    fn once_init_leave_pointer() {
+        return once_init_leave_pointer(location,result)
+    }
+
+    #[napi]
+    fn open() {
+        return open(filename,flags,mode)
+    }
+
+    #[napi]
+    fn option_error_quark() {
+        return option_error_quark()
+    }
+
+    #[napi]
+    fn parse_debug_string() {
+        return parse_debug_string(string,keys,nkeys)
+    }
+
+    #[napi]
+    fn path_buf_equal() {
+        return path_buf_equal(v1,v2)
+    }
+
+    #[napi]
+    fn path_get_basename() {
+        return path_get_basename(file_name)
+    }
+
+    #[napi]
+    fn path_get_dirname() {
+        return path_get_dirname(file_name)
+    }
+
+    #[napi]
+    fn path_is_absolute() {
+        return path_is_absolute(file_name)
+    }
+
+    #[napi]
+    fn path_skip_root() {
+        return path_skip_root(file_name)
+    }
+
+    #[napi]
+    fn pattern_match_simple() {
+        return pattern_match_simple(pattern,string)
+    }
+
+    #[napi]
+    fn pointer_bit_lock() {
+        return pointer_bit_lock(address,lock_bit)
+    }
+
+    #[napi]
+    fn pointer_bit_lock_and_get() {
+        return pointer_bit_lock_and_get(address,lock_bit,out_ptr)
+    }
+
+    #[napi]
+    fn pointer_bit_lock_mask_ptr() {
+        return pointer_bit_lock_mask_ptr(ptr,lock_bit,set,preserve_mask,preserve_ptr)
+    }
+
+    #[napi]
+    fn pointer_bit_trylock() {
+        return pointer_bit_trylock(address,lock_bit)
+    }
+
+    #[napi]
+    fn pointer_bit_unlock() {
+        return pointer_bit_unlock(address,lock_bit)
+    }
+
+    #[napi]
+    fn pointer_bit_unlock_and_set() {
+        return pointer_bit_unlock_and_set(address,lock_bit,ptr,preserve_mask)
+    }
+
+    #[napi]
+    fn poll() {
+        return poll(fds,nfds,timeout)
+    }
+
+    #[napi]
+    fn prefix_error_literal() {
+        return prefix_error_literal(err,prefix)
+    }
+
+    #[napi]
+    fn propagate_error() {
+        return propagate_error(dest,src)
+    }
+
+    #[napi]
+    fn qsort_with_data() {
+        return qsort_with_data(pbase,total_elems,size,compare_func,user_data)
+    }
+
+    #[napi]
+    fn quark_from_static_string() {
+        return quark_from_static_string(string)
+    }
+
+    #[napi]
+    fn quark_from_string() {
+        return quark_from_string(string)
+    }
+
+    #[napi]
+    fn quark_to_string() {
+        return quark_to_string(quark)
+    }
+
+    #[napi]
+    fn quark_try_string() {
+        return quark_try_string(string)
+    }
+
+    #[napi]
+    fn random_double() {
+        return random_double()
+    }
+
+    #[napi]
+    fn random_double_range() {
+        return random_double_range(begin,end)
+    }
+
+    #[napi]
+    fn random_int() {
+        return random_int()
+    }
+
+    #[napi]
+    fn random_int_range() {
+        return random_int_range(begin,end)
+    }
+
+    #[napi]
+    fn random_set_seed() {
+        return random_set_seed(seed)
+    }
+
+    #[napi]
+    fn rc_box_acquire() {
+        return rc_box_acquire(mem_block)
+    }
+
+    #[napi]
+    fn rc_box_alloc() {
+        return rc_box_alloc(block_size)
+    }
+
+    #[napi]
+    fn rc_box_alloc0() {
+        return rc_box_alloc0(block_size)
+    }
+
+    #[napi]
+    fn rc_box_dup() {
+        return rc_box_dup(block_size,mem_block)
+    }
+
+    #[napi]
+    fn rc_box_get_size() {
+        return rc_box_get_size(mem_block)
+    }
+
+    #[napi]
+    fn rc_box_release() {
+        return rc_box_release(mem_block)
+    }
+
+    #[napi]
+    fn rc_box_release_full() {
+        return rc_box_release_full(mem_block,clear_func)
+    }
+
+    #[napi]
+    fn realloc() {
+        return realloc(mem,n_bytes)
+    }
+
+    #[napi]
+    fn realloc_n() {
+        return realloc_n(mem,n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn ref_count_compare() {
+        return ref_count_compare(rc,val)
+    }
+
+    #[napi]
+    fn ref_count_dec() {
+        return ref_count_dec(rc)
+    }
+
+    #[napi]
+    fn ref_count_inc() {
+        return ref_count_inc(rc)
+    }
+
+    #[napi]
+    fn ref_count_init() {
+        return ref_count_init(rc)
+    }
+
+    #[napi]
+    fn ref_string_acquire() {
+        return ref_string_acquire(str)
+    }
+
+    #[napi]
+    fn ref_string_length() {
+        return ref_string_length(str)
+    }
+
+    #[napi]
+    fn ref_string_new() {
+        return ref_string_new(str)
+    }
+
+    #[napi]
+    fn ref_string_new_intern() {
+        return ref_string_new_intern(str)
+    }
+
+    #[napi]
+    fn ref_string_new_len() {
+        return ref_string_new_len(str,len)
+    }
+
+    #[napi]
+    fn ref_string_release() {
+        return ref_string_release(str)
+    }
+
+    #[napi]
+    fn regex_check_replacement() {
+        return regex_check_replacement(replacement,has_references)
+    }
+
+    #[napi]
+    fn regex_error_quark() {
+        return regex_error_quark()
+    }
+
+    #[napi]
+    fn regex_escape_nul() {
+        return regex_escape_nul(string,length)
+    }
+
+    #[napi]
+    fn regex_escape_string() {
+        return regex_escape_string(string,length)
+    }
+
+    #[napi]
+    fn regex_match_simple() {
+        return regex_match_simple(pattern,string,compile_options,match_options)
+    }
+
+    #[napi]
+    fn regex_split_simple() {
+        return regex_split_simple(pattern,string,compile_options,match_options)
+    }
+
+    #[napi]
+    fn reload_user_special_dirs_cache() {
+        return reload_user_special_dirs_cache()
+    }
+
+    #[napi]
+    fn remove() {
+        return remove(filename)
+    }
+
+    #[napi]
+    fn rename() {
+        return rename(oldfilename,newfilename)
+    }
+
+    #[napi]
+    fn rmdir() {
+        return rmdir(filename)
+    }
+
+    #[napi]
+    fn sequence_foreach_range() {
+        return sequence_foreach_range(begin,end,func,user_data)
+    }
+
+    #[napi]
+    fn sequence_get() {
+        return sequence_get(iter)
+    }
+
+    #[napi]
+    fn sequence_insert_before() {
+        return sequence_insert_before(iter,data)
+    }
+
+    #[napi]
+    fn sequence_move() {
+        return sequence_move(src,dest)
+    }
+
+    #[napi]
+    fn sequence_move_range() {
+        return sequence_move_range(dest,begin,end)
+    }
+
+    #[napi]
+    fn sequence_range_get_midpoint() {
+        return sequence_range_get_midpoint(begin,end)
+    }
+
+    #[napi]
+    fn sequence_remove() {
+        return sequence_remove(iter)
+    }
+
+    #[napi]
+    fn sequence_remove_range() {
+        return sequence_remove_range(begin,end)
+    }
+
+    #[napi]
+    fn sequence_set() {
+        return sequence_set(iter,data)
+    }
+
+    #[napi]
+    fn sequence_sort_changed() {
+        return sequence_sort_changed(iter,cmp_func,cmp_data)
+    }
+
+    #[napi]
+    fn sequence_sort_changed_iter() {
+        return sequence_sort_changed_iter(iter,iter_cmp,cmp_data)
+    }
+
+    #[napi]
+    fn sequence_swap() {
+        return sequence_swap(a,b)
+    }
+
+    #[napi]
+    fn set_application_name() {
+        return set_application_name(application_name)
+    }
+
+    #[napi]
+    fn set_error_literal() {
+        return set_error_literal(err,domain,code,message)
+    }
+
+    #[napi]
+    fn set_prgname() {
+        return set_prgname(prgname)
+    }
+
+    #[napi]
+    fn setenv() {
+        return setenv(variable,value,overwrite)
+    }
+
+    #[napi]
+    fn shell_error_quark() {
+        return shell_error_quark()
+    }
+
+    #[napi]
+    fn shell_parse_argv() {
+        return shell_parse_argv(command_line,argcp,argvp)
+    }
+
+    #[napi]
+    fn shell_quote() {
+        return shell_quote(unquoted_string)
+    }
+
+    #[napi]
+    fn shell_unquote() {
+        return shell_unquote(quoted_string)
+    }
+
+    #[napi]
+    fn slice_alloc() {
+        return slice_alloc(block_size)
+    }
+
+    #[napi]
+    fn slice_alloc0() {
+        return slice_alloc0(block_size)
+    }
+
+    #[napi]
+    fn slice_copy() {
+        return slice_copy(block_size,mem_block)
+    }
+
+    #[napi]
+    fn slice_free1() {
+        return slice_free1(block_size,mem_block)
+    }
+
+    #[napi]
+    fn slice_free_chain_with_offset() {
+        return slice_free_chain_with_offset(block_size,mem_chain,next_offset)
+    }
+
+    #[napi]
+    fn slice_get_config() {
+        return slice_get_config(ckey)
+    }
+
+    #[napi]
+    fn slice_get_config_state() {
+        return slice_get_config_state(ckey,address,n_values)
+    }
+
+    #[napi]
+    fn slice_set_config() {
+        return slice_set_config(ckey,value)
+    }
+
+    #[napi]
+    fn slist_pop_allocator() {
+        return slist_pop_allocator()
+    }
+
+    #[napi]
+    fn slist_push_allocator() {
+        return slist_push_allocator(allocator)
+    }
+
+    #[napi]
+    fn source_remove() {
+        return source_remove(tag)
+    }
+
+    #[napi]
+    fn source_remove_by_funcs_user_data() {
+        return source_remove_by_funcs_user_data(funcs,user_data)
+    }
+
+    #[napi]
+    fn source_remove_by_user_data() {
+        return source_remove_by_user_data(user_data)
+    }
+
+    #[napi]
+    fn source_set_name_by_id() {
+        return source_set_name_by_id(tag,name)
+    }
+
+    #[napi]
+    fn spaced_primes_closest() {
+        return spaced_primes_closest(num)
+    }
+
+    #[napi]
+    fn spawn_async() {
+        return spawn_async(working_directory,argv,envp,flags,child_setup,user_data,child_pid)
+    }
+
+    #[napi]
+    fn spawn_async_with_fds() {
+        return spawn_async_with_fds(working_directory,argv,envp,flags,child_setup,user_data,child_pid,stdin_fd,stdout_fd,stderr_fd)
+    }
+
+    #[napi]
+    fn spawn_async_with_pipes() {
+        return spawn_async_with_pipes(working_directory,argv,envp,flags,child_setup,user_data,child_pid,standard_input,standard_output,standard_error)
+    }
+
+    #[napi]
+    fn spawn_async_with_pipes_and_fds() {
+        return spawn_async_with_pipes_and_fds(working_directory,argv,envp,flags,child_setup,user_data,stdin_fd,stdout_fd,stderr_fd,source_fds,target_fds,n_fds,child_pid_out,stdin_pipe_out,stdout_pipe_out,stderr_pipe_out)
+    }
+
+    #[napi]
+    fn spawn_check_exit_status() {
+        return spawn_check_exit_status(wait_status)
+    }
+
+    #[napi]
+    fn spawn_check_wait_status() {
+        return spawn_check_wait_status(wait_status)
+    }
+
+    #[napi]
+    fn spawn_close_pid() {
+        return spawn_close_pid(pid)
+    }
+
+    #[napi]
+    fn spawn_command_line_async() {
+        return spawn_command_line_async(command_line)
+    }
+
+    #[napi]
+    fn spawn_command_line_sync() {
+        return spawn_command_line_sync(command_line,standard_output,standard_error,wait_status)
+    }
+
+    #[napi]
+    fn spawn_error_quark() {
+        return spawn_error_quark()
+    }
+
+    #[napi]
+    fn spawn_exit_error_quark() {
+        return spawn_exit_error_quark()
+    }
+
+    #[napi]
+    fn spawn_sync() {
+        return spawn_sync(working_directory,argv,envp,flags,child_setup,user_data,standard_output,standard_error,wait_status)
+    }
+
+    #[napi]
+    fn stat() {
+        return stat(filename,buf)
+    }
+
+    #[napi]
+    fn stpcpy() {
+        return stpcpy(dest,src)
+    }
+
+    #[napi]
+    fn str_equal() {
+        return str_equal(v1,v2)
+    }
+
+    #[napi]
+    fn str_has_prefix() {
+        return str_has_prefix(str,prefix)
+    }
+
+    #[napi]
+    fn str_has_suffix() {
+        return str_has_suffix(str,suffix)
+    }
+
+    #[napi]
+    fn str_hash() {
+        return str_hash(v)
+    }
+
+    #[napi]
+    fn str_is_ascii() {
+        return str_is_ascii(str)
+    }
+
+    #[napi]
+    fn str_match_string() {
+        return str_match_string(search_term,potential_hit,accept_alternates)
+    }
+
+    #[napi]
+    fn str_to_ascii() {
+        return str_to_ascii(str,from_locale)
+    }
+
+    #[napi]
+    fn str_tokenize_and_fold() {
+        return str_tokenize_and_fold(string,translit_locale,ascii_alternates)
+    }
+
+    #[napi]
+    fn strcanon() {
+        return strcanon(string,valid_chars,substitutor)
+    }
+
+    #[napi]
+    fn strcasecmp() {
+        return strcasecmp(s1,s2)
+    }
+
+    #[napi]
+    fn strchomp() {
+        return strchomp(string)
+    }
+
+    #[napi]
+    fn strchug() {
+        return strchug(string)
+    }
+
+    #[napi]
+    fn strcmp0() {
+        return strcmp0(str1,str2)
+    }
+
+    #[napi]
+    fn strcompress() {
+        return strcompress(source)
+    }
+
+    #[napi]
+    fn strdelimit() {
+        return strdelimit(string,delimiters,new_delimiter)
+    }
+
+    #[napi]
+    fn strdown() {
+        return strdown(string)
+    }
+
+    #[napi]
+    fn strdup() {
+        return strdup(str)
+    }
+
+    #[napi]
+    fn strdupv() {
+        return strdupv(str_array)
+    }
+
+    #[napi]
+    fn strerror() {
+        return strerror(errnum)
+    }
+
+    #[napi]
+    fn strescape() {
+        return strescape(source,exceptions)
+    }
+
+    #[napi]
+    fn strfreev() {
+        return strfreev(str_array)
+    }
+
+    #[napi]
+    fn strip_context() {
+        return strip_context(msgid,msgval)
+    }
+
+    #[napi]
+    fn strjoinv() {
+        return strjoinv(separator,str_array)
+    }
+
+    #[napi]
+    fn strlcat() {
+        return strlcat(dest,src,dest_size)
+    }
+
+    #[napi]
+    fn strlcpy() {
+        return strlcpy(dest,src,dest_size)
+    }
+
+    #[napi]
+    fn strncasecmp() {
+        return strncasecmp(s1,s2,n)
+    }
+
+    #[napi]
+    fn strndup() {
+        return strndup(str,n)
+    }
+
+    #[napi]
+    fn strnfill() {
+        return strnfill(length,fill_char)
+    }
+
+    #[napi]
+    fn strreverse() {
+        return strreverse(string)
+    }
+
+    #[napi]
+    fn strrstr() {
+        return strrstr(haystack,needle)
+    }
+
+    #[napi]
+    fn strrstr_len() {
+        return strrstr_len(haystack,haystack_len,needle)
+    }
+
+    #[napi]
+    fn strsignal() {
+        return strsignal(signum)
+    }
+
+    #[napi]
+    fn strsplit() {
+        return strsplit(string,delimiter,max_tokens)
+    }
+
+    #[napi]
+    fn strsplit_set() {
+        return strsplit_set(string,delimiters,max_tokens)
+    }
+
+    #[napi]
+    fn strstr_len() {
+        return strstr_len(haystack,haystack_len,needle)
+    }
+
+    #[napi]
+    fn strtod() {
+        return strtod(nptr,endptr)
+    }
+
+    #[napi]
+    fn strup() {
+        return strup(string)
+    }
+
+    #[napi]
+    fn strv_contains() {
+        return strv_contains(strv,str)
+    }
+
+    #[napi]
+    fn strv_equal() {
+        return strv_equal(strv1,strv2)
+    }
+
+    #[napi]
+    fn strv_get_type() {
+        return strv_get_type()
+    }
+
+    #[napi]
+    fn strv_length() {
+        return strv_length(str_array)
+    }
+
+    #[napi]
+    fn test_add_data_func() {
+        return test_add_data_func(testpath,test_data,test_func)
+    }
+
+    #[napi]
+    fn test_add_data_func_full() {
+        return test_add_data_func_full(testpath,test_data,test_func,data_free_func)
+    }
+
+    #[napi]
+    fn test_add_func() {
+        return test_add_func(testpath,test_func)
+    }
+
+    #[napi]
+    fn test_assert_expected_messages_internal() {
+        return test_assert_expected_messages_internal(domain,file,line,func)
+    }
+
+    #[napi]
+    fn test_bug() {
+        return test_bug(bug_uri_snippet)
+    }
+
+    #[napi]
+    fn test_bug_base() {
+        return test_bug_base(uri_pattern)
+    }
+
+    #[napi]
+    fn test_disable_crash_reporting() {
+        return test_disable_crash_reporting()
+    }
+
+    #[napi]
+    fn test_expect_message() {
+        return test_expect_message(log_domain,log_level,pattern)
+    }
+
+    #[napi]
+    fn test_fail() {
+        return test_fail()
+    }
+
+    #[napi]
+    fn test_failed() {
+        return test_failed()
+    }
+
+    #[napi]
+    fn test_get_dir() {
+        return test_get_dir(file_type)
+    }
+
+    #[napi]
+    fn test_get_path() {
+        return test_get_path()
+    }
+
+    #[napi]
+    fn test_incomplete() {
+        return test_incomplete(msg)
+    }
+
+    #[napi]
+    fn test_log_type_name() {
+        return test_log_type_name(log_type)
+    }
+
+    #[napi]
+    fn test_queue_destroy() {
+        return test_queue_destroy(destroy_func,destroy_data)
+    }
+
+    #[napi]
+    fn test_queue_free() {
+        return test_queue_free(gfree_pointer)
+    }
+
+    #[napi]
+    fn test_rand_double() {
+        return test_rand_double()
+    }
+
+    #[napi]
+    fn test_rand_double_range() {
+        return test_rand_double_range(range_start,range_end)
+    }
+
+    #[napi]
+    fn test_rand_int() {
+        return test_rand_int()
+    }
+
+    #[napi]
+    fn test_rand_int_range() {
+        return test_rand_int_range(begin,end)
+    }
+
+    #[napi]
+    fn test_run() {
+        return test_run()
+    }
+
+    #[napi]
+    fn test_run_suite() {
+        return test_run_suite(suite)
+    }
+
+    #[napi]
+    fn test_set_nonfatal_assertions() {
+        return test_set_nonfatal_assertions()
+    }
+
+    #[napi]
+    fn test_skip() {
+        return test_skip(msg)
+    }
+
+    #[napi]
+    fn test_subprocess() {
+        return test_subprocess()
+    }
+
+    #[napi]
+    fn test_summary() {
+        return test_summary(summary)
+    }
+
+    #[napi]
+    fn test_timer_elapsed() {
+        return test_timer_elapsed()
+    }
+
+    #[napi]
+    fn test_timer_last() {
+        return test_timer_last()
+    }
+
+    #[napi]
+    fn test_timer_start() {
+        return test_timer_start()
+    }
+
+    #[napi]
+    fn test_trap_assertions() {
+        return test_trap_assertions(domain,file,line,func,assertion_flags,pattern)
+    }
+
+    #[napi]
+    fn test_trap_fork() {
+        return test_trap_fork(usec_timeout,test_trap_flags)
+    }
+
+    #[napi]
+    fn test_trap_has_passed() {
+        return test_trap_has_passed()
+    }
+
+    #[napi]
+    fn test_trap_reached_timeout() {
+        return test_trap_reached_timeout()
+    }
+
+    #[napi]
+    fn test_trap_subprocess() {
+        return test_trap_subprocess(test_path,usec_timeout,test_flags)
+    }
+
+    #[napi]
+    fn test_trap_subprocess_with_envp() {
+        return test_trap_subprocess_with_envp(test_path,envp,usec_timeout,test_flags)
+    }
+
+    #[napi]
+    fn thread_error_quark() {
+        return thread_error_quark()
+    }
+
+    #[napi]
+    fn thread_exit() {
+        return thread_exit(retval)
+    }
+
+    #[napi]
+    fn thread_pool_get_max_idle_time() {
+        return thread_pool_get_max_idle_time()
+    }
+
+    #[napi]
+    fn thread_pool_get_max_unused_threads() {
+        return thread_pool_get_max_unused_threads()
+    }
+
+    #[napi]
+    fn thread_pool_get_num_unused_threads() {
+        return thread_pool_get_num_unused_threads()
+    }
+
+    #[napi]
+    fn thread_pool_set_max_idle_time() {
+        return thread_pool_set_max_idle_time(interval)
+    }
+
+    #[napi]
+    fn thread_pool_set_max_unused_threads() {
+        return thread_pool_set_max_unused_threads(max_threads)
+    }
+
+    #[napi]
+    fn thread_pool_stop_unused_threads() {
+        return thread_pool_stop_unused_threads()
+    }
+
+    #[napi]
+    fn thread_self() {
+        return thread_self()
+    }
+
+    #[napi]
+    fn thread_yield() {
+        return thread_yield()
+    }
+
+    #[napi]
+    fn time_val_from_iso8601() {
+        return time_val_from_iso8601(iso_date,time_)
+    }
+
+    #[napi]
+    fn timeout_add() {
+        return timeout_add(priority,interval,function,data,notify)
+    }
+
+    #[napi]
+    fn timeout_add_seconds() {
+        return timeout_add_seconds(priority,interval,function,data,notify)
+    }
+
+    #[napi]
+    fn timeout_source_new() {
+        return timeout_source_new(interval)
+    }
+
+    #[napi]
+    fn timeout_source_new_seconds() {
+        return timeout_source_new_seconds(interval)
+    }
+
+    #[napi]
+    fn trash_stack_height() {
+        return trash_stack_height(stack_p)
+    }
+
+    #[napi]
+    fn trash_stack_peek() {
+        return trash_stack_peek(stack_p)
+    }
+
+    #[napi]
+    fn trash_stack_pop() {
+        return trash_stack_pop(stack_p)
+    }
+
+    #[napi]
+    fn trash_stack_push() {
+        return trash_stack_push(stack_p,data_p)
+    }
+
+    #[napi]
+    fn try_malloc() {
+        return try_malloc(n_bytes)
+    }
+
+    #[napi]
+    fn try_malloc0() {
+        return try_malloc0(n_bytes)
+    }
+
+    #[napi]
+    fn try_malloc0_n() {
+        return try_malloc0_n(n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn try_malloc_n() {
+        return try_malloc_n(n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn try_realloc() {
+        return try_realloc(mem,n_bytes)
+    }
+
+    #[napi]
+    fn try_realloc_n() {
+        return try_realloc_n(mem,n_blocks,n_block_bytes)
+    }
+
+    #[napi]
+    fn ucs4_to_utf16() {
+        return ucs4_to_utf16(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn ucs4_to_utf8() {
+        return ucs4_to_utf8(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn unichar_break_type() {
+        return unichar_break_type(c)
+    }
+
+    #[napi]
+    fn unichar_combining_class() {
+        return unichar_combining_class(uc)
+    }
+
+    #[napi]
+    fn unichar_compose() {
+        return unichar_compose(a,b,ch)
+    }
+
+    #[napi]
+    fn unichar_decompose() {
+        return unichar_decompose(ch,a,b)
+    }
+
+    #[napi]
+    fn unichar_digit_value() {
+        return unichar_digit_value(c)
+    }
+
+    #[napi]
+    fn unichar_fully_decompose() {
+        return unichar_fully_decompose(ch,compat,result,result_len)
+    }
+
+    #[napi]
+    fn unichar_get_mirror_char() {
+        return unichar_get_mirror_char(ch,mirrored_ch)
+    }
+
+    #[napi]
+    fn unichar_get_script() {
+        return unichar_get_script(ch)
+    }
+
+    #[napi]
+    fn unichar_isalnum() {
+        return unichar_isalnum(c)
+    }
+
+    #[napi]
+    fn unichar_isalpha() {
+        return unichar_isalpha(c)
+    }
+
+    #[napi]
+    fn unichar_iscntrl() {
+        return unichar_iscntrl(c)
+    }
+
+    #[napi]
+    fn unichar_isdefined() {
+        return unichar_isdefined(c)
+    }
+
+    #[napi]
+    fn unichar_isdigit() {
+        return unichar_isdigit(c)
+    }
+
+    #[napi]
+    fn unichar_isgraph() {
+        return unichar_isgraph(c)
+    }
+
+    #[napi]
+    fn unichar_islower() {
+        return unichar_islower(c)
+    }
+
+    #[napi]
+    fn unichar_ismark() {
+        return unichar_ismark(c)
+    }
+
+    #[napi]
+    fn unichar_isprint() {
+        return unichar_isprint(c)
+    }
+
+    #[napi]
+    fn unichar_ispunct() {
+        return unichar_ispunct(c)
+    }
+
+    #[napi]
+    fn unichar_isspace() {
+        return unichar_isspace(c)
+    }
+
+    #[napi]
+    fn unichar_istitle() {
+        return unichar_istitle(c)
+    }
+
+    #[napi]
+    fn unichar_isupper() {
+        return unichar_isupper(c)
+    }
+
+    #[napi]
+    fn unichar_iswide() {
+        return unichar_iswide(c)
+    }
+
+    #[napi]
+    fn unichar_iswide_cjk() {
+        return unichar_iswide_cjk(c)
+    }
+
+    #[napi]
+    fn unichar_isxdigit() {
+        return unichar_isxdigit(c)
+    }
+
+    #[napi]
+    fn unichar_iszerowidth() {
+        return unichar_iszerowidth(c)
+    }
+
+    #[napi]
+    fn unichar_to_utf8() {
+        return unichar_to_utf8(c,outbuf)
+    }
+
+    #[napi]
+    fn unichar_tolower() {
+        return unichar_tolower(c)
+    }
+
+    #[napi]
+    fn unichar_totitle() {
+        return unichar_totitle(c)
+    }
+
+    #[napi]
+    fn unichar_toupper() {
+        return unichar_toupper(c)
+    }
+
+    #[napi]
+    fn unichar_type() {
+        return unichar_type(c)
+    }
+
+    #[napi]
+    fn unichar_validate() {
+        return unichar_validate(ch)
+    }
+
+    #[napi]
+    fn unichar_xdigit_value() {
+        return unichar_xdigit_value(c)
+    }
+
+    #[napi]
+    fn unicode_canonical_decomposition() {
+        return unicode_canonical_decomposition(ch,result_len)
+    }
+
+    #[napi]
+    fn unicode_canonical_ordering() {
+        return unicode_canonical_ordering(string,len)
+    }
+
+    #[napi]
+    fn unicode_script_from_iso15924() {
+        return unicode_script_from_iso15924(iso15924)
+    }
+
+    #[napi]
+    fn unicode_script_to_iso15924() {
+        return unicode_script_to_iso15924(script)
+    }
+
+    #[napi]
+    fn unix_error_quark() {
+        return unix_error_quark()
+    }
+
+    #[napi]
+    fn unix_fd_add_full() {
+        return unix_fd_add_full(priority,fd,condition,function,user_data,notify)
+    }
+
+    #[napi]
+    fn unix_fd_source_new() {
+        return unix_fd_source_new(fd,condition)
+    }
+
+    #[napi]
+    fn unix_get_passwd_entry() {
+        return unix_get_passwd_entry(user_name)
+    }
+
+    #[napi]
+    fn unix_open_pipe() {
+        return unix_open_pipe(fds,flags)
+    }
+
+    #[napi]
+    fn unix_set_fd_nonblocking() {
+        return unix_set_fd_nonblocking(fd,nonblock)
+    }
+
+    #[napi]
+    fn unix_signal_add() {
+        return unix_signal_add(priority,signum,handler,user_data,notify)
+    }
+
+    #[napi]
+    fn unix_signal_source_new() {
+        return unix_signal_source_new(signum)
+    }
+
+    #[napi]
+    fn unlink() {
+        return unlink(filename)
+    }
+
+    #[napi]
+    fn unsetenv() {
+        return unsetenv(variable)
+    }
+
+    #[napi]
+    fn uri_build() {
+        return uri_build(flags,scheme,userinfo,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_build_with_user() {
+        return uri_build_with_user(flags,scheme,user,password,auth_params,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_error_quark() {
+        return uri_error_quark()
+    }
+
+    #[napi]
+    fn uri_escape_bytes() {
+        return uri_escape_bytes(unescaped,length,reserved_chars_allowed)
+    }
+
+    #[napi]
+    fn uri_escape_string() {
+        return uri_escape_string(unescaped,reserved_chars_allowed,allow_utf8)
+    }
+
+    #[napi]
+    fn uri_is_valid() {
+        return uri_is_valid(uri_string,flags)
+    }
+
+    #[napi]
+    fn uri_join() {
+        return uri_join(flags,scheme,userinfo,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_join_with_user() {
+        return uri_join_with_user(flags,scheme,user,password,auth_params,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_list_extract_uris() {
+        return uri_list_extract_uris(uri_list)
+    }
+
+    #[napi]
+    fn uri_parse() {
+        return uri_parse(uri_string,flags)
+    }
+
+    #[napi]
+    fn uri_parse_params() {
+        return uri_parse_params(params,length,separators,flags)
+    }
+
+    #[napi]
+    fn uri_parse_scheme() {
+        return uri_parse_scheme(uri)
+    }
+
+    #[napi]
+    fn uri_peek_scheme() {
+        return uri_peek_scheme(uri)
+    }
+
+    #[napi]
+    fn uri_resolve_relative() {
+        return uri_resolve_relative(base_uri_string,uri_ref,flags)
+    }
+
+    #[napi]
+    fn uri_split() {
+        return uri_split(uri_ref,flags,scheme,userinfo,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_split_network() {
+        return uri_split_network(uri_string,flags,scheme,host,port)
+    }
+
+    #[napi]
+    fn uri_split_with_user() {
+        return uri_split_with_user(uri_ref,flags,scheme,user,password,auth_params,host,port,path,query,fragment)
+    }
+
+    #[napi]
+    fn uri_unescape_bytes() {
+        return uri_unescape_bytes(escaped_string,length,illegal_characters)
+    }
+
+    #[napi]
+    fn uri_unescape_segment() {
+        return uri_unescape_segment(escaped_string,escaped_string_end,illegal_characters)
+    }
+
+    #[napi]
+    fn uri_unescape_string() {
+        return uri_unescape_string(escaped_string,illegal_characters)
+    }
+
+    #[napi]
+    fn usleep() {
+        return usleep(microseconds)
+    }
+
+    #[napi]
+    fn utf16_to_ucs4() {
+        return utf16_to_ucs4(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn utf16_to_utf8() {
+        return utf16_to_utf8(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn utf8_casefold() {
+        return utf8_casefold(str,len)
+    }
+
+    #[napi]
+    fn utf8_collate() {
+        return utf8_collate(str1,str2)
+    }
+
+    #[napi]
+    fn utf8_collate_key() {
+        return utf8_collate_key(str,len)
+    }
+
+    #[napi]
+    fn utf8_collate_key_for_filename() {
+        return utf8_collate_key_for_filename(str,len)
+    }
+
+    #[napi]
+    fn utf8_find_next_char() {
+        return utf8_find_next_char(p,end)
+    }
+
+    #[napi]
+    fn utf8_find_prev_char() {
+        return utf8_find_prev_char(str,p)
+    }
+
+    #[napi]
+    fn utf8_get_char() {
+        return utf8_get_char(p)
+    }
+
+    #[napi]
+    fn utf8_get_char_validated() {
+        return utf8_get_char_validated(p,max_len)
+    }
+
+    #[napi]
+    fn utf8_make_valid() {
+        return utf8_make_valid(str,len)
+    }
+
+    #[napi]
+    fn utf8_normalize() {
+        return utf8_normalize(str,len,mode)
+    }
+
+    #[napi]
+    fn utf8_offset_to_pointer() {
+        return utf8_offset_to_pointer(str,offset)
+    }
+
+    #[napi]
+    fn utf8_pointer_to_offset() {
+        return utf8_pointer_to_offset(str,pos)
+    }
+
+    #[napi]
+    fn utf8_prev_char() {
+        return utf8_prev_char(p)
+    }
+
+    #[napi]
+    fn utf8_strchr() {
+        return utf8_strchr(p,len,c)
+    }
+
+    #[napi]
+    fn utf8_strdown() {
+        return utf8_strdown(str,len)
+    }
+
+    #[napi]
+    fn utf8_strlen() {
+        return utf8_strlen(p,max)
+    }
+
+    #[napi]
+    fn utf8_strncpy() {
+        return utf8_strncpy(dest,src,n)
+    }
+
+    #[napi]
+    fn utf8_strrchr() {
+        return utf8_strrchr(p,len,c)
+    }
+
+    #[napi]
+    fn utf8_strreverse() {
+        return utf8_strreverse(str,len)
+    }
+
+    #[napi]
+    fn utf8_strup() {
+        return utf8_strup(str,len)
+    }
+
+    #[napi]
+    fn utf8_substring() {
+        return utf8_substring(str,start_pos,end_pos)
+    }
+
+    #[napi]
+    fn utf8_to_ucs4() {
+        return utf8_to_ucs4(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn utf8_to_ucs4_fast() {
+        return utf8_to_ucs4_fast(str,len,items_written)
+    }
+
+    #[napi]
+    fn utf8_to_utf16() {
+        return utf8_to_utf16(str,len,items_read,items_written)
+    }
+
+    #[napi]
+    fn utf8_truncate_middle() {
+        return utf8_truncate_middle(string,truncate_length)
+    }
+
+    #[napi]
+    fn utf8_validate() {
+        return utf8_validate(str,max_len,end)
+    }
+
+    #[napi]
+    fn utf8_validate_len() {
+        return utf8_validate_len(str,max_len,end)
+    }
+
+    #[napi]
+    fn utime() {
+        return utime(filename,utb)
+    }
+
+    #[napi]
+    fn uuid_string_is_valid() {
+        return uuid_string_is_valid(str)
+    }
+
+    #[napi]
+    fn uuid_string_random() {
+        return uuid_string_random()
+    }
+
+    #[napi]
+    fn variant_get_gtype() {
+        return variant_get_gtype()
+    }
+
+    #[napi]
+    fn variant_is_object_path() {
+        return variant_is_object_path(string)
+    }
+
+    #[napi]
+    fn variant_is_signature() {
+        return variant_is_signature(string)
+    }
+
+    #[napi]
+    fn variant_parse() {
+        return variant_parse(type,text,limit,endptr)
+    }
+
+    #[napi]
+    fn variant_parse_error_print_context() {
+        return variant_parse_error_print_context(error,source_str)
+    }
+
+    #[napi]
+    fn variant_parse_error_quark() {
+        return variant_parse_error_quark()
+    }
+
+    #[napi]
+    fn variant_parser_get_error_quark() {
+        return variant_parser_get_error_quark()
+    }
+
+    #[napi]
+    fn variant_type_checked_() {
+        return variant_type_checked_(type_string)
+    }
+
+    #[napi]
+    fn variant_type_string_get_depth_() {
+        return variant_type_string_get_depth_(type_string)
+    }
+
+    #[napi]
+    fn variant_type_string_is_valid() {
+        return variant_type_string_is_valid(type_string)
+    }
+
+    #[napi]
+    fn variant_type_string_scan() {
+        return variant_type_string_scan(string,limit,endptr)
+    }
+}
