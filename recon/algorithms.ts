@@ -1,4 +1,4 @@
-import { act } from "./deps.ts";
+import { MagicError } from "@lukekaalim/act";
 
 export type ChangeReport = {
   /** Index for Next that didnt exist in Prev */
@@ -42,5 +42,5 @@ export type SortedChangeReport = ChangeReport & {
   moved: [number, number][],
 };
 export const calculateSortedChangedElements = (): SortedChangeReport => {
-  throw new act.MagicError();
+  throw new MagicError();
 }

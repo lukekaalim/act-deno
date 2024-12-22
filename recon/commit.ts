@@ -1,11 +1,10 @@
-import { createId } from "@lukekaalim/act";
-import { act } from "./deps.ts";
+import { createId, Element, OpaqueID } from "@lukekaalim/act";
 
 /**
  * A single consistent id representing a commit in the act tree.
  * Does not change.
  */
-export type CommitID = act.OpaqueID<"CommitID">;
+export type CommitID = OpaqueID<"CommitID">;
 /**
  * A array of **CommitID**'s, starting at the "root" id and "descending"
  * until reaching (including) the subject's ID. Useful for efficiently
@@ -18,7 +17,7 @@ export type CommitPath = readonly CommitID[];
  * children change, a commit with the same Id but a new CommitVersion
  * is added to the tree, replacing the previous.
  */
-export type CommitVersion = act.OpaqueID<"CommitVersion">;
+export type CommitVersion = OpaqueID<"CommitVersion">;
 
 /**
  * Structure for quick lookup and identification of a commit
@@ -27,34 +26,41 @@ export type CommitRef = {
   id: CommitID;
   path: CommitPath;
 };
+export const CommitRef = {
+  new(path: CommitPath = []) {
+    const id = createId<'CommitID'>();
+    return {
+      path: [...path, id],
+      id,
+    }
+  }
+}
 
 /**
  * Representing an entry in the act "Tree"
  */
 export type Commit = CommitRef & {
   version: CommitVersion;
-  element: act.Element;
+  element: Element;
   children: CommitRef[];
 };
 
 export const updateCommit = (
   ref: CommitRef,
-  element: act.Element,
+  element: Element,
   children: CommitRef[]
 ): Commit => ({
   ...ref,
   element,
   children,
-  version: act.createId(),
+  version: createId(),
 });
 
 export const Commit = {
-  new(element: act.Element, path: CommitPath = [], children: CommitRef[] = []): Commit {
-    const id = createId<'CommitID'>();
+  new(element: Element, path: CommitPath = [], children: CommitRef[] = []): Commit {
     return {
-      id,
-      path: [...path, id],
-      version: act.createId(),
+      ...CommitRef.new(path),
+      version: createId(),
       children,
       element,
     }

@@ -43,7 +43,7 @@ const App = () => {
     return () => {
       cancelAnimationFrame(id);
     }
-  }, [])
+  }, [!!name])
 
   const geometry = useMemo(() => {
     return new TextGeometry(`Hello, ${name}!`, { depth: 1, font, size: 5 }).center()
@@ -56,26 +56,27 @@ const App = () => {
         onInput: e => setName((e.currentTarget as HTMLInputElement).value),
         value: name
       }),
-
-      hs('h3', {}, `Hello, ${name}!`),
-      hs('p', {}, `Hello, ${name}!`),
-      hs('div', { ref: refB }),
-      h(primitiveNodeTypes.null, {}, [
-        h(HTML, {}, h('p', { ref }, 'A child')),
-      ]),
-      h(SVG, {}, h('svg', { ref: refD, width: 300, height: 300 }, [
-        h('text', { fill: 'blue', x: '0px', y: '20px' }, `Hello, ${name}!`),
-        h('rect', { x: '50px', y: '50px', stroke: 'orange', 'stroke-width': '8px', fill: 'red', width: '50px', height: '50px' })
-      ])),
-      h('canvas', { ref: refE, width: 300, height: 300 }),
-      h(primitiveNodeTypes.null, {}, [
-        h(ThreeJS, {}, [
-          h('scene', { ref: refG }, [
-            h('mesh', { ref: refC, geometry, material }),
-            h('perspectivecamera', { ref: refF, position: new three.Vector3(0, 0, 100) }),
+      !!name && [
+        hs('h3', {}, `Hello, ${name}!`),
+        hs('p', {}, `Hello, ${name}!`),
+        hs('div', { ref: refB }),
+        h(primitiveNodeTypes.null, {}, [
+          h(HTML, {}, h('p', { ref }, 'A child')),
+        ]),
+        h(SVG, {}, h('svg', { ref: refD, width: 300, height: 300 }, [
+          h('text', { fill: 'blue', x: '0px', y: '20px' }, `Hello, ${name}!`),
+          h('rect', { x: '50px', y: '50px', stroke: 'orange', 'stroke-width': '8px', fill: 'red', width: '50px', height: '50px' })
+        ])),
+        h('canvas', { ref: refE, width: 300, height: 300 }),
+        h(primitiveNodeTypes.null, {}, [
+          h(ThreeJS, {}, [
+            h('scene', { ref: refG }, [
+              h('mesh', { ref: refC, geometry, material }),
+              h('perspectivecamera', { ref: refF, position: new three.Vector3(0, 0, 100) }),
+            ])
           ])
         ])
-      ])
+      ]
     ])
   ]
 };

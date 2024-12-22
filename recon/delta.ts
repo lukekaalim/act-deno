@@ -1,7 +1,6 @@
 import { Commit, CommitID, CommitRef, updateCommit } from "./commit.ts";
 import { WorkThread } from "./thread.ts";
-import { Update, calcUpdates, calculateUpdates, findChildCommits } from "./update.ts";
-import { act } from "./deps.ts";
+import { Update, calculateUpdates, isDescendant } from "./update.ts";
 import { CommitTree } from "./tree.ts";
 import { ComponentService } from "./component.ts";
 
@@ -63,14 +62,15 @@ export const applyUpdate = (
     }
 
     const contextTargets = comp.context.processContextElement(next, ref.id) || [];
+    const nextTargets = [...contextTargets, ...targets];
+
     const childNode = comp.state.calculateCommitChildren(thread, next, ref);
 
-    const elements = act.convertNodeToElements(childNode);
-
-    const childCommits = findChildCommits(ref, prevChildren, elements);
-    const updates = calcUpdates(childCommits, [...targets, ...contextTargets]);
-    
-    const childRefs = childCommits.newOrPersisted.map(n => n.ref);
+    const [childRefs, updates] = calculateUpdates(ref, prevChildren, childNode);
+    const finalUpdates = updates.map(update => ({
+      ...update,
+      targets: nextTargets.filter(t => isDescendant(update.ref, t))
+    }))
 
     const commit = Commit.update(ref, next, childRefs);
 
@@ -79,7 +79,7 @@ export const applyUpdate = (
     else
       thread.deltas.created.push({ ref, next: commit });
 
-    thread.pendingUpdates.push(...updates);
+    thread.pendingUpdates.push(...finalUpdates);
     return;
   }
   // If we have a prev, but no next, then this is a requets to

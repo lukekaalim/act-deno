@@ -1,6 +1,6 @@
 import { CommitRef, CommitID } from "./commit.ts";
 import { ContextManager } from "./context.ts";
-import { act } from "./deps.ts";
+import * as act from '@lukekaalim/act';
 import { EffectManager, EffectID } from "./effects.ts";
 import { WorkThread } from "./thread.ts";
 

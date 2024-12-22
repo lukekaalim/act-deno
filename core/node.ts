@@ -20,30 +20,6 @@ export const primitiveNodeTypes = {
   render:   Symbol('render'),
 } as const;
 
-export const convertNodeToElement = (node: Node): Element => {
-  switch (typeof node) {
-    case 'boolean':
-      return h(primitiveNodeTypes.boolean, { value: node });
-    case 'number':
-      return h(primitiveNodeTypes.number, { value: node });
-    case 'string':
-      return h(primitiveNodeTypes.string, { value: node });
-
-    case 'object': 
-      if (node === null)
-        return h(primitiveNodeTypes.null);
-      if (Array.isArray(node))
-        return h(primitiveNodeTypes.array, {}, node);
-      if (node.type)
-        return node;
-      throw new UnknownElementType()
-    case 'undefined':
-      throw new Error(`Undefined is not a valid act element!`);
-    default:
-      throw new UnknownElementType()
-  }
-}
-
 /**
  * Any node tree represents one or more elements
  */

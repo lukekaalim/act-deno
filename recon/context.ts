@@ -1,5 +1,4 @@
-import { act } from "./deps.ts";
-
+import { Context, ContextID, Element, providerNodeType } from "@lukekaalim/act";
 import { CommitID, CommitRef, Commit } from "./commit.ts";
 import { WorkThread } from "./thread.ts";
 
@@ -7,7 +6,7 @@ export type ContextManager = ReturnType<typeof createContextManager>;
 
 export type ContextState<T> = {
   id: CommitID,
-  contextId: act.ContextID,
+  contextId: ContextID,
   consumers: Map<CommitID, CommitRef>,
   value: T,
 }
@@ -20,12 +19,12 @@ export const createContextManager = () => {
      * Take an element+commit, and if a change is detected,
      * the context value is updated and the consumers are returned.
      */
-    processContextElement(element: act.Element, commitId: CommitID) {
-      if (element.type !== act.providerNodeType)
+    processContextElement(element: Element, commitId: CommitID) {
+      if (element.type !== providerNodeType)
         return;
-      const prevState = contextStates.get(commitId) || {
+      const prevState: ContextState<unknown> = contextStates.get(commitId) || {
         id: commitId,
-        contextId: element.props.id as act.ContextID,
+        contextId: element.props.id as ContextID,
         consumers: new Map(),
         value: element.props.value,
       };
@@ -36,7 +35,7 @@ export const createContextManager = () => {
       }
       return [];
     },
-    subscribeContext<T>(ref: CommitRef, context: act.Context<T>): T {
+    subscribeContext<T>(ref: CommitRef, context: Context<T>): T {
       const contextsInPath = ref.path.map(id => contextStates.get(id)).reverse();
       
       const closestContextOfType = contextsInPath.find(cState => cState && cState.contextId === context.id);
@@ -46,7 +45,7 @@ export const createContextManager = () => {
 
       return closestContextOfType.value as T;
     },
-    unsubscribeContext(ref: CommitRef, context: act.Context<unknown>) {
+    unsubscribeContext(ref: CommitRef, context: Context<unknown>) {
       const contextsInPath = ref.path.map(id => contextStates.get(id)).reverse();
       
       const closestContextOfType = contextsInPath.find(cState => cState && cState.contextId === context.id);

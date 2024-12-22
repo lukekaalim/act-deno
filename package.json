@@ -6,6 +6,10 @@
     "core",
     "docs"
   ],
+  "scripts": {
+    "test": "tsx --test",
+    "testw": "tsx --test --watch"
+  },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.2",

@@ -1,6 +1,6 @@
+import { convertNodeToElements, createId, Element, Node } from "@lukekaalim/act";
 import { calculateChangedElements, ChangeEqualityTest } from "./algorithms.ts";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
-import { act } from "./deps.ts";
 
 export type Update = {
   /**
@@ -16,7 +16,7 @@ export type Update = {
   /** If null, this update should cause
    * this commit to be removed
    */
-  next: null | act.Element;
+  next: null | Element;
 
   /**
    * List of commits that _must_ re-render as a
@@ -26,11 +26,11 @@ export type Update = {
 };
 
 export const Update = {
-  fresh: (ref: CommitRef, next: act.Element): Update => ({
+  fresh: (ref: CommitRef, next: Element): Update => ({
     ref, next, prev: null, targets: []
   }),
-  existing: (ref: CommitRef, prev: Commit | null, next: act.Element): Update => ({
-    ref, next, prev, targets: [],
+  existing: (prev: Commit, next: Element): Update => ({
+    ref: prev, next, prev, targets: [],
   }),
   remove: (prev: Commit): Update => ({
     ref: prev, next: null, prev, targets: [],
@@ -46,16 +46,15 @@ export const Update = {
 export const calculateFastUpdate = (
   parentRef: CommitRef,
   prevCommit: null | Commit,
-  nextNode: Exclude<act.Node, act.Node[]>
+  element: Element,
 ): [CommitRef[], Update[]] => {
-  const element = act.convertNodeToElement(nextNode);
   const compatible = prevCommit && prevCommit.element.type === element.type;
 
   const updates: Update[] = [];
   const refs: CommitRef[] = [];
 
   if (!compatible) {
-    const id = act.createId<"CommitID">();
+    const id = createId<"CommitID">();
     const path = [...parentRef.path, id];
     const ref = { id, path };
     updates.push(Update.fresh(ref, element));
@@ -65,75 +64,14 @@ export const calculateFastUpdate = (
       updates.push(Update.remove(prevCommit));
   } else if (prevCommit) {
     refs.push(prevCommit);
-    updates.push(Update.existing(prevCommit, prevCommit, element));
+    updates.push(Update.existing(prevCommit, element));
   }
 
   return [refs, updates];
 };
 
-/**
- * For a set of (prev) commits and a set of (next) elements
- * (plus the parent that they all)
- * belong to, try to associate each commit with an element
- * 
- * @param parent 
- * @param prevCommits 
- * @param nextElements 
- * @returns 
- */
-export const findChildCommits = (
-  parent: CommitRef,
-  prevCommits: Commit[],
-  nextElements: act.Element[],
-) => {
-  const changes = calculateChangedElements(
-    prevCommits,
-    nextElements,
-    (c, e, pi, ni) => c.element.type === e.type && pi === ni,
-  );
 
-  const newOrPersisted = nextElements.map((next, index) => {
-    const prevIndex = changes.nextToPrev[index];
-    const prev = prevIndex !== -1 ? prevCommits[prevIndex] : null;
-    if (prev) {
-      return { prev, next, ref: prev };
-    }
-    const id = act.createId<"CommitID">();
-    const ref = { id, path: [...parent.path, id] };
-    return { prev, next, ref };
-  });
-  const removed = changes.removed.map((index) => prevCommits[index]);
-
-  return { newOrPersisted, removed };
-}
-
-export const calcUpdates = (
-  childCommits: ReturnType<typeof findChildCommits>,
-  targets: CommitRef[],
-): Update[] => {
-  return [
-    ...childCommits.removed
-          // Delete commits dont need targets (they always visit all nodes)
-      .map(prev => Update.remove(prev)),
-    ...childCommits.newOrPersisted
-      .map(({ prev, next, ref }): Update | null => {
-        if (!prev) {
-          // Create commits dont need targets (they always visit all nodes)
-          return { ref, prev, next, targets: [] };
-        }
-        const validTargets = targets.filter(target => target.path.includes(prev.id));
-        if (prev.element.id === next.id && validTargets.length === 0) {
-          // dont generate updates for nodes that both:
-          //  - havent changed
-          //  - dont need their children re-renderered
-            return null;
-        }
-        return { ref: prev, prev, next, targets: validTargets };
-      }).filter((x): x is Update => !!x),
-  ]
-}
-
-const simpleElementEqualityTest: ChangeEqualityTest<Commit, act.Element> = (prev, next, prev_index, next_index) =>
+const simpleElementEqualityTest: ChangeEqualityTest<Commit, Element> = (prev, next, prev_index, next_index) =>
   prev.element.type === next.type && prev_index === next_index;
 
 /**
@@ -149,14 +87,13 @@ const simpleElementEqualityTest: ChangeEqualityTest<Commit, act.Element> = (prev
 export const calculateUpdates = (
   parentRef: CommitRef,
   commits: Commit[],
-  node: act.Node
+  node: Node
 ): [CommitRef[], Update[]] => {
-  const elements = act.convertNodeToElements(node);
+  const elements = convertNodeToElements(node);
 
   // Fast exit if there is only one node
-  if (!Array.isArray(node) && commits.length <= 1 && elements.length == 1) {
-    //return calculateFastUpdate(parentRef, commits[0], node)
-  }
+  if (commits.length <= 1 && elements.length == 1)
+    return calculateFastUpdate(parentRef, commits[0], elements[0])
 
   const change_report = calculateChangedElements(commits, elements, simpleElementEqualityTest);
 
@@ -164,11 +101,10 @@ export const calculateUpdates = (
     const prevIndex = change_report.nextToPrev[index];
     const prev = prevIndex !== -1 ? commits[prevIndex] : null;
 
-    const id = (prev && prev.id) || act.createId();
-    const path = (prev && prev.path) || [...parentRef.path, id];
-
-    const ref = prev || { id, path };
-    return Update.existing(ref, prev, next);
+    if (!prev)
+      return Update.fresh(CommitRef.new(parentRef.path), next);
+    
+    return Update.existing(prev, next);
   });
   const removed = change_report.removed.map((index) => {
     const prev = commits[index];
@@ -180,6 +116,6 @@ export const calculateUpdates = (
   return [refs, updates];
 };
 
-export const isOnTarget = (ref: CommitRef, target: CommitRef) => {
-
+export const isDescendant = (anscestor: CommitRef, descendant: CommitRef) => {
+  return descendant.path.includes(anscestor.id);
 }

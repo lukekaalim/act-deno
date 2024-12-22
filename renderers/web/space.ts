@@ -41,10 +41,15 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
     link(el, parent) {
       (parent || root).appendChild(el);
     },
-    sort(el, children) {
+    sort(el, newChildren) {
       if (el instanceof Text)
         return;
-      el.replaceChildren(...children);
+      if (newChildren.length < 2)
+        return;
+
+      for (let i = 0; i < newChildren.length; i++)
+        if (el.children[i] !== newChildren[i])
+          el.insertBefore(newChildren[i], el.children[i])
     },
     destroy(prev) {
       if (prev.parentNode)

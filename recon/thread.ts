@@ -1,8 +1,7 @@
-import { convertNodeToElements } from "@lukekaalim/act";
+import { convertNodeToElements, createId, Node } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
 import { ComponentService } from "./component.ts";
 import { applyUpdate, DeltaSet } from "./delta.ts";
-import { act } from "./deps.ts";
 import { EffectTask } from "./effects.ts";
 import { CommitTree } from "./tree.ts";
 import { Update } from "./update.ts";
@@ -125,10 +124,10 @@ export const createThreadManager = (
     requestWork();
   }
 
-  const mount = (root: act.Node) => {
+  const mount = (root: Node) => {
     const elements = convertNodeToElements(root);
     for (const element of elements) {
-      const id = act.createId<"CommitID">();
+      const id = createId<"CommitID">();
       const ref = { id, path: [id] };
       tree.roots.add(ref);
       currentThread.pendingUpdates.push(Update.fresh(ref, element));
