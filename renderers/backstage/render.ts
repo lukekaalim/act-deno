@@ -1,6 +1,6 @@
 import { CommitTree, createReconciler } from "@lukekaalim/act-recon";
 import { RenderSpace } from "./space";
-import { act } from "./deps";
+import * as act from '@lukekaalim/act';
 
 export type ScheduleRequestFunc<ID> = (callback: () => void) => ID;
 export type ScheduleCancelFunc<ID> = (id: ID) => void;

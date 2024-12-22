@@ -1,5 +1,5 @@
-import { primitiveNodeTypes } from "@lukekaalim/act/node.ts";
-import { recon, act } from "./deps.ts";
+import * as act from '@lukekaalim/act';
+import * as recon from '@lukekaalim/act-recon';
 
 /**
  * A "RenderSpace" is a service that manages
@@ -71,7 +71,7 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
 
       const commit = tree.commits.get(id) as recon.Commit;
       // Early exit out of parent lookup if someone on the path is null;
-      if (commit.element.type === primitiveNodeTypes.null)
+      if (commit.element.type === act.primitiveNodeTypes.null)
         return { id, node: null };
 
       const node = nodeByCommit.get(id);
