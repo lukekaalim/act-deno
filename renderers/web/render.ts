@@ -1,5 +1,6 @@
-import { createWebSpace } from "./space";
-import { createRenderFunction, Scheduler } from "@lukekaalim/act-backstage";
+import { h } from "@lukekaalim/act";
+import { createWebSpace, HTML } from "./space";
+import { createRenderFunction, RenderFunction, Scheduler } from "@lukekaalim/act-backstage";
 
 const intervalScheduler: Scheduler<NodeJS.Timeout> = {
   duration: 10,
@@ -7,4 +8,5 @@ const intervalScheduler: Scheduler<NodeJS.Timeout> = {
   cancel: id => clearInterval(id),
 }
 
-export const render = createRenderFunction(intervalScheduler, createWebSpace);
+export const render: RenderFunction<HTMLElement> = (node, root) => 
+  createRenderFunction(intervalScheduler, createWebSpace)(h(HTML, {}, node), root);

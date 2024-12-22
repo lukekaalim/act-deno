@@ -12,11 +12,13 @@ export type Scheduler<ID> = {
   cancel: ScheduleCancelFunc<ID>,
 }
 
+export type RenderFunction<T> = (node: act.Node, root: T) => { stop: () => void }
+
 export const createRenderFunction = <S, T>(
   scheduler: Scheduler<S>,
   createSpace: (tree: CommitTree, root: T) => RenderSpace
-) => {
-  const render = (node: act.Node, root: T) => {
+): RenderFunction<T> => {
+  const render: RenderFunction<T> = (node: act.Node, root: T) => {
     const reconciler = createReconciler(deltas => {
       space.create(deltas).configure();
     }, () => {
@@ -42,8 +44,10 @@ export const createRenderFunction = <S, T>(
     
     reconciler.threads.mount(node);
 
-    return () => {
-      scheduler.cancel(id)
+    return {
+      stop() {
+        scheduler.cancel(id);
+      },
     }
   };
 
