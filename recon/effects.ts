@@ -1,19 +1,19 @@
-import { act } from './deps.ts';
+import { EffectCleanup, EffectConstructor, OpaqueID } from "@lukekaalim/act";
 import { WorkThread } from "./thread.ts";
 
-export type EffectID = act.OpaqueID<"EffectID">;
+export type EffectID = OpaqueID<"EffectID">;
 export type EffectTask = {
   id: EffectID,
   task: () => void,
 }
 
 export const createEffectManager = () => {
-  const cleanups = new Map<EffectID, act.EffectCleanup>();
+  const cleanups = new Map<EffectID, EffectCleanup>();
 
   const enqueueEffect = (
     thread: WorkThread,
     id: EffectID,
-    effect: act.EffectConstructor
+    effect: EffectConstructor
   ) => {
     thread.pendingEffects.push({
       id,

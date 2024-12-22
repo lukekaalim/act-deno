@@ -30,14 +30,19 @@ export type ElementType<T extends Props = EmptyProps> = null | string | symbol |
  * Generate a unique element. Each element has an internal
  * ID to quickly tell if elements are different.
  */
-export function createElement<TProps extends Props>(
-  type: ElementType<TProps>,
-  props: TProps,
+export function createElement<Type extends ElementType<any>>(
+  type: Type,
+  props: Type extends ElementType<infer X> ? X : never,
   children?: Node
 ): Element;
 export function createElement(
-  type: ElementType<EmptyProps>,
+  type: string | symbol,
   props?: Record<string, unknown>,
+  children?: Node
+): Element;
+export function createElement<Type extends Component<EmptyProps>>(
+  type: Type,
+  props?: Record<string, never>,
   children?: Node
 ): Element;
 export function createElement(

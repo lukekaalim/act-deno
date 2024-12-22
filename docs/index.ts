@@ -1,6 +1,6 @@
 import { h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
 import { hs, HTML, SVG } from '@lukekaalim/act-web';
-import { render, three, ThreeJS } from '@lukekaalim/act-three';
+import { render, three, ThreeJS, node } from '@lukekaalim/act-three';
 import { TextGeometry, FontLoader, Font } from 'three/addons';
 import fontURL from 'three/examples/fonts/helvetiker_regular.typeface.json?url';
 
@@ -70,9 +70,9 @@ const App = () => {
         h('canvas', { ref: refE, width: 300, height: 300 }),
         h(primitiveNodeTypes.null, {}, [
           h(ThreeJS, {}, [
-            h('scene', { ref: refG }, [
-              h('mesh', { ref: refC, geometry, material }),
-              h('perspectivecamera', { ref: refF, position: new three.Vector3(0, 0, 100) }),
+            h(node.scene, { ref: refG }, [
+              h(node.mesh, { ref: refC, geometry, material }),
+              h(node.perspectiveCamera, { ref: refF, position: new three.Vector3(0, 0, 100) }),
             ])
           ])
         ])
