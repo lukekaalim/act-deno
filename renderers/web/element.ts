@@ -1,4 +1,4 @@
-import { act } from "./deps";
+import * as act from '@lukekaalim/act';
 import { HTMLTagName } from "./tags";
 
 type EventMap = {
@@ -34,7 +34,7 @@ type ElementMap = {
 export const createSpiderElement = <Type extends HTMLTagName>(
   type: Type,
   props?: {
-    ref?: act.Ref<null | (Type extends keyof ElementMap ? ElementMap[Type] : HTMLElement)>,
+    ref?: act.Ref<null | HTMLElement>,
     key?: string | number,
     style?: { [key in keyof CSSStyleDeclaration]?: number | string },
     classList?: readonly (string | boolean | null | void)[],

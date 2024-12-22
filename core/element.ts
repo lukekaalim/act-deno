@@ -24,7 +24,7 @@ export type Element = {
   children: Node;
 };
 
-export type ElementType<T extends Props = EmptyProps> = string | symbol | Component<T>;
+export type ElementType<T extends Props = EmptyProps> = null | string | symbol | Component<T>;
 
 /**
  * Generate a unique element. Each element has an internal

@@ -1,25 +1,45 @@
+import * as act from '@lukekaalim/act';
+import * as recon from '@lukekaalim/act-recon';
+
 import { createSimpleRenderSpace } from '@lukekaalim/act-backstage/mod.ts';
-import { htmlTagNames } from './tags.ts';
-import { recon } from './deps.ts';
-import { primitiveNodeTypes } from '@lukekaalim/act/mod.ts';
+
 import { setProps } from './props.ts';
 
-export const createWebSpace = (document: Document = window.document) => {
-  return createSimpleRenderSpace({
-    create(element) {
-      const tag = element.type as string;
-      if (element.type === primitiveNodeTypes.string)
-        return document.createTextNode('');
-      if (!htmlTagNames.has(tag as any))
-        return null;
+export const HTML: act.Component = ({ children }) => act.h(act.primitiveNodeTypes.render, { type: 'web:html' }, children);
+export const SVG: act.Component = ({ children }) => act.h(act.primitiveNodeTypes.render, { type: 'web:svg' }, children);
 
-      return document.createElement(tag);
+export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, document: Document = window.document) => {
+  return createSimpleRenderSpace(tree, {
+    rootTypes: new Set(['web:html', 'web:svg']),
+    create(element, rootType) {
+      const tag = element.type;
+      
+      switch (typeof tag) {
+        case 'symbol': {
+          switch (tag) {
+            case act.primitiveNodeTypes.string:
+              return document.createTextNode("");
+            default:
+              return null;
+          }
+        }
+        case 'string': {
+          switch (rootType) {
+            case 'web:html':
+              return document.createElementNS('http://www.w3.org/1999/xhtml', tag);
+            case 'web:svg':
+              return document.createElementNS('http://www.w3.org/2000/svg', tag);
+          }
+        }
+        default:
+          return null;
+      }
     },
     update(el, next, prev) {
       setProps(el, next, prev);
     },
     link(el, parent) {
-      (parent || document.body).appendChild(el);
+      (parent || root).appendChild(el);
     },
     sort(el, children) {
       if (el instanceof Text)
@@ -32,5 +52,3 @@ export const createWebSpace = (document: Document = window.document) => {
     },
   });
 };
-
-export const spider = createWebSpace;

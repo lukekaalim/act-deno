@@ -1,3 +1,9 @@
 {
-  "name": "@lukekaalim/act-recon"
+  "name": "@lukekaalim/act-recon",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "mod.ts",
+  "dependencies": {
+    "@lukekaalim/act": "^3.0.0"
+  }
 }

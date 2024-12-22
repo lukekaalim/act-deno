@@ -1,10 +1,5 @@
-# Act (Deno)
+# `@lukekaalim/act`
 
-A rewrite of Act with the goals of being:
-  - Simpler Internally
-  - Typescript-first
-  - Using Deno for testing and command line tasks instead of Node
-
-## Packages
- - `@lukekaalim/act` Core Library
- - `@lukekaalim/act-reconciler` Reconciliation algrithm
+Simple react-like tree rendering library. Includes a "core" library,
+a reconciler implementation, a rendering utility library,
+a web (HTML/SVG) renderer and a three.js renderer.

@@ -7,6 +7,8 @@ export const setProps = (object: three.Object3D, props: act.Element["props"]) =>
     object.scale.copy(props.scale as three.Vector3);
   if (props.quaternion)
     object.quaternion.copy(props.quaternion as three.Quaternion);
+  if (props.rotation)
+    object.rotation.copy(props.rotation as three.Euler);
   if (props.ref)
     (props.ref as Record<string, unknown>).current = object;
   

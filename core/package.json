@@ -1,3 +1,6 @@
 {
-  "name": "@lukekaalim/act"
+  "name": "@lukekaalim/act",
+  "version": "3.0.0",
+  "type": "module",
+  "main": "mod.ts"
 }

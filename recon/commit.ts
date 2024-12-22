@@ -1,3 +1,4 @@
+import { createId } from "@lukekaalim/act";
 import { act } from "./deps.ts";
 
 /**
@@ -46,3 +47,17 @@ export const updateCommit = (
   children,
   version: act.createId(),
 });
+
+export const Commit = {
+  new(element: act.Element, path: CommitPath = [], children: CommitRef[] = []): Commit {
+    const id = createId<'CommitID'>();
+    return {
+      id,
+      path: [...path, id],
+      version: act.createId(),
+      children,
+      element,
+    }
+  },
+  update: updateCommit,
+}

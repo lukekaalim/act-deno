@@ -16,6 +16,8 @@ export const primitiveNodeTypes = {
   boolean:  Symbol("boolean-node"),
   null:     Symbol("null-node"),
   array:    Symbol("array-node"),
+
+  render:   Symbol('render'),
 } as const;
 
 export const convertNodeToElement = (node: Node): Element => {
@@ -40,4 +42,36 @@ export const convertNodeToElement = (node: Node): Element => {
     default:
       throw new UnknownElementType()
   }
+}
+
+/**
+ * Any node tree represents one or more elements
+ */
+export const convertNodeToElements = (node: Node): Element[] => {
+  const nodeArray = Array.isArray(node) ? node : [node];
+
+  return nodeArray.map(node => {
+    switch (typeof node) {
+      case 'boolean':
+        return h(primitiveNodeTypes.boolean, { value: node });
+      case 'number':
+        return h(primitiveNodeTypes.number, { value: node });
+      case 'string':
+        return h(primitiveNodeTypes.string, { value: node });
+  
+      case 'object': 
+        if (node === null)
+          return h(primitiveNodeTypes.null);
+        if (Array.isArray(node))
+          return h(primitiveNodeTypes.array, {}, node);
+        
+        return node;
+      case 'symbol':
+        return node;
+      case 'undefined':
+        throw new Error(`Undefined is not a valid act element!`);
+      default:
+        throw new UnknownElementType()
+    }
+  })
 }

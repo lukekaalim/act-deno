@@ -1,3 +1,11 @@
 {
-  "name": "@lukekaalim/act-web"
+  "name": "@lukekaalim/act-web",
+  "version": "3.0.0",
+  "type": "module",
+  "main": "mod.ts",
+  "dependencies": {
+    "@lukekaalim/act": "^3.0.0",
+    "@lukekaalim/act-recon": "^1.0.0",
+    "@lukekaalim/act-backstage": "^1.0.0"
+  }
 }

@@ -10,10 +10,12 @@ export type ChangeReport = {
   nextToPrev: number[],
 };
 
+export type ChangeEqualityTest<Prev, Next> = (prev: Prev, next: Next, prevIndex: number, nextIndex: number) => boolean;
+
 export const calculateChangedElements = <Prev, Next>(
   prevs: Prev[],
   nexts: Next[],
-  isEqual: (prev: Prev, next: Next, prevIndex: number, nextIndex: number) => boolean,
+  isEqual: ChangeEqualityTest<Prev, Next>,
 ): ChangeReport => {
   const report: ChangeReport = {
     created: [],

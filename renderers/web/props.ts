@@ -1,4 +1,4 @@
-import { act, recon } from "./deps";
+import * as act from '@lukekaalim/act';
 
 export const setProps = (
   node: HTMLElement | SVGElement | Text,
@@ -10,12 +10,35 @@ export const setProps = (
     setHTMLElementProps(node, next, prev);
   }
   if (node instanceof SVGElement) {
-
+    setSVGElementProps(node, next, prev);
   }
   if (node instanceof Text) {
     if (node.textContent !== next.props.value)
       node.textContent = next.props.value as string
   }
+}
+
+export const setSVGElementProps = (
+  node: SVGElement,
+  
+  next: act.Element,
+  prev: null | act.Element
+) => {
+  setPropObject(node as any, next.props, prev && prev.props, (name, next, prev) => {
+    if (name.startsWith('on')) {
+      const eventName = name.slice(2).toLocaleLowerCase();
+      setEventProp(node as any, eventName, next, prev);
+      return true;
+    }
+    switch (name) {
+      case 'ref':
+        (next as any).current = node;
+        return true;
+      default:
+        node.setAttribute(name, next as any);
+        return true;
+    };
+  });
 }
 
 export const setHTMLElementProps = (

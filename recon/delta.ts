@@ -1,102 +1,100 @@
-import { convertNodeToElement } from "@lukekaalim/act/node.ts";
 import { Commit, CommitID, CommitRef, updateCommit } from "./commit.ts";
-import { StateManager } from "./state.ts";
 import { WorkThread } from "./thread.ts";
 import { Update, calcUpdates, calculateUpdates, findChildCommits } from "./update.ts";
 import { act } from "./deps.ts";
-import { ContextManager } from "./context.ts";
+import { CommitTree } from "./tree.ts";
+import { ComponentService } from "./component.ts";
 
-export type Delta = {
-  ref: CommitRef,
+export type CreateDelta = { ref: CommitRef, next: Commit };
+export type UpdateDelta = { ref: CommitRef, next: Commit, prev: Commit };
+export type RemoveDelta = { ref: CommitRef, prev: Commit };
+export type SkipDelta =   { ref: CommitRef, next: Commit };
 
-  prev: null | Commit,
-  next: null | Commit,
+
+export type DeltaSet = {
+  created: CreateDelta[],
+  updated: UpdateDelta[],
+  skipped: SkipDelta[],
+  removed: RemoveDelta[],
 };
 
-/** TODO: come up with better name */
-export type TreePatch = {
-  created: { ref: CommitRef, next: Commit },
-  updated: { ref: CommitRef, next: Commit, prev: Commit },
-  removed: { ref: CommitRef, prev: Commit },
-};
 
-export const createDeltaManager = (
-  stateManager: StateManager,
-  commits: Map<CommitID, Commit>,
-  contextManager: ContextManager | null = null,
+/**
+ * Given an Update, compute if there is any
+ * change to the tree (a "Delta"), and if more updates
+ * are needed to complete this work, appending them to
+ * the work thread
+ * */
+export const applyUpdate = (
+  tree: CommitTree,
+  comp: ComponentService,
+  thread: WorkThread,
+  { next, prev, ref, targets }: Update
 ) => {
   /**
-   * Given an Update, compute if there is any
-   * change to the tree (a "Delta"), and if more updates
-   * are needed to complete this work, appending them to
-   * the work thread
+   * A change is considered identical if the "next element"
+   * is the same as the "prev element" - its the same as there
+   * being no change at all.
    * */
-  const applyUpdate = (
-    thread: WorkThread,
-    { next, prev, ref, targets }: Update
-  ) => {
-    /**
-     * A change is considered identical if the "next element"
-     * is the same as the "prev element" - its the same as there
-     * being no change at all.
-     * */
-    const identicalChange = (next && prev && next.id === prev.element.id);
-    /**
-     * If we're "on a target's path", then we have to continue rendering.
-     */
-    const requiredChange = !!targets.find(target => target.path.includes(ref.id));
-    const requiresRerender = targets.some(target => target.id === ref.id);
+  const identicalChange = (next && prev && next.id === prev.element.id);
+  /**
+   * If we're "on a target's path", then we have to continue rendering.
+   */
+  const requiredChange = !!targets.find(target => target.path.includes(ref.id));
+  const requiresRerender = targets.some(target => target.id === ref.id);
 
-    if (identicalChange && !requiredChange)
-      return;
+  if (identicalChange && !requiredChange)
+    return;
 
-    const prevChildren = prev && prev.children
-      .map(c => commits.get(c.id) as Commit) || [];
+  const prevChildren = prev && prev.children
+    .map(c => tree.commits.get(c.id) as Commit) || [];
 
-    // If we have a "Next", then this is a request to either
-    // Create or Update a commit.
-    if (next) {
-      if (identicalChange && !requiresRerender) {
-        const updates = prevChildren.map(prev => ({ ref: prev, prev, next: prev.element, targets }));  
-        thread.pendingUpdates.push(...updates);
-        const commit = updateCommit(ref, prev.element, prev.children);
-        thread.completedDeltas.push({ ref, prev, next: commit });
-        return;
-      }
-      const contextTargets = contextManager && contextManager.processContextElement(next, ref.id) || [];
-      const childNode = stateManager.calculateCommitChildren(thread, next, ref);
+  // If we have a "Next", then this is a request to either
+  // Create or Update a commit.
+  if (next) {
 
-      const nodes = Array.isArray(childNode) ? childNode : [childNode];
-      const elements = nodes.map(act.convertNodeToElement);
-
-      const childCommits = findChildCommits(ref, prevChildren, elements);
-      const updates = calcUpdates(childCommits, [...targets, ...contextTargets]);
-      const childRefs = childCommits.newOrPersisted.map(n => n.ref);
-
-      const commit = updateCommit(ref, next, childRefs);
-
-      thread.completedDeltas.push({ ref, prev, next: commit });
+    // skip the change
+    if (identicalChange && !requiresRerender) {
+      const updates = prevChildren.map(prev => ({ ref: prev, prev, next: prev.element, targets }));  
       thread.pendingUpdates.push(...updates);
+      const commit = Commit.update(ref, prev.element, prev.children);
+      thread.deltas.skipped.push({ ref, next: commit });
       return;
     }
-    // If we have a prev, but no next, then this is a requets to
-    // delete this commit. We still have emit "delete" updates
-    // as well for all children of this node too.
-    else if (prev && !next) {
-      const [, updates] = calculateUpdates(ref, prevChildren, []);
-      stateManager.clearCommitState(thread, ref);
-      // No need to reclculate targets - no more re-rendering
-      // will happen on this set of updates.
 
-      thread.completedDeltas.push({ ref: prev, prev, next: null });
-      thread.pendingUpdates.push(...updates);
-      return;
-    } else {
-      throw new Error(`No prev, no next, did this commit ever exist?`)
-    }
-  };
+    const contextTargets = comp.context.processContextElement(next, ref.id) || [];
+    const childNode = comp.state.calculateCommitChildren(thread, next, ref);
 
-  return { applyUpdate }
+    const elements = act.convertNodeToElements(childNode);
+
+    const childCommits = findChildCommits(ref, prevChildren, elements);
+    const updates = calcUpdates(childCommits, [...targets, ...contextTargets]);
+    
+    const childRefs = childCommits.newOrPersisted.map(n => n.ref);
+
+    const commit = Commit.update(ref, next, childRefs);
+
+    if (prev)
+      thread.deltas.updated.push({ ref, prev, next: commit });
+    else
+      thread.deltas.created.push({ ref, next: commit });
+
+    thread.pendingUpdates.push(...updates);
+    return;
+  }
+  // If we have a prev, but no next, then this is a requets to
+  // delete this commit. We still have emit "delete" updates
+  // as well for all children of this node too.
+  else if (prev && !next) {
+    const [, updates] = calculateUpdates(ref, prevChildren, []);
+    comp.state.clearCommitState(thread, ref);
+    // No need to reclculate targets - no more re-rendering
+    // will happen on this set of updates.
+
+    thread.deltas.removed.push({ ref: prev, prev });
+    thread.pendingUpdates.push(...updates);
+    return;
+  } else {
+    throw new Error(`No prev, no next, did this commit ever exist?`)
+  }
 };
-
-export type DeltaManager = ReturnType<typeof createDeltaManager>;
