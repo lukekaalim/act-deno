@@ -1,4 +1,4 @@
-import { Element, primitiveNodeTypes } from "@lukekaalim/act";
+import { Element, Node, primitiveNodeTypes, providerNodeType } from "@lukekaalim/act";
 import { CommitRef } from "./commit";
 import { EffectTask } from "./effects";
 import { ComponentService } from "./component";
@@ -18,11 +18,18 @@ export type ElementOutput = {
 export const renderElement = (element: Element, ref: CommitRef, comp: ComponentService): ElementOutput => {
   switch (typeof element.type) {
     case 'string':
+      return { child: element.children, boundary: null, effects: null, targets: null }
     case 'symbol':
       switch (element.type) {
-        
+        case providerNodeType:
+          const targets = comp.context.processContextElement(element, ref.id);
+          if (targets)
+            return { child: element.children, boundary: null, effects: null, targets }
+        default:
+          return { child: element.children, boundary: null, effects: null, targets: null }
       }
     case 'function':
+      comp.state.calculateCommitChildren();
     default:
       return output
   }
