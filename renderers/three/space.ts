@@ -1,10 +1,10 @@
 import { createSimpleRenderSpace } from "@lukekaalim/act-backstage/mod.ts"
 import { act, recon, three } from "./deps"
 import { setProps } from "./props";
-import { primitiveNodeTypes } from "@lukekaalim/act";
+import { primitiveNodeTypes, renderNodeType } from "@lukekaalim/act";
 import { getElementHandler } from "./elements";
 
-export const ThreeJS: act.Component = ({ children }) => act.h(primitiveNodeTypes.render, { type: 'threejs' }, children)
+export const ThreeJS: act.Component = ({ children }) => act.h(renderNodeType, { type: 'threejs' }, children)
 
 export const createFinaleSpace = (tree: recon.CommitTree) => {
   return createSimpleRenderSpace(tree, {

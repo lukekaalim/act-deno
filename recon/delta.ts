@@ -7,7 +7,7 @@ import { ComponentService } from "./component.ts";
 export type CreateDelta = { ref: CommitRef, next: Commit };
 export type UpdateDelta = { ref: CommitRef, next: Commit, prev: Commit };
 export type RemoveDelta = { ref: CommitRef, prev: Commit };
-export type SkipDelta =   { ref: CommitRef, next: Commit };
+export type SkipDelta =   { next: Commit };
 
 
 export type DeltaSet = {
@@ -16,7 +16,6 @@ export type DeltaSet = {
   skipped: SkipDelta[],
   removed: RemoveDelta[],
 };
-
 
 /**
  * Given an Update, compute if there is any
@@ -38,29 +37,35 @@ export const applyUpdate = (
   const identicalChange = (next && prev && next.id === prev.element.id);
   /**
    * If we're "on a target's path", then we have to continue rendering.
+   * (but if we don't need to )
    */
   const requiredChange = !!targets.find(target => target.path.includes(ref.id));
+  /**
+   * if we _are_ a target, then we _must_ re-render
+   */
   const requiresRerender = targets.some(target => target.id === ref.id);
 
-  if (identicalChange && !requiredChange)
+  const stopUpdating = identicalChange && !requiredChange;
+  const skipThisUpdate = identicalChange && !requiresRerender;
+
+  if (stopUpdating)
     return;
 
   const prevChildren = prev && prev.children
     .map(c => tree.commits.get(c.id) as Commit) || [];
 
+  if (skipThisUpdate) {
+    const updates = prevChildren.map(prev => Update.skip(prev, targets));  
+    thread.pendingUpdates.push(...updates);
+
+    const commit = Commit.version(prev);
+    thread.deltas.skipped.push({ next: commit });
+    return;
+  }
+
   // If we have a "Next", then this is a request to either
   // Create or Update a commit.
   if (next) {
-
-    // skip the change
-    if (identicalChange && !requiresRerender) {
-      const updates = prevChildren.map(prev => ({ ref: prev, prev, next: prev.element, targets }));  
-      thread.pendingUpdates.push(...updates);
-      const commit = Commit.update(ref, prev.element, prev.children);
-      thread.deltas.skipped.push({ ref, next: commit });
-      return;
-    }
-
     const contextTargets = comp.context.processContextElement(next, ref.id) || [];
     const nextTargets = [...contextTargets, ...targets];
 

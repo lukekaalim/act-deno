@@ -5,8 +5,8 @@ import { createSimpleRenderSpace } from '@lukekaalim/act-backstage/mod.ts';
 
 import { setProps } from './props.ts';
 
-export const HTML: act.Component = ({ children }) => act.h(act.primitiveNodeTypes.render, { type: 'web:html' }, children);
-export const SVG: act.Component = ({ children }) => act.h(act.primitiveNodeTypes.render, { type: 'web:svg' }, children);
+export const HTML: act.Component = ({ children }) => act.h(act.renderNodeType, { type: 'web:html' }, children);
+export const SVG: act.Component = ({ children }) => act.h(act.renderNodeType, { type: 'web:svg' }, children);
 
 export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, document: Document = window.document) => {
   return createSimpleRenderSpace(tree, {

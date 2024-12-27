@@ -16,8 +16,6 @@ export const primitiveNodeTypes = {
   boolean:  Symbol("boolean-node"),
   null:     Symbol("null-node"),
   array:    Symbol("array-node"),
-
-  render:   Symbol('render'),
 } as const;
 
 /**

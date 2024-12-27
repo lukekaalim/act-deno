@@ -66,4 +66,8 @@ export const Commit = {
     }
   },
   update: updateCommit,
+  version: (commit: Commit): Commit => ({
+    ...commit,
+    version: createId(),
+  })
 }

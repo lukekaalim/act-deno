@@ -37,6 +37,9 @@ export const Update = {
   }),
   distant: (root: Commit, targets: CommitRef[]): Update => ({
     ref: root, next: root.element, prev: root, targets,
+  }),
+  skip: (prev: Commit, targets: CommitRef[]): Update => ({
+    ref: prev, next: prev.element, prev, targets,
   })
 }
 

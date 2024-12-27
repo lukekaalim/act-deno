@@ -97,7 +97,7 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
       const needsReorder = new Set<recon.CommitID>();
 
       for (const delta of deltas.created) {
-        if (delta.next.element.type === act.primitiveNodeTypes.render) {
+        if (delta.next.element.type === act.renderNodeType) {
           // add render boundary
           rootIds.add(delta.ref.id);
           continue;

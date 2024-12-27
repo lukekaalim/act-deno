@@ -1,6 +1,7 @@
+import { Node } from "@lukekaalim/act";
 import { CommitRef } from "./commit";
 import { ContextManager, createContextManager } from "./context"
-import { createEffectManager, EffectManager } from "./effects"
+import { createEffectManager, EffectManager, EffectTask } from "./effects"
 import { createStateManager, StateManager } from "./state"
 
 export type ComponentService = {
