@@ -18,6 +18,7 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
         case 'symbol': {
           switch (tag) {
             case act.primitiveNodeTypes.string:
+            case act.primitiveNodeTypes.number:
               return document.createTextNode("");
             default:
               return null;

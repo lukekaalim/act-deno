@@ -5,6 +5,5 @@ export * from './algorithms.ts';
 export * from './update.ts';
 export * from './thread.ts';
 export * from './tree.ts';
-export * from './effects.ts';
 
 export * from './reconciler.ts';

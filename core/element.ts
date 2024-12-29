@@ -48,13 +48,13 @@ export function createElement<Type extends Component<EmptyProps>>(
 export function createElement(
   type: ElementType,
   props?: Record<string, unknown>,
-  children?: Node
+  children: Node = []
 ): Element {
   return {
     id: createId(),
     type,
     props: props || {},
-    children: children || [],
+    children,
   } as Element;
 }
 

@@ -1,8 +1,8 @@
-
-import { createThreadManager, WorkThread } from "./thread";
+import { createThreadManager } from "./thread";
 import { CommitTree } from "./tree";
-import { ComponentService } from "./component";
 import { DeltaSet } from "./delta";
+import { createElementService } from "./element";
+import { EffectTask } from "./state";
 
 /**
  * A reconciler links all the relevant subsystems together.
@@ -16,21 +16,21 @@ export const createReconciler = (
   requestWork: () => void,
 ) => {
   const tree = CommitTree.new();
-  const components = ComponentService.create(ref => {
-    threads.request(ref);
-  });
+  const elements = createElementService(ref => threads.request(ref));
 
-  const threads = createThreadManager(components, tree, requestWork, (deltas, effects) => {
+  const onThreadComplete = (deltas: DeltaSet, effects: EffectTask[]) => {
     render(deltas);
     
     // immedialty execute all side effects
     for (const effect of effects)
-      effect.task();
-  });
+      effect.func();
+  }
+
+  const threads = createThreadManager(elements, tree, requestWork, onThreadComplete);
 
   return {
     threads,
-    components,
+    elements,
     tree,
   }
 }

@@ -1,10 +1,10 @@
 import { convertNodeToElements, createId, Node } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
-import { ComponentService } from "./component.ts";
-import { applyUpdate, DeltaSet } from "./delta.ts";
-import { EffectTask } from "./effects.ts";
+import { DeltaSet } from "./delta.ts";
 import { CommitTree } from "./tree.ts";
-import { Update } from "./update.ts";
+import { calculateUpdates, isDescendant, Update } from "./update.ts";
+import { ElementService } from "./element.ts";
+import { EffectTask } from "./state.ts";
 
 /**
  * A WorkThread is a mutable data struture that
@@ -38,7 +38,7 @@ export const WorkThread = {
 }
 
 export const createThreadManager = (
-  comp: ComponentService,
+  elementService: ElementService,
   tree: CommitTree,
   requestWork: () => void,
   onThreadComplete: (deltas: DeltaSet, effects: EffectTask[]) => unknown = _ => {},
@@ -50,7 +50,7 @@ export const createThreadManager = (
   const run = () => {
     const update = currentThread.pendingUpdates.pop();
     if (update) {
-      applyUpdate(tree, comp, currentThread, update);
+      applyUpdate(currentThread, update);
     }
   }
 
@@ -81,7 +81,7 @@ export const createThreadManager = (
       tree.commits.set(delta.ref.id, delta.next);
     
     for (const delta of currentThread.deltas.skipped)
-      tree.commits.set(delta.ref.id, delta.next);
+      tree.commits.set(delta.next.id, delta.next);
     
     for (const delta of currentThread.deltas.updated)
       tree.commits.set(delta.ref.id, delta.next);
@@ -109,10 +109,16 @@ export const createThreadManager = (
 
   const request = (target: CommitRef) => {
     if (currentThread.started) {
-      // TODO: add new requests to the current thread
-      // if they are compatible instead of scheduling another
-      // thread.
-      pendingUpdateTargets.set(target.id, target);
+      const updateOnPath = currentThread.pendingUpdates.find(update => {
+        return isDescendant(update.ref, target)
+      })
+      if (updateOnPath) {
+        if (updateOnPath.targets.some(target => target.id === target.id)) {
+          updateOnPath.targets.push(target);
+        }
+      } else {
+        pendingUpdateTargets.set(target.id, target);
+      }
     } else {
       const roots = CommitTree.getRootCommits(tree);
       for (const root of roots) {
@@ -135,6 +141,59 @@ export const createThreadManager = (
 
     requestWork();
   }
+
+  const applyUpdate = (thread: WorkThread, { next, prev, ref, targets }: Update) => {
+    const identicalChange = (next && prev && next.id === prev.element.id);
+
+    const prevChildren = prev && prev.children
+      .map(c => tree.commits.get(c.id) as Commit) || [];
+
+    if (identicalChange) {
+      const isOnTargetPath = targets.some(target => target.path.includes(ref.id));
+      if (!isOnTargetPath)
+        return;
+
+      const isSpecificallyTarget = targets.some(target => target.id === ref.id);
+
+      if (!isSpecificallyTarget) {
+        const updates = prevChildren.map(prev => Update.skip(prev, targets));  
+        thread.pendingUpdates.push(...updates);
+    
+        const commit = Commit.version(prev);
+        thread.deltas.skipped.push({ next: commit });
+        return;
+      }
+    }
+    if (next) {
+      const output = elementService.render(next, ref);
+  
+      const [childRefs, updates] = calculateUpdates(ref, prevChildren, output.child);
+
+      thread.pendingEffects.push(...output.effects);
+      thread.pendingUpdates.push(...updates.map(update => ({
+        ...update,
+        targets: output.targets.filter(t => isDescendant(update.ref, t))
+      })));
+  
+      const commit = Commit.update(ref, next, childRefs);
+  
+      if (prev)
+        thread.deltas.updated.push({ ref, prev, next: commit });
+      else
+        thread.deltas.created.push({ ref, next: commit });
+  
+      return;
+    }
+    else if (prev && !next) {
+      const output = elementService.clear(prev);
+      thread.deltas.removed.push({ ref: prev, prev });
+      thread.pendingUpdates.push(...prevChildren.map(prev => Update.remove(prev)));
+      thread.pendingEffects.push(...output.effects);
+      return;
+    } else {
+      throw new Error(`No prev, no next, did this commit ever exist?`)
+    }
+  };
 
   return { work, request, mount }
 };

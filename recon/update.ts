@@ -2,6 +2,10 @@ import { convertNodeToElements, createId, Element, Node } from "@lukekaalim/act"
 import { calculateChangedElements, ChangeEqualityTest } from "./algorithms.ts";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
 
+/**
+ * A request to transform part of a tree specified by
+ * the "ref"
+ */
 export type Update = {
   /**
    * The commit that should evaluate this

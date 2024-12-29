@@ -60,6 +60,7 @@ const App = () => {
         hs('h3', {}, `Hello, ${name}!`),
         hs('p', {}, `Hello, ${name}!`),
         hs('div', { ref: refB }),
+        h(Ticker),
         h(primitiveNodeTypes.null, {}, [
           h(HTML, {}, h('p', { ref }, 'A child')),
         ]),
@@ -80,6 +81,17 @@ const App = () => {
     ])
   ]
 };
+
+const Ticker = () => {
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    console.log('mount')
+    return () => console.log('unmount')
+  }, [counter])
+
+  return  hs('button', { onClick: () => (setCounter(c => c + 1), setCounter(c => c + 1)) }, counter);
+}
 
 const main = () => {
   render(h(HTML, {}, h(App)), document.body);
