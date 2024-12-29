@@ -1,4 +1,6 @@
 {
+  "name": "docs",
+  "private": true,
   "devDependencies": {
     "vite": "^6.0.4"
   },
