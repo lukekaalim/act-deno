@@ -16,7 +16,7 @@ export const createReconciler = (
   requestWork: () => void,
 ) => {
   const tree = CommitTree.new();
-  const elements = createElementService(ref => threads.request(ref));
+  const elements = createElementService(tree, ref => threads.request(ref));
 
   const onThreadComplete = (deltas: DeltaSet, effects: EffectTask[]) => {
     render(deltas);

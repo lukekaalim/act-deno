@@ -61,7 +61,7 @@ export const loadHooks = (
     if (depsChanges) {
       output.effects.push({
         id: effectId,
-        commitId: ref.id,
+        ref,
         func() {
           const prevCleanup = state.cleanups.get(effectId);
           if (prevCleanup) {

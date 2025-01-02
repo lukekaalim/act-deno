@@ -59,7 +59,7 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
     if (node && !ignoreFirst)
       return [node];
     const commit = tree.commits.get(id);
-    if (!commit)
+    if (!commit || commit.suspended)
       return [];
     if (commit.element.type === act.primitiveNodeTypes.null)
       return [];
@@ -143,8 +143,24 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
           if (args.update) {
             for (const delta of deltas.updated) {
               const node = nodeByCommit.get(delta.ref.id);
-              if (node)
-                args.update(node, delta.next.element, delta.prev.element);
+              if (!node)
+                continue;
+              args.update(node, delta.next.element, delta.prev.element);
+
+              if (delta.prev.suspended !== delta.next.suspended) {
+                const parent = findParent(delta.ref);
+                const parentNode = parent && parent.node;
+                if (parentNode) {
+                  needsReorder.add(parent.id)
+                }
+                console.log('altering suspention type', node, parentNode, delta.next)
+                if (!parent || parentNode) {
+                  if (!delta.next.suspended && args.link)
+                    args.link(node, parentNode);
+                  if (delta.next.suspended && args.unlink)
+                    args.unlink(node, parentNode);
+                }
+              }
             }
             for (const delta of deltas.created) {
               const node = nodeByCommit.get(delta.ref.id);
@@ -152,7 +168,6 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
                 args.update(node, delta.next.element, null);
             }
           }
-
           for (const delta of deltas.removed) {
             const prevResult = nodeByCommit.get(delta.ref.id);
             if (prevResult) {

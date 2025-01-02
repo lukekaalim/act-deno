@@ -27,23 +27,31 @@ export type Update = {
    * concequence of this update.
    */
   targets: CommitRef[];
+
+  suspend: boolean,
 };
 
 export const Update = {
   fresh: (ref: CommitRef, next: Element): Update => ({
-    ref, next, prev: null, targets: []
+    ref, next, prev: null, targets: [], suspend: false,
   }),
   existing: (prev: Commit, next: Element): Update => ({
-    ref: prev, next, prev, targets: [],
+    ref: prev, next, prev, targets: [], suspend: false,
   }),
   remove: (prev: Commit): Update => ({
-    ref: prev, next: null, prev, targets: [],
+    ref: prev, next: null, prev, targets: [], suspend: false,
   }),
   distant: (root: Commit, targets: CommitRef[]): Update => ({
-    ref: root, next: root.element, prev: root, targets,
+    ref: root, next: root.element, prev: root, targets, suspend: false,
   }),
   skip: (prev: Commit, targets: CommitRef[]): Update => ({
-    ref: prev, next: prev.element, prev, targets,
+    ref: prev, next: prev.element, prev, targets, suspend: false,
+  }),
+  target: (prev: Commit): Update => ({
+    ref: prev, next: prev.element, prev, targets: [prev], suspend: false,
+  }),
+  suspend: (prev: Commit): Update => ({
+    ref: prev, next: prev.element, prev, targets: [], suspend: true,
   })
 }
 

@@ -6,6 +6,7 @@ import { Commit, CommitID, CommitRef } from "./commit";
 import { loadHooks } from "./hooks";
 import { ContextState } from "./context";
 import { ComponentState, EffectID, EffectTask } from "./state";
+import { CommitTree } from "./tree";
 
 /**
  * When processing an element, it may produce additional
@@ -14,14 +15,14 @@ import { ComponentState, EffectID, EffectTask } from "./state";
  */
 export type ElementOutput = {
   child: Node,
-  boundary: null | unknown,
+  reject: null | unknown,
   effects: EffectTask[],
   targets: CommitRef[],
 };
 export const ElementOutput = {
   new: (child: Node): ElementOutput => ({
     child,
-    boundary: null,
+    reject: null,
     effects: [],
     targets: [],
   })
@@ -30,11 +31,17 @@ export const ElementOutput = {
 export type ElementService = {
   render(element: Element, ref: CommitRef): ElementOutput,
   clear(ref: Commit): ElementOutput,
+
+  boundary: Map<CommitID, unknown>,
 }
 
-export const createElementService = (requestRender: (ref: CommitRef) => void): ElementService => {
+export const createElementService = (
+  tree: CommitTree,
+  requestRender: (ref: CommitRef) => void
+): ElementService => {
   const contextStates = new Map<CommitID, ContextState<unknown>>();
   const componentStates = new Map<CommitID, ComponentState>();
+  const boundaryValues = new Map<CommitID, unknown>();
 
   const render = (
     element: Element,
@@ -65,6 +72,9 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
             break;
           }
           case boundaryType: {
+            const boundaryValue = boundaryValues.get(ref.id);
+            if (boundaryValue)
+              output.reject = tree.commits.get(ref.id) as Commit;
             // do something on a boundary node
             break;
           }
@@ -94,7 +104,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
           output.child = element.type(props);
         } catch (thrownValue) {
           output.child = null;
-          output.boundary = thrownValue;
+          output.reject = thrownValue;
         }
         break;
       }
@@ -126,7 +136,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
           const id = componentState.effects.get(index) as EffectID;
           output.effects.push({
             id,
-            commitId: prev.id,
+            ref: prev,
             func: () => {
               cleanup();
             }
@@ -140,5 +150,5 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
     return output;
   }
 
-  return { render, clear };
+  return { render, clear, boundary: boundaryValues };
 }

@@ -40,7 +40,12 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
       setProps(el, next, prev);
     },
     link(el, parent) {
+      console.log('attaching', el, 'to', (parent || root));
       (parent || root).appendChild(el);
+    },
+    unlink(el, parent) {
+      console.log('detaching', el, 'to', (parent || root));
+      (parent || root).removeChild(el);
     },
     sort(el, newChildren) {
       if (el instanceof Text)

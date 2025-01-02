@@ -1,4 +1,4 @@
-import { h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
+import { Boundary, boundaryType, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
 import { hs, HTML, SVG } from '@lukekaalim/act-web';
 import { render, three, ThreeJS, node } from '@lukekaalim/act-three';
 import { TextGeometry, FontLoader, Font } from 'three/addons';
@@ -49,6 +49,11 @@ const App = () => {
     return new TextGeometry(`Hello, ${name}!`, { depth: 1, font, size: 5 }).center()
   }, [name])
 
+  const [boundaryValue, setBoundaryValue] = useState<unknown>(null);
+  const [boundaryClearer, setBoundaryClearer] = useState(() => () => {});
+
+  console.log(boundaryValue, boundaryClearer)
+
   return [
     hs('div', {}, [
       hs('input', {
@@ -56,11 +61,18 @@ const App = () => {
         onInput: e => setName((e.currentTarget as HTMLInputElement).value),
         value: name
       }),
+      hs('button', { onClick: () => boundaryClearer() }, 'Clear Boundary'),
       !!name && [
         hs('h3', {}, `Hello, ${name}!`),
         hs('p', {}, `Hello, ${name}!`),
         hs('div', { ref: refB }),
-        h(Ticker),
+        h(Boundary, { onValue: (value, clear) => {
+          debugger;
+          setBoundaryClearer(clear);
+          setBoundaryValue(value)
+         } }, [
+          h(Ticker),
+        ]),
         h(primitiveNodeTypes.null, {}, [
           h(HTML, {}, h('p', { ref }, 'A child')),
         ]),
@@ -89,6 +101,11 @@ const Ticker = () => {
     console.log('mount')
     return () => console.log('unmount')
   }, [counter])
+
+  if (counter > 2) {
+    console.error('OH NO')
+    throw new Error('ouch!')
+  }
 
   return  hs('button', { onClick: () => (setCounter(c => c + 1), setCounter(c => c + 1)) }, counter);
 }
