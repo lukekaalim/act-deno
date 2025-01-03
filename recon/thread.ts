@@ -1,10 +1,12 @@
-import { boundaryType, convertNodeToElements, createId, Node } from "@lukekaalim/act";
+import { boundaryType, convertNodeToElements, createId, errorBoundaryType, Node } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
 import { DeltaSet } from "./delta.ts";
 import { CommitTree } from "./tree.ts";
 import { calculateUpdates, isDescendant, Update } from "./update.ts";
 import { ElementService } from "./element.ts";
 import { EffectTask } from "./state.ts";
+import { ErrorBoundaryState } from "./errors.ts";
+import { first } from "./algorithms.ts";
 
 /**
  * A WorkThread is a mutable data struture that
@@ -165,14 +167,6 @@ export const createThreadManager = (
     const prevChildren = prev && prev.children
       .map(c => tree.commits.get(c.id) as Commit) || [];
 
-    if (suspend && prev) {
-      const commit = Commit.suspend(prev);
-      const updates = prevChildren.map(prev => Update.suspend(prev))
-      thread.deltas.updated.push({ ref: prev, prev: prev, next: commit });
-      thread.pendingUpdates.push(...updates);
-      return console.log('suspending node', prev);
-    }
-
     if (identicalChange) {
       const isOnTargetPath = targets.some(target => target.path.includes(ref.id));
       if (!isOnTargetPath)
@@ -193,22 +187,34 @@ export const createThreadManager = (
       const output = elementService.render(next, ref);
       const { reject } = output;
       if (reject) {
-        if (reject.id === ref.id) {
-          const commit = Commit.update(ref, next, )
-          thread.deltas.updated.push({ prev });
-          return;
+        const errorBoundary = first(ref.path, id => {
+          if (tree.commits.has(id))
+            return tree.commits.get(id) as Commit;
+          // We also might have just created the boundary
+          const freshBoundary = thread.deltas.created.find(c => c.ref.id === id);
+          if (freshBoundary)
+            return freshBoundary.next;
+          return null;
+        })
+
+        if (errorBoundary) {
+          if (!tree.errors.has(errorBoundary.id))
+            tree.errors.set(errorBoundary.id, ErrorBoundaryState.create(errorBoundary.id))
+          const boundaryState = tree.errors.get(errorBoundary.id) as ErrorBoundaryState;
+      
+          thread.deltas.created = thread.deltas.created.filter(d => !isDescendant(errorBoundary, d.ref));
+          thread.deltas.updated = thread.deltas.updated.filter(d => !isDescendant(errorBoundary, d.ref));
+          thread.deltas.removed = thread.deltas.removed.filter(d => !isDescendant(errorBoundary, d.ref));
+          thread.deltas.skipped = thread.deltas.skipped.filter(d => !isDescendant(errorBoundary, d.next));
+          thread.pendingUpdates = thread.pendingUpdates.filter(update => !isDescendant(errorBoundary, update.ref))
+          thread.pendingEffects = thread.pendingEffects.filter(effect => !isDescendant(errorBoundary, effect.ref))
+
+          thread.boundaryNotifications.add();
+          
+          thread.pendingUpdates.push();
+          return console.log('rewinding to boundary', next);
+            
         }
-        thread.deltas.created = thread.deltas.created.filter(d => !isDescendant(reject, d.ref));
-        thread.deltas.updated = thread.deltas.updated.filter(d => !isDescendant(reject, d.ref));
-        thread.deltas.removed = thread.deltas.removed.filter(d => !isDescendant(reject, d.ref));
-        thread.deltas.skipped = thread.deltas.skipped.filter(d => !isDescendant(reject, d.next));
-        thread.pendingUpdates = thread.pendingUpdates.filter(update => !isDescendant(reject, update.ref))
-        thread.pendingEffects = thread.pendingEffects.filter(effect => !isDescendant(reject, effect.ref))
-
-        thread.boundaryNotifications.add(reject.id);
-
-        thread.pendingUpdates.push(Update.suspend(reject));
-        return console.log('rewinding to boundary', next);
       }
   
       const [childRefs, updates] = calculateUpdates(ref, prevChildren, output.child);
@@ -225,6 +231,9 @@ export const createThreadManager = (
         (thread.deltas.updated.push({ ref, prev, next: commit }), console.log('update', commit.element));
       else
         (thread.deltas.created.push({ ref, next: commit }), console.log('create', commit.element));
+
+      // Update tree
+      //tree.commits.set(ref.id, commit);
   
       return;
     }

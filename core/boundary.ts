@@ -1,9 +1,9 @@
 import { Component, ElementType } from "./mod";
 
-export const boundaryType = Symbol('boundary');
+export const errorBoundaryType = Symbol('error-boundary');
 
-export type BoundaryProps = {
-  onValue: (value: unknown, clear: () => void) => unknown,
+export type ErrorBoundaryProps = {
+  onError: (value: unknown, clear: () => void) => unknown,
 }
 
-export const Boundary: Component<BoundaryProps> = boundaryType as any;
+export const ErrorBoundary: Component<ErrorBoundaryProps> = errorBoundaryType as any;
