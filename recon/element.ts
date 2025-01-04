@@ -1,5 +1,5 @@
 import {
-  boundaryType, ContextID, Element, Node,
+  ContextID, Element, errorBoundaryType, Node,
   providerNodeType
 } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit";
@@ -71,11 +71,11 @@ export const createElementService = (
             }
             break;
           }
-          case boundaryType: {
-            const boundaryValue = boundaryValues.get(ref.id);
-            if (boundaryValue)
-              output.reject = tree.commits.get(ref.id) as Commit;
-            // do something on a boundary node
+          case errorBoundaryType: {
+            const error = CommitTree.getError(tree, ref.id);
+            console.log(`Checking error boundary ${ref.id}`, error)
+            if (error.state === 'error')
+              output.child = null;
             break;
           }
           default:
@@ -86,6 +86,7 @@ export const createElementService = (
         let state = componentStates.get(ref.id);
         if (!state) {
           state = {
+            unmounted: false,
             ref,
             cleanups: new Map(),
             contexts: new Map(),
@@ -126,6 +127,7 @@ export const createElementService = (
       }
       case 'function': {
         const componentState = componentStates.get(prev.id) as ComponentState;
+        componentState.unmounted = true;
         for (const [,context] of componentState.contexts) {
           if (context.state)
             context.state.consumers.delete(prev.id);

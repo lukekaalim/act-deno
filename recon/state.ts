@@ -13,6 +13,8 @@ export type EffectTask = {
 export type ComponentState = {
   ref: CommitRef;
 
+  unmounted: boolean,
+
   values:   Map<number, unknown>;
   deps:     Map<number, act.Deps>;
   effects:  Map<number, EffectID>;

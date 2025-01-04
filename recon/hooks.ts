@@ -42,6 +42,8 @@ export const loadHooks = (
 
     const value = state.values.get(stateIndex) as T;
     const setValue: StateSetter<T> = (updater) => {
+      if (state.unmounted)
+        return;
       const prevValue = state.values.get(stateIndex) as T;
       const nextValue = runUpdater(prevValue, updater);
       state.values.set(stateIndex, nextValue);

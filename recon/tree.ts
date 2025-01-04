@@ -24,6 +24,13 @@ export const CommitTree = {
   getRootCommits: (tree: CommitTree) => {
     return [...tree.roots].map(ref => tree.commits.get(ref.id) as Commit)
   },
+  getError(tree: CommitTree, id: CommitID): ErrorBoundaryState {
+    if (tree.errors.has(id))
+      return tree.errors.get(id) as ErrorBoundaryState;
+    const state = ErrorBoundaryState.create(id);
+    tree.errors.set(id, state);
+    return state;
+  },
   searchParents(tree: CommitTree, ref: CommitRef, func: (commit: Commit) => boolean): Commit | null {
     for (const id of [...ref.path].reverse()) {
       const commit = tree.commits.get(id) as Commit;
