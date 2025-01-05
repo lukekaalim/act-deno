@@ -1,5 +1,11 @@
 # @lukekaalim/act-recon
 
+## 1.1.2
+
+### Patch Changes
+
+- e2f7db4: Fix context hooks not properly incrementing their hookIndex, causing the same value to be returned for each subsequent useContext call
+
 ## 1.1.1
 
 ### Patch Changes
