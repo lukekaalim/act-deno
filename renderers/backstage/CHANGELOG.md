@@ -1,5 +1,13 @@
 # @lukekaalim/act-backstage
 
+## 1.2.1
+
+### Patch Changes
+
+- 0017c07: Fix packages emitting debugging console logs
+- Updated dependencies [0017c07]
+  - @lukekaalim/act-recon@1.1.1
+
 ## 1.2.0
 
 ### Minor Changes

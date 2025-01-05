@@ -1,5 +1,11 @@
 # @lukekaalim/act-recon
 
+## 1.1.1
+
+### Patch Changes
+
+- 0017c07: Fix packages emitting debugging console logs
+
 ## 1.1.0
 
 ### Minor Changes
