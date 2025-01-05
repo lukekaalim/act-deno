@@ -1,4 +1,5 @@
 import { createId, Element, OpaqueID } from "@lukekaalim/act";
+import { version } from "os";
 
 /**
  * A single consistent id representing a commit in the act tree.
@@ -69,5 +70,5 @@ export const Commit = {
   version: (commit: Commit): Commit => ({
     ...commit,
     version: createId(),
-  })
+  }),
 }

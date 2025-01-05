@@ -1,11 +1,12 @@
 import {
-  boundaryType, ContextID, Element, Node,
+  ContextID, Element, errorBoundaryType, Node,
   providerNodeType
 } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit";
 import { loadHooks } from "./hooks";
 import { ContextState } from "./context";
 import { ComponentState, EffectID, EffectTask } from "./state";
+import { CommitTree } from "./tree";
 
 /**
  * When processing an element, it may produce additional
@@ -14,14 +15,14 @@ import { ComponentState, EffectID, EffectTask } from "./state";
  */
 export type ElementOutput = {
   child: Node,
-  boundary: null | unknown,
+  reject: null | unknown,
   effects: EffectTask[],
   targets: CommitRef[],
 };
 export const ElementOutput = {
   new: (child: Node): ElementOutput => ({
     child,
-    boundary: null,
+    reject: null,
     effects: [],
     targets: [],
   })
@@ -30,11 +31,17 @@ export const ElementOutput = {
 export type ElementService = {
   render(element: Element, ref: CommitRef): ElementOutput,
   clear(ref: Commit): ElementOutput,
+
+  boundary: Map<CommitID, unknown>,
 }
 
-export const createElementService = (requestRender: (ref: CommitRef) => void): ElementService => {
+export const createElementService = (
+  tree: CommitTree,
+  requestRender: (ref: CommitRef) => void
+): ElementService => {
   const contextStates = new Map<CommitID, ContextState<unknown>>();
   const componentStates = new Map<CommitID, ComponentState>();
+  const boundaryValues = new Map<CommitID, unknown>();
 
   const render = (
     element: Element,
@@ -64,8 +71,11 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
             }
             break;
           }
-          case boundaryType: {
-            // do something on a boundary node
+          case errorBoundaryType: {
+            const error = CommitTree.getError(tree, ref.id);
+            console.log(`Checking error boundary ${ref.id}`, error)
+            if (error.state === 'error')
+              output.child = null;
             break;
           }
           default:
@@ -76,6 +86,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
         let state = componentStates.get(ref.id);
         if (!state) {
           state = {
+            unmounted: false,
             ref,
             cleanups: new Map(),
             contexts: new Map(),
@@ -94,7 +105,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
           output.child = element.type(props);
         } catch (thrownValue) {
           output.child = null;
-          output.boundary = thrownValue;
+          output.reject = thrownValue;
         }
         break;
       }
@@ -116,6 +127,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
       }
       case 'function': {
         const componentState = componentStates.get(prev.id) as ComponentState;
+        componentState.unmounted = true;
         for (const [,context] of componentState.contexts) {
           if (context.state)
             context.state.consumers.delete(prev.id);
@@ -126,7 +138,7 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
           const id = componentState.effects.get(index) as EffectID;
           output.effects.push({
             id,
-            commitId: prev.id,
+            ref: prev,
             func: () => {
               cleanup();
             }
@@ -140,5 +152,5 @@ export const createElementService = (requestRender: (ref: CommitRef) => void): E
     return output;
   }
 
-  return { render, clear };
+  return { render, clear, boundary: boundaryValues };
 }

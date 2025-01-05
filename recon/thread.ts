@@ -1,10 +1,12 @@
-import { convertNodeToElements, createId, Node } from "@lukekaalim/act";
+import { convertNodeToElements, createId, ErrorBoundaryProps, errorBoundaryType, Node } from "@lukekaalim/act";
 import { Commit, CommitID, CommitRef } from "./commit.ts";
 import { DeltaSet } from "./delta.ts";
 import { CommitTree } from "./tree.ts";
 import { calculateUpdates, isDescendant, Update } from "./update.ts";
 import { ElementService } from "./element.ts";
 import { EffectTask } from "./state.ts";
+import { ErrorBoundaryState } from "./errors.ts";
+import { first, last } from "./algorithms.ts";
 
 /**
  * A WorkThread is a mutable data struture that
@@ -19,6 +21,9 @@ export type WorkThread = {
   pendingUpdates: Update[],
   pendingEffects: EffectTask[],
 
+  errorNotifications: Set<CommitID>,
+
+  visited: Set<CommitID>,
   deltas: DeltaSet,
 };
 export const WorkThread = {
@@ -27,6 +32,8 @@ export const WorkThread = {
       started: false,
       pendingEffects: [],
       pendingUpdates: [],
+      errorNotifications: new Set(),
+      visited: new Set(),
       deltas: {
         created: [],
         updated: [],
@@ -35,6 +42,41 @@ export const WorkThread = {
       },
     }
   },
+  /**
+   * Remove all changes from a particular commit onward
+   */
+  rollback(thread: WorkThread, from: CommitRef) {
+    console.log(`rolling back changes from ${from.id} in thread`);
+    thread.deltas.created = thread.deltas.created.filter(d => !isDescendant(from, d.ref));
+    thread.deltas.updated = thread.deltas.updated.filter(d => !isDescendant(from, d.ref));
+    thread.deltas.removed = thread.deltas.removed.filter(d => !isDescendant(from, d.ref));
+    thread.deltas.skipped = thread.deltas.skipped.filter(d => !isDescendant(from, d.next));
+    thread.pendingUpdates = thread.pendingUpdates.filter(update => !isDescendant(from, update.ref))
+    thread.pendingEffects = thread.pendingEffects.filter(effect => !isDescendant(from, effect.ref))
+  },
+  notifyError(thread: WorkThread, ref: CommitRef) {
+    thread.errorNotifications.add(ref.id);
+  },
+  /**
+   * Find the closest anscestor error boundary for a commit,
+   * either in the tree or one that was just created
+   * */
+  findClosestBoundary(thread: WorkThread, tree: CommitTree, ref: CommitRef): Commit | null {
+    return last(ref.path, id => {
+      console.log(ref.path, id);
+      if (tree.commits.has(id)) {
+        const commit = tree.commits.get(id) as Commit;
+        if (commit.element.type === errorBoundaryType)
+          return commit;
+        return null;
+      }
+      // We also might have just created the boundary
+      const freshBoundary = thread.deltas.created.find(c => c.ref.id === id && c.next.element.type === errorBoundaryType);
+      if (freshBoundary)
+        return freshBoundary.next;
+      return null;
+    });
+  }
 }
 
 export const createThreadManager = (
@@ -89,6 +131,23 @@ export const createThreadManager = (
     for (const delta of currentThread.deltas.removed)
       tree.commits.delete(delta.ref.id);
 
+    console.log(currentThread.errorNotifications);
+    for (const boundaryId of currentThread.errorNotifications) {
+      const commit = tree.commits.get(boundaryId) as Commit;
+      const { onError } = commit.element.props as ErrorBoundaryProps;
+      console.log({commit});
+      if (typeof onError === 'function') {
+        const state = CommitTree.getError(tree, commit.id);
+        console.log('informing the candidate')
+        const clear = () => {
+          console.log('clearing the error!')
+          ErrorBoundaryState.clear(state);
+          request(commit);
+        }
+        onError(state.value, clear);
+      }
+    }
+
     // Notify external
     onThreadComplete(currentThread.deltas, currentThread.pendingEffects);
 
@@ -117,6 +176,7 @@ export const createThreadManager = (
           updateOnPath.targets.push(target);
         }
       } else {
+        console.log('adding pending task')
         pendingUpdateTargets.set(target.id, target);
       }
     } else {
@@ -142,16 +202,17 @@ export const createThreadManager = (
     requestWork();
   }
 
-  const applyUpdate = (thread: WorkThread, { next, prev, ref, targets }: Update) => {
-    const identicalChange = (next && prev && next.id === prev.element.id);
+  const applyUpdate = (thread: WorkThread, { next, prev, ref, targets, suspend }: Update) => {
+    thread.visited.add(ref.id);
 
+    const identicalChange = next && prev && (next.id === prev.element.id);
     const prevChildren = prev && prev.children
       .map(c => tree.commits.get(c.id) as Commit) || [];
 
     if (identicalChange) {
       const isOnTargetPath = targets.some(target => target.path.includes(ref.id));
       if (!isOnTargetPath)
-        return;
+        return console.log('no action', prev.element);
 
       const isSpecificallyTarget = targets.some(target => target.id === ref.id);
 
@@ -161,26 +222,51 @@ export const createThreadManager = (
     
         const commit = Commit.version(prev);
         thread.deltas.skipped.push({ next: commit });
-        return;
+        return console.log('skip', prev.element, targets);
       }
     }
     if (next) {
       const output = elementService.render(next, ref);
+      if (output.reject) {
+        const errorBoundary = WorkThread.findClosestBoundary(thread, tree, ref);
+        if (errorBoundary) {
+          const errorState = CommitTree.getError(tree, errorBoundary.id);
+          ErrorBoundaryState.set(errorState, output.reject);
+          WorkThread.rollback(thread, errorBoundary);
+          WorkThread.notifyError(thread, errorBoundary);
+
+          thread.pendingUpdates.push(Update.target(errorBoundary));
+          return console.log('rewinding to boundary', next);
+        } else {
+          console.error(output.reject);
+          console.error(`No boundary to catch error: Unmounting roots`);
+          for (const ref of tree.roots) {
+            WorkThread.rollback(thread, ref);
+            const prev = tree.commits.get(ref.id);
+            if (prev)
+              thread.pendingUpdates.push(Update.remove(prev));
+          }
+
+        }
+      }
   
       const [childRefs, updates] = calculateUpdates(ref, prevChildren, output.child);
 
       thread.pendingEffects.push(...output.effects);
       thread.pendingUpdates.push(...updates.map(update => ({
         ...update,
-        targets: output.targets.filter(t => isDescendant(update.ref, t))
+        targets: [...targets, ...output.targets.filter(t => isDescendant(update.ref, t))]
       })));
   
       const commit = Commit.update(ref, next, childRefs);
   
       if (prev)
-        thread.deltas.updated.push({ ref, prev, next: commit });
+        (thread.deltas.updated.push({ ref, prev, next: commit }), console.log('update', commit.element));
       else
-        thread.deltas.created.push({ ref, next: commit });
+        (thread.deltas.created.push({ ref, next: commit }), console.log('create', commit.element));
+
+      // Update tree
+      //tree.commits.set(ref.id, commit);
   
       return;
     }
@@ -189,7 +275,7 @@ export const createThreadManager = (
       thread.deltas.removed.push({ ref: prev, prev });
       thread.pendingUpdates.push(...prevChildren.map(prev => Update.remove(prev)));
       thread.pendingEffects.push(...output.effects);
-      return;
+      return console.log('remove', prev.element);
     } else {
       throw new Error(`No prev, no next, did this commit ever exist?`)
     }

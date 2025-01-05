@@ -44,3 +44,23 @@ export type SortedChangeReport = ChangeReport & {
 export const calculateSortedChangedElements = (): SortedChangeReport => {
   throw new MagicError();
 }
+
+export const first = <X, Y>(array: ReadonlyArray<X>, func: (value: X, index: number) => Y | null): Y | null => {
+  for (let i = 0; i < array.length; i++) {
+    const value = array[i];
+    const result = func(value, i);
+    if (result !== null)
+      return result;
+  }
+  return null;
+}
+
+export const last = <X, Y>(array: ReadonlyArray<X>, func: (value: X, index: number) => Y | null): Y | null => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const value = array[i];
+    const result = func(value, i);
+    if (result !== null)
+      return result;
+  }
+  return null;
+}

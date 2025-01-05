@@ -1,4 +1,4 @@
-import { h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
+import { ErrorBoundary, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
 import { hs, HTML, SVG } from '@lukekaalim/act-web';
 import { render, three, ThreeJS, node } from '@lukekaalim/act-three';
 import { TextGeometry, FontLoader, Font } from 'three/addons';
@@ -49,6 +49,9 @@ const App = () => {
     return new TextGeometry(`Hello, ${name}!`, { depth: 1, font, size: 5 }).center()
   }, [name])
 
+  const [boundaryValue, setBoundaryValue] = useState<null | Error>(null);
+  const [boundaryClearer, setBoundaryClearer] = useState(() => () => {});
+
   return [
     hs('div', {}, [
       hs('input', {
@@ -56,11 +59,23 @@ const App = () => {
         onInput: e => setName((e.currentTarget as HTMLInputElement).value),
         value: name
       }),
+      h(Ticker),
+      hs('button', { onClick: () => {
+        boundaryClearer()
+        setBoundaryClearer(() => () => {});
+        setBoundaryValue(null);
+      }}, 'Clear Boundary'),
+      hs('pre', {}, boundaryValue && boundaryValue.toString()),
       !!name && [
         hs('h3', {}, `Hello, ${name}!`),
         hs('p', {}, `Hello, ${name}!`),
         hs('div', { ref: refB }),
-        h(Ticker),
+        h(ErrorBoundary, { onError: (value, clear) => {
+          setBoundaryClearer(() => clear);
+          setBoundaryValue(value as Error)
+         } }, [
+          h(Ticker),
+        ]),
         h(primitiveNodeTypes.null, {}, [
           h(HTML, {}, h('p', { ref }, 'A child')),
         ]),
@@ -82,6 +97,8 @@ const App = () => {
   ]
 };
 
+class TooHighError extends Error {}
+
 const Ticker = () => {
   const [counter, setCounter] = useState(0);
 
@@ -89,6 +106,10 @@ const Ticker = () => {
     console.log('mount')
     return () => console.log('unmount')
   }, [counter])
+
+  if (counter > 10) {
+    throw new TooHighError(`:( I can't count that high. ${counter} is too big!`)
+  }
 
   return  hs('button', { onClick: () => (setCounter(c => c + 1), setCounter(c => c + 1)) }, counter);
 }
