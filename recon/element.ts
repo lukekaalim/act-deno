@@ -73,7 +73,6 @@ export const createElementService = (
           }
           case errorBoundaryType: {
             const error = CommitTree.getError(tree, ref.id);
-            console.log(`Checking error boundary ${ref.id}`, error)
             if (error.state === 'error')
               output.child = null;
             break;
