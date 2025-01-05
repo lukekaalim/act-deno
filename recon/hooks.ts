@@ -24,10 +24,11 @@ export const loadHooks = (
 ) => {
   let index = 0;
   hookImplementation.useContext = <T>(context: Context<T>): T => {
-    let value = state.contexts.get(index);
+    const stateIndex = index++;
+    let value = state.contexts.get(stateIndex);
     if (!value) {
       value = { state: findContext(contexts, ref, context) };
-      state.contexts.set(index, value);
+      state.contexts.set(stateIndex, value);
       if (value.state)
         value.state.consumers.set(ref.id, ref);
     }
