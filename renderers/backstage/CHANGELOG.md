@@ -1,5 +1,17 @@
 # @lukekaalim/act-backstage
 
+## 1.3.0
+
+### Minor Changes
+
+- Added support for keys/reordering elements without unmounting them
+
+### Patch Changes
+
+- Updated dependencies
+  - @lukekaalim/act-recon@1.2.0
+  - @lukekaalim/act@3.2.0
+
 ## 1.2.1
 
 ### Patch Changes
