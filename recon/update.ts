@@ -29,29 +29,30 @@ export type Update = {
   targets: CommitRef[];
 
   suspend: boolean,
+  moved: boolean,
 };
 
 export const Update = {
   fresh: (ref: CommitRef, next: Element): Update => ({
-    ref, next, prev: null, targets: [], suspend: false,
+    ref, next, prev: null, targets: [], suspend: false, moved: false,
   }),
-  existing: (prev: Commit, next: Element): Update => ({
-    ref: prev, next, prev, targets: [], suspend: false,
+  existing: (prev: Commit, next: Element, moved: boolean = false): Update => ({
+    ref: prev, next, prev, targets: [], suspend: false, moved,
   }),
   remove: (prev: Commit): Update => ({
-    ref: prev, next: null, prev, targets: [], suspend: false,
+    ref: prev, next: null, prev, targets: [], suspend: false, moved: false,
   }),
   distant: (root: Commit, targets: CommitRef[]): Update => ({
-    ref: root, next: root.element, prev: root, targets, suspend: false,
+    ref: root, next: root.element, prev: root, targets, suspend: false, moved: false,
   }),
   skip: (prev: Commit, targets: CommitRef[]): Update => ({
-    ref: prev, next: prev.element, prev, targets, suspend: false,
+    ref: prev, next: prev.element, prev, targets, suspend: false, moved: false,
   }),
   target: (prev: Commit): Update => ({
-    ref: prev, next: prev.element, prev, targets: [prev], suspend: false,
+    ref: prev, next: prev.element, prev, targets: [prev], suspend: false, moved: false,
   }),
   suspend: (prev: Commit): Update => ({
-    ref: prev, next: prev.element, prev, targets: [], suspend: true,
+    ref: prev, next: prev.element, prev, targets: [], suspend: true, moved: false,
   })
 }
 
@@ -89,6 +90,18 @@ export const calculateFastUpdate = (
 const simpleElementEqualityTest: ChangeEqualityTest<Commit, Element> = (prev, next, prev_index, next_index) =>
   prev.element.type === next.type && prev_index === next_index;
 
+const keyedElementEqualityTest:  ChangeEqualityTest<Commit, Element> = (prev, next, prev_index, next_index) => {
+  const compatible = prev.element.type === next.type;
+  if (!compatible)
+    return false;
+  const prevKey = prev.element.props.key;
+  const nextKey = next.props.key;
+  if (prevKey || nextKey)
+    return prevKey === nextKey;
+
+  return prev_index === next_index;
+}
+
 /**
  * Returns a list of all updates that should
  * occur -- given a set of commits and a
@@ -110,7 +123,7 @@ export const calculateUpdates = (
   if (commits.length <= 1 && elements.length == 1)
     return calculateFastUpdate(parentRef, commits[0], elements[0])
 
-  const change_report = calculateChangedElements(commits, elements, simpleElementEqualityTest);
+  const change_report = calculateChangedElements(commits, elements, keyedElementEqualityTest);
 
   const newOrPersisted = elements.map((next, index) => {
     const prevIndex = change_report.nextToPrev[index];
@@ -118,8 +131,10 @@ export const calculateUpdates = (
 
     if (!prev)
       return Update.fresh(CommitRef.new(parentRef.path), next);
-    
-    return Update.existing(prev, next);
+
+    const moved = index === prevIndex;
+
+    return Update.existing(prev, next, moved);
   });
   const removed = change_report.removed.map((index) => {
     const prev = commits[index];

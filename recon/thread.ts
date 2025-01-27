@@ -157,6 +157,8 @@ export const createThreadManager = (
       }
       
       pendingUpdateTargets.clear();
+      currentThread.started = true;
+      requestWork();
     }
   }
 
@@ -167,6 +169,8 @@ export const createThreadManager = (
       })
       if (updateOnPath) {
         if (updateOnPath.targets.some(target => target.id === target.id)) {
+          // not sure whats going on here
+        } else {
           updateOnPath.targets.push(target);
         }
       } else {
@@ -195,7 +199,7 @@ export const createThreadManager = (
     requestWork();
   }
 
-  const applyUpdate = (thread: WorkThread, { next, prev, ref, targets, suspend }: Update) => {
+  const applyUpdate = (thread: WorkThread, { next, prev, ref, targets, moved }: Update) => {
     thread.visited.add(ref.id);
 
     const identicalChange = next && prev && (next.id === prev.element.id);
@@ -254,7 +258,7 @@ export const createThreadManager = (
       const commit = Commit.update(ref, next, childRefs);
   
       if (prev)
-        thread.deltas.updated.push({ ref, prev, next: commit });
+        thread.deltas.updated.push({ ref, prev, next: commit, moved });
       else
         thread.deltas.created.push({ ref, next: commit });
 

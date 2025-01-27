@@ -146,6 +146,13 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
               if (!node)
                 continue;
               args.update(node, delta.next.element, delta.prev.element);
+              if (delta.moved) {
+                const parent = findParent(delta.ref);
+                const parentNode = parent && parent.node;
+                if (parentNode) {
+                  needsReorder.add(parent.id)
+                }
+              }
             }
             for (const delta of deltas.created) {
               const node = nodeByCommit.get(delta.ref.id);

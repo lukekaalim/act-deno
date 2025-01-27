@@ -12,5 +12,5 @@ export type EmptyProps = Record<string, never>;
  * createElement as the first argument.
  */
 export type Component<T extends Props = EmptyProps> = (
-  props: T & { children: Node }
+  props: T & { children: Node, key?: string }
 ) => Node;

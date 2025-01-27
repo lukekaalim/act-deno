@@ -1,4 +1,4 @@
-import { ErrorBoundary, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
+import { Component, ErrorBoundary, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
 import { hs, HTML, SVG } from '@lukekaalim/act-web';
 import { render, three, ThreeJS, node } from '@lukekaalim/act-three';
 import { TextGeometry, FontLoader, Font } from 'three/addons';
@@ -52,6 +52,8 @@ const App = () => {
   const [boundaryValue, setBoundaryValue] = useState<null | Error>(null);
   const [boundaryClearer, setBoundaryClearer] = useState(() => () => {});
 
+  const [order, setOrder] = useState<'forward' | 'backward'>('forward');
+
   return [
     hs('div', {}, [
       hs('input', {
@@ -66,6 +68,7 @@ const App = () => {
         setBoundaryValue(null);
       }}, 'Clear Boundary'),
       hs('pre', {}, boundaryValue && boundaryValue.toString()),
+      h('br'),
       !!name && [
         hs('h3', {}, `Hello, ${name}!`),
         hs('p', {}, `Hello, ${name}!`),
@@ -92,8 +95,19 @@ const App = () => {
             ])
           ])
         ])
+      ],
+      h('br', { key: 10 }),
+      h('button', { onClick: () => setOrder(order === 'forward' ? 'backward' : 'forward')}, 'Swap'),
+      order === 'forward' ? [
+        h(A, { key: 'a' }),
+        h(B, { key: 'b' }),
+        h(C, { key: 'c' }),
+      ] : [
+        h(C, { key: 'c' }),
+        h(B, { key: 'b' }),
+        h(A, { key: 'a' }),
       ]
-    ])
+    ]),
   ]
 };
 
@@ -119,3 +133,16 @@ const main = () => {
 }
 
 main();
+
+const A = () => h(RenderCounter, { key: 'a' });
+const B = () => h(RenderCounter, { key: 'b' });
+const C = () => h(RenderCounter, { key: 'c' });
+
+const RenderCounter: Component = ({ key }) => {
+  const [real_key] = useState(key)
+  const renderCounter = useRef(0);
+
+  renderCounter.current++;
+
+  return hs('pre', {}, `key=${real_key} Rendered ${renderCounter.current} times`);
+};

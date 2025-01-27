@@ -26,28 +26,30 @@ export type Element = {
 
 export type ElementType<T extends Props = EmptyProps> = null | string | symbol | Component<T>;
 
+export type ElementKey = string | number | symbol;
+
 /**
  * Generate a unique element. Each element has an internal
  * ID to quickly tell if elements are different.
  */
 export function createElement<Type extends ElementType<any>>(
   type: Type,
-  props: Type extends ElementType<infer X> ? X : never,
+  props: Type extends ElementType<infer X> ? X & { key?: ElementKey } : never,
   children?: Node
 ): Element;
 export function createElement(
   type: string | symbol,
-  props?: Record<string, unknown>,
+  props?: Record<string, unknown> & { key?: ElementKey },
   children?: Node
 ): Element;
 export function createElement<Type extends Component<EmptyProps>>(
   type: Type,
-  props?: Record<string, never>,
+  props?: { key?: ElementKey },
   children?: Node
 ): Element;
 export function createElement(
   type: ElementType,
-  props?: Record<string, unknown>,
+  props?: Record<string, unknown> & { key?: ElementKey },
   children: Node = []
 ): Element {
   return {
