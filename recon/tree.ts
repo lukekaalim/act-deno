@@ -24,6 +24,12 @@ export const CommitTree = {
   getRootCommits: (tree: CommitTree) => {
     return [...tree.roots].map(ref => tree.commits.get(ref.id) as Commit)
   },
+  /**
+   * Each commit ID _may_ have an ErrorBoundaryState associated with it
+   * @param tree 
+   * @param id 
+   * @returns 
+   */
   getError(tree: CommitTree, id: CommitID): ErrorBoundaryState {
     if (tree.errors.has(id))
       return tree.errors.get(id) as ErrorBoundaryState;

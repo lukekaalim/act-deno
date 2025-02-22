@@ -42,7 +42,7 @@ export const createRenderFunction = <S, T>(
 
     let id = scheduler.request(work);
     
-    reconciler.threads.mount(node);
+    reconciler.scheduler.mount(node);
 
     return {
       stop() {

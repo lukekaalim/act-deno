@@ -1,0 +1,8 @@
+{
+  "name": "@lukekaalim/act-insight",
+  "dependencies": {
+    "@lukekaalim/act": "*",
+    "@lukekaalim/act-recon": "*",
+    "@lukekaalim/act-web": "*"
+  }
+}

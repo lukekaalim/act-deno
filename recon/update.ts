@@ -53,7 +53,13 @@ export const Update = {
   }),
   suspend: (prev: Commit): Update => ({
     ref: prev, next: prev.element, prev, targets: [], suspend: true, moved: false,
-  })
+  }),
+
+  addTarget: (update: Update, newTarget: CommitRef): Update => {
+    const targetMap = new Map([...update.targets, newTarget].map(ref => [ref.id, ref]));
+    const targets = [...targetMap.values()];
+    return { ...update, targets };
+  }
 }
 
 /** 

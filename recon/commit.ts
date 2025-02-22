@@ -34,6 +34,21 @@ export const CommitRef = {
       path: [...path, id],
       id,
     }
+  },
+  /**
+   * Visit each ID in a commit's path, from "lowest" to "highest" (reverse order)
+   * @param ref
+   * @param climbFunc 
+   * @returns 
+   */
+  climb<T>(ref: CommitRef, climbFunc: (id: CommitID) => T): T | null {
+    const ids = [...ref.path].reverse();
+    for (const id of ids) {
+      const value = climbFunc(id);
+      if (value)
+        return value;
+    }
+    return null;
   }
 }
 
