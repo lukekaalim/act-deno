@@ -1,8 +1,14 @@
-import { Component, ErrorBoundary, h, primitiveNodeTypes, useEffect, useMemo, useRef, useState } from '@lukekaalim/act';
+import { h, useEffect, useState } from "@lukekaalim/act";
+import { createReconciler } from "@lukekaalim/act-recon";
+import { createWebSpace, render as renderWeb } from "@lukekaalim/act-web";
+import { InsightApp } from '@lukekaalim/act-insight';
+
+import { Component, ErrorBoundary, primitiveNodeTypes, useMemo, useRef } from '@lukekaalim/act';
 import { hs, HTML, SVG } from '@lukekaalim/act-web';
-import { render, three, ThreeJS, node } from '@lukekaalim/act-three';
+import { render, three, ThreeJS, node, createFinaleSpace } from '@lukekaalim/act-three';
 import { TextGeometry, FontLoader, Font } from 'three/addons';
 import fontURL from 'three/examples/fonts/helvetiker_regular.typeface.json?url';
+import { createRenderFunction, RenderSpace } from "@lukekaalim/act-backstage";
 
 const material = new three.MeshBasicMaterial({ color: 'red' });
 
@@ -73,8 +79,8 @@ const App = () => {
         hs('h3', {}, `Hello, ${name}!`),
         hs('p', {}, `Hello, ${name}!`),
         hs('div', { ref: refB }),
-        h(ErrorBoundary, { onError: (value, clear) => {
-          setBoundaryClearer(() => clear);
+        h(ErrorBoundary, { onError: (value) => {
+          //setBoundaryClearer(() => clear);
           setBoundaryValue(value as Error)
          } }, [
           h(Ticker),
@@ -98,7 +104,7 @@ const App = () => {
       ],
       h('br', { key: 10 }),
       h('button', { onClick: () => setOrder(order === 'forward' ? 'backward' : 'forward')}, 'Swap'),
-      order === 'forward' ? [
+      useMemo(() => order === 'forward' ? [
         h(A, { key: 'a' }),
         h(B, { key: 'b' }),
         h(C, { key: 'c' }),
@@ -106,7 +112,7 @@ const App = () => {
         h(C, { key: 'c' }),
         h(B, { key: 'b' }),
         h(A, { key: 'a' }),
-      ]
+      ], [order])
     ]),
   ]
 };
@@ -128,12 +134,6 @@ const Ticker = () => {
   return  hs('button', { onClick: () => (setCounter(c => c + 1), setCounter(c => c + 1)) }, counter);
 }
 
-const main = () => {
-  render(h(HTML, {}, h(App)), document.body);
-}
-
-main();
-
 const A = () => h(RenderCounter, { key: 'a' });
 const B = () => h(RenderCounter, { key: 'b' });
 const C = () => h(RenderCounter, { key: 'c' });
@@ -146,3 +146,44 @@ const RenderCounter: Component = ({ key }) => {
 
   return hs('pre', {}, `key=${real_key} Rendered ${renderCounter.current} times`);
 };
+
+const main = () => {
+  const reconciler = createReconciler();
+
+  const onReady = () => {
+    reconciler.scheduler.mount(h(HTML, {}, h(App)))
+  }
+
+  const debugWindow = window.open('', 'debug', 'popup');
+  if (debugWindow) {
+    const node = h(InsightApp, { reconciler, onReady });
+    const root = debugWindow.document.body;
+    for (const child of [...debugWindow.document.body.children, ...debugWindow.document.head.children])
+      child.remove()
+
+    for (const child of document.head.children) {
+      if (child instanceof HTMLStyleElement) {
+        debugWindow.document.head.append(child.cloneNode(true));
+      }
+    }
+
+    const renderWeb = createRenderFunction<unknown, HTMLElement>(
+      null as any,
+      (tree, root) => createWebSpace(tree, root, debugWindow)
+    )(h(HTML, {}, node), root);
+  }
+
+  const mainRoot = document.getElementById('main_root');
+  if (mainRoot) {
+    const space = RenderSpace.combine([
+      createWebSpace(reconciler.tree, mainRoot),
+      createFinaleSpace(reconciler.tree),
+    ])
+    reconciler.on('render', (thread) => {
+      space.create(thread.deltas).configure();
+    })
+  }
+};
+
+//if (document.location.pathname === '/')
+  main();

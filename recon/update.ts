@@ -22,44 +22,32 @@ export type Update = {
    */
   next: null | Element;
 
-  /**
-   * List of commits that _must_ re-render as a
-   * concequence of this update.
-   */
-  targets: CommitRef[];
-
-  suspend: boolean,
+  // TODO: maybe expose prev/next index information?
   moved: boolean,
 };
 
 export const Update = {
   fresh: (ref: CommitRef, next: Element): Update => ({
-    ref, next, prev: null, targets: [], suspend: false, moved: false,
+    ref, next, prev: null, moved: false,
   }),
   existing: (prev: Commit, next: Element, moved: boolean = false): Update => ({
-    ref: prev, next, prev, targets: [], suspend: false, moved,
+    ref: prev, next, prev, moved,
   }),
   remove: (prev: Commit): Update => ({
-    ref: prev, next: null, prev, targets: [], suspend: false, moved: false,
+    ref: prev, next: null, prev, moved: false,
   }),
-  distant: (root: Commit, targets: CommitRef[]): Update => ({
-    ref: root, next: root.element, prev: root, targets, suspend: false, moved: false,
+  distant: (root: Commit): Update => ({
+    ref: root, next: root.element, prev: root, moved: false,
   }),
-  skip: (prev: Commit, targets: CommitRef[]): Update => ({
-    ref: prev, next: prev.element, prev, targets, suspend: false, moved: false,
+  skip: (prev: Commit): Update => ({
+    ref: prev, next: prev.element, prev, moved: false,
   }),
   target: (prev: Commit): Update => ({
-    ref: prev, next: prev.element, prev, targets: [prev], suspend: false, moved: false,
+    ref: prev, next: prev.element, prev, moved: false,
   }),
   suspend: (prev: Commit): Update => ({
-    ref: prev, next: prev.element, prev, targets: [], suspend: true, moved: false,
+    ref: prev, next: prev.element, prev, moved: false,
   }),
-
-  addTarget: (update: Update, newTarget: CommitRef): Update => {
-    const targetMap = new Map([...update.targets, newTarget].map(ref => [ref.id, ref]));
-    const targets = [...targetMap.values()];
-    return { ...update, targets };
-  }
 }
 
 /** 

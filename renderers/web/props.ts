@@ -1,18 +1,27 @@
 import * as act from '@lukekaalim/act';
 
+declare global {
+  interface Window {
+    HTMLElement: typeof HTMLElement,
+    SVGElement: typeof SVGElement,
+    Text: typeof Text,
+  }
+}
+
 export const setProps = (
+  window: Window,
   node: HTMLElement | SVGElement | Text,
   
   next: act.Element,
   prev: null | act.Element
 ) => {
-  if (node instanceof HTMLElement) {
+  if (node instanceof window.HTMLElement) {
     setHTMLElementProps(node, next, prev);
   }
-  if (node instanceof SVGElement) {
+  if (node instanceof window.SVGElement) {
     setSVGElementProps(node, next, prev);
   }
-  if (node instanceof Text) {
+  if (node instanceof window.Text) {
     if (node.textContent !== next.props.value)
       node.textContent = next.props.value as string
   }

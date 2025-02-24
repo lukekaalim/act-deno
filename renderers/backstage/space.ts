@@ -121,7 +121,6 @@ export const createSimpleRenderSpace = <T, R extends string | Symbol>(
             commitByNode.set(node, delta.ref.id)
           }
         }
-
       }
 
       return {

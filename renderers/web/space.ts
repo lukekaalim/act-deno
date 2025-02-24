@@ -8,7 +8,13 @@ import { setProps } from './props.ts';
 export const HTML: act.Component = ({ children }) => act.h(act.renderNodeType, { type: 'web:html' }, children);
 export const SVG: act.Component = ({ children }) => act.h(act.renderNodeType, { type: 'web:svg' }, children);
 
-export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, document: Document = window.document) => {
+const defaultWindow = window;
+
+export const createWebSpace = (
+  tree: recon.CommitTree,
+  root: HTMLElement,
+  window: Window = defaultWindow
+) => {
   return createSimpleRenderSpace(tree, {
     rootTypes: new Set(['web:html', 'web:svg']),
     create(element, rootType) {
@@ -19,7 +25,7 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
           switch (tag) {
             case act.primitiveNodeTypes.string:
             case act.primitiveNodeTypes.number:
-              return document.createTextNode("");
+              return window.document.createTextNode("<empty text>");
             default:
               return null;
           }
@@ -27,9 +33,9 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
         case 'string': {
           switch (rootType) {
             case 'web:html':
-              return document.createElementNS('http://www.w3.org/1999/xhtml', tag);
+              return window.document.createElementNS('http://www.w3.org/1999/xhtml', tag);
             case 'web:svg':
-              return document.createElementNS('http://www.w3.org/2000/svg', tag);
+              return window.document.createElementNS('http://www.w3.org/2000/svg', tag);
           }
         }
         default:
@@ -37,7 +43,7 @@ export const createWebSpace = (tree: recon.CommitTree, root: HTMLElement, docume
       }
     },
     update(el, next, prev) {
-      setProps(el, next, prev);
+      setProps(window, el, next, prev);
     },
     link(el, parent) {
       (parent || root).appendChild(el);

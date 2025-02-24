@@ -36,6 +36,12 @@ const applyDeltaSet = (deltas: DeltaSet, tree: CommitTree) => {
 
 export const DeltaSet = {
   create: (): DeltaSet => ({ created: [], updated: [], skipped: [], removed: [] }),
+  clone: (deltas: DeltaSet): DeltaSet => ({
+    created: [...deltas.created],
+    updated: [...deltas.updated],
+    skipped: [...deltas.skipped],
+    removed: [...deltas.removed],
+  }),
   apply: applyDeltaSet,
 }
 

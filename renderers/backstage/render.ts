@@ -19,34 +19,33 @@ export const createRenderFunction = <S, T>(
   createSpace: (tree: CommitTree, root: T) => RenderSpace
 ): RenderFunction<T> => {
   const render: RenderFunction<T> = (node: act.Node, root: T) => {
-    const reconciler = createReconciler(deltas => {
-      space.create(deltas).configure();
-    }, () => {
-      scheduler.cancel(id);
-      id = scheduler.request(work)
-    });
+    const reconciler = createReconciler();
 
-    const space = createSpace(reconciler.tree, root);
-    
+    reconciler.on('render', thread => {
+      space.create(thread.deltas).configure();
+    })
+    let pendingWork = false;
+    let timeoutId: number | null = null;
+    reconciler.on('request-work', () => {
+      pendingWork = true;
+      if (!timeoutId)
+        timeoutId = setTimeout(work, 1);
+    })
     const work = () => {
-      const start = performance.now();
-      const end = start + scheduler.duration;
-      const done = reconciler.threads.work(() => {
-        const now = performance.now();
-        return now >= end;
-      })
-      if (done) {
-        scheduler.cancel(id)
+      timeoutId = null;
+      // sync worker
+      while (pendingWork) {
+        pendingWork = false;
+        reconciler.work();
       }
     }
 
-    let id = scheduler.request(work);
+    const space = createSpace(reconciler.tree, root);
     
     reconciler.scheduler.mount(node);
 
     return {
       stop() {
-        scheduler.cancel(id);
       },
     }
   };

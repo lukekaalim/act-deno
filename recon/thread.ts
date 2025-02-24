@@ -19,32 +19,13 @@ export type WorkReason =
  * @param thread 
  * @param tree 
  */
-const applyWorkThread = (thread: WorkThread, tree: CommitTree): null | WorkThread => {
+const applyWorkThread = (thread: WorkThread, tree: CommitTree) => {
   DeltaSet.apply(thread.deltas, tree);
-
-  // add any pending work that couldnt be completed last thread
-  if (thread.leftovers.size > 0) {
-    return populateNextThread(thread.leftovers, tree);
-  }
   return null;
 }
 
-const populateNextThread = (leftovers: Set<CommitRef>, tree: CommitTree): WorkThread => {
-  const roots = CommitTree.getRootCommits(tree);
-  const nextThread = WorkThread.new();
-
-  const targets = [...leftovers];
-  for (const root of roots) {
-    nextThread.pendingUpdates.push(Update.distant(root, targets));
-  }
-  for (const target of leftovers)
-    nextThread.reasons.push({ type: 'target', ref: target });
-
-  return nextThread
-}
-
-const nofifyErrorBoundaries = (thread: WorkThread, tree: CommitTree) => {
-  for (const boundaryId of thread.errorNotifications) {
+const notifyErrorBoundaries = (thread: WorkThread, tree: CommitTree) => {
+  for (const [boundaryId] of thread.errorNotifications) {
     const commit = tree.commits.get(boundaryId) as Commit;
     const { onError, ref } = commit.element.props as ErrorBoundaryProps;
     if (typeof onError === 'function') {
@@ -61,38 +42,46 @@ const nofifyErrorBoundaries = (thread: WorkThread, tree: CommitTree) => {
  * @param from 
  */
 const rollbackWorkThread = (thread: WorkThread, from: CommitRef) => {
+  // TODO: rollbacks are hard: need rollback compatible with new
+  // thread model
+  throw new Error();
+  /*
   thread.deltas.created = thread.deltas.created.filter(d => !isDescendant(from, d.ref));
   thread.deltas.updated = thread.deltas.updated.filter(d => !isDescendant(from, d.ref));
   thread.deltas.removed = thread.deltas.removed.filter(d => !isDescendant(from, d.ref));
   thread.deltas.skipped = thread.deltas.skipped.filter(d => !isDescendant(from, d.next));
+
+  thread.visited = new Set([...thread.visited].filter(v => !isDescendant(from, v)))
+
   thread.pendingUpdates = thread.pendingUpdates.filter(update => !isDescendant(from, update.ref))
   thread.pendingEffects = thread.pendingEffects.filter(effect => !isDescendant(from, effect.ref))
+  */
 }
 
 const updateWorkThread = (thread: WorkThread, update: Update, tree: CommitTree, element: ElementService) => {
-  const { next, prev, ref, targets, moved } = update;
-  thread.visited.add(ref.id);
+  const { next, prev, ref, moved } = update;
+  thread.visited.set(ref.id, ref);
 
   const identicalChange = next && prev && (next.id === prev.element.id);
   const prevChildren = prev && prev.children
     .map(c => tree.commits.get(c.id) as Commit) || [];
 
   if (identicalChange) {
-    const isOnTargetPath = targets.some(target => target.path.includes(ref.id));
-    if (!isOnTargetPath)
+    const mustVisit = thread.mustVisit.has(ref.id);
+    if (!mustVisit)
       return;
 
-    const isSpecificallyTarget = targets.some(target => target.id === ref.id);
+    const mustRender = thread.mustRender.has(ref.id);
 
-    if (!isSpecificallyTarget) {
-      const updates = prevChildren.map(prev => Update.skip(prev, targets));  
+    if (!mustRender) {
+      const updates = prevChildren.map(prev => Update.skip(prev));  
       thread.pendingUpdates.push(...updates);
-  
       const commit = Commit.version(prev);
       thread.deltas.skipped.push({ next: commit });
       return;
     }
   }
+  
   if (next) {
     const output = element.render(next, ref);
     if (output.reject) {
@@ -114,17 +103,13 @@ const updateWorkThread = (thread: WorkThread, update: Update, tree: CommitTree, 
           if (prev)
             thread.pendingUpdates.push(Update.remove(prev));
         }
-
       }
     }
 
     const [childRefs, updates] = calculateUpdates(ref, prevChildren, output.child);
 
     thread.pendingEffects.push(...output.effects);
-    thread.pendingUpdates.push(...updates.map(update => ({
-      ...update,
-      targets: [...targets, ...output.targets.filter(t => isDescendant(update.ref, t))]
-    })));
+    thread.pendingUpdates.push(...updates);
 
     const commit = Commit.update(ref, next, childRefs);
 
@@ -151,26 +136,76 @@ const updateWorkThread = (thread: WorkThread, update: Update, tree: CommitTree, 
   }
 };
 
-const queueWorkThreadUpdate = (thread: WorkThread, ref: CommitRef) => {
-  for (const id of [...ref.path].reverse()) {
-    // If we've already prepared a render, quit for next time
-    if (thread.visited.has(ref.id)) {
-      thread.leftovers.add(ref);
-      return;
-    }
-    thread.pendingUpdates = thread.pendingUpdates.map(update => {
-      if (update.ref.id === id)
-        return Update.addTarget(update, ref);
-      return update;
-    });
-  }
-  throw new Error();
+/**
+ * Start a new Update in the current Thread.
+ * @param thread
+ * @param ref 
+ * @param tree 
+ */
+const startWorkThreadUpdate = (thread: WorkThread, ref: CommitRef, prev: Commit | null, next: Element | null) => {
+  // Once a update starts,
+  // all "parents" are considered to have been visited,
+  // and cannot be rendered in this pass.
+  for (const id of [...ref.path].reverse().slice(1))
+    thread.visited.set(id, ref);
+
+  thread.pendingUpdates.push({
+    ref,
+    prev,
+    next,
+    moved: false,
+  })
 }
+
+/**
+ * Request that a commit be re-rendered
+ * @param thread 
+ * @param ref 
+ * @returns 
+ */
+const queueWorkThreadTarget = (thread: WorkThread, ref: CommitRef, tree: CommitTree): boolean => {
+  // If the thread _already_ has this ref as a target,
+  // do nothing
+  if (thread.mustRender.has(ref.id))
+    return true;
+
+  // We cant do work on a commit that has
+  // already been visited
+  if (thread.visited.has(ref.id))
+    return false;
+
+  thread.reasons.push({ type: 'target', ref });
+  thread.mustRender.set(ref.id, ref);
+
+  // Search through all the parents, looking to see if
+  // there are any pendingUpdates that might
+  // lead to this commit. If so, make sure ancestor commit
+  // is on the MustVisit so they should make their way down
+  // eventually
+  for (const id of [...ref.path].reverse().slice(1)) {
+    thread.mustVisit.set(ref.id, ref);
+
+    for (const update of thread.pendingUpdates) {
+      if (update.ref.id === id)
+        // Found an ancestor pending update - it should
+        // handle our target eventually
+        return true;
+    }
+  }
+  // otherwise, start a new update from the root
+  const prev = tree.commits.get(ref.id) as Commit;
+  startWorkThreadUpdate(thread, ref, prev, prev.element);
+  return true;
+}
+const queueWorkThreadMount = (thread: WorkThread, ref: CommitRef, element: Element) => {
+  thread.reasons.push({ type: 'mount', element });
+  startWorkThreadUpdate(thread, ref, null, element);
+};
 
 
 /**
- * A WorkThread is a mutable data struture that
- * represents a particular "Tree Travesal Task".
+ * A WorkThread is a mutable data structure that
+ * represents a particular "Tree Traversal Task".
  * 
  * Its expected when you start rendering, you
  * may start rendering more nodes due to updates.
@@ -181,46 +216,67 @@ const queueWorkThreadUpdate = (thread: WorkThread, ref: CommitRef) => {
  */
 export type WorkThread = {
   reasons: WorkReason[],
-
+  
+  mustRender: Map<CommitID, CommitRef>,
+  mustVisit: Map<CommitID, CommitRef>,
+  
   pendingUpdates: Update[],
   pendingEffects: EffectTask[],
 
-  errorNotifications: Set<CommitID>,
+  errorNotifications: Map<CommitID, CommitRef>,
 
   /**
-   * If a side effect or callback causes another render to happen
-   * to a commit that has already been rendererd this 
-   * */
-  leftovers: Set<CommitRef>,
-
-  /**
-   * A list of each commit the thread proccessed
+   * A list of each commit the thread processed
    */
-  visited: Set<CommitID>,
+  visited: Map<CommitID, CommitRef>,
   deltas: DeltaSet,
 };
+
+export const cloneWorkThread = (thread: WorkThread): WorkThread => {
+  return {
+    reasons: [...thread.reasons],
+    pendingEffects: [...thread.pendingEffects],
+    pendingUpdates: [...thread.pendingUpdates],
+    errorNotifications: new Map(thread.errorNotifications),
+
+    mustVisit: new Map(thread.mustVisit),
+    mustRender: new Map(thread.mustRender),
+
+    visited: new Map(thread.visited),
+
+    deltas: DeltaSet.clone(thread.deltas),
+  }
+}
+
 export const WorkThread = {
   new(): WorkThread {
     return {
       reasons: [],
-      leftovers: new Set(),
       pendingEffects: [],
       pendingUpdates: [],
-      errorNotifications: new Set(),
-      visited: new Set(),
+      errorNotifications: new Map(),
+
+      mustVisit: new Map(),
+      mustRender: new Map(),
+
+      visited: new Map(),
+
       deltas: DeltaSet.create(),
     }
   },
   rollback: rollbackWorkThread,
   apply: applyWorkThread,
   update: updateWorkThread,
-  queue: queueWorkThreadUpdate,
+  queueTarget: queueWorkThreadTarget,
+  queueMount: queueWorkThreadMount,
+
+  clone: cloneWorkThread,
 
   notifyError(thread: WorkThread, ref: CommitRef) {
-    thread.errorNotifications.add(ref.id);
+    thread.errorNotifications.set(ref.id, ref);
   },
   /**
-   * Find the closest anscestor error boundary for a commit,
+   * Find the closest ancestor error boundary for a commit,
    * either in the tree or one that was just created
    * */
   findClosestBoundary(thread: WorkThread, tree: CommitTree, ref: CommitRef): Commit | null {
@@ -239,16 +295,3 @@ export const WorkThread = {
     });
   }
 }
-
-/*
-  I think the thread manager should maybe have an event interface?
-
-  // events
-  onRequestWork
-  onThreadComplete
-
-  // methods
-  rerender
-  mount
-  process
-*/
