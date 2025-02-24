@@ -5,6 +5,7 @@ import { getElementName } from "./utils";
 import stringHash from '@sindresorhus/string-hash';
 
 import classes from './TreeViewer.module.css';
+import { CommitAttributeTag } from "./AttributeTag";
 
 export type TreeViewerProps = {
   tree: CommitTree,
@@ -50,16 +51,3 @@ const CommitPreview: Component<CommitPreviewProps> = ({ commit, tree, depth = 0,
       h('li', {}, h(CommitPreview, { commit: child, tree, depth: depth + 1, selectedCommits, onSelectCommit })))),
   ])
 };
-
-type CommitAttributeTagProps = {
-  name: string,
-  value: string,
-}
-
-const CommitAttributeTag: Component<CommitAttributeTagProps> = ({ name, value }) => {
-  const background = `hsl(${stringHash(name) % 360}deg, 50%, 50%)`;
-  return hs('span', { className: classes.commitAttributeTag, style: { background } }, [
-    hs('span', { className: classes.commitAttributeTagName }, name),
-    hs('span', { className: classes.commitAttributeTagValue }, value),
-  ])
-}

@@ -1,0 +1,6 @@
+.treeExplorer {
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+}

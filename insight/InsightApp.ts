@@ -6,6 +6,8 @@ import { TreeViewer } from './TreeViewer';
 
 import { debounce } from 'lodash-es'
 import { getElementName } from './utils';
+import { CommitViewer } from './CommitViewer';
+import classes from './InsightApp.module.css';
 
 export type InsightAppProps = {
   reconciler: Reconciler,
@@ -76,12 +78,12 @@ export const InsightApp: Component<InsightAppProps> = ({ reconciler, onReady }) 
     setAutoWork((e.target as HTMLInputElement).checked);
   }
 
-  const [selectedCommits, setSelectedCommits] = useState(new Set<CommitID>());
+  const [selectedCommit, setSelectedCommit] = useState<null | CommitID>(null);
   const onSelectCommit = (id: CommitID) => {
-    if (selectedCommits.has(id))
-      setSelectedCommits(new Set([...selectedCommits].filter(commitId => commitId !== id)))
+    if (selectedCommit === id)
+      setSelectedCommit(null)
     else
-      setSelectedCommits(new Set([id]))
+      setSelectedCommit(id)
   }
 
   return h('div', {}, [
@@ -114,10 +116,14 @@ export const InsightApp: Component<InsightAppProps> = ({ reconciler, onReady }) 
       ]))),
     ],
     //hs('pre', {}, counter),
-    tree && [
-      hs('pre', {}, `Size=${tree.commits.size}`),
-      h(TreeViewer, { tree, selectedCommits, onSelectCommit }),
-    ],
+    hs('div', { className: classes.treeExplorer }, [
+      tree && [
+        h(TreeViewer, { tree, selectedCommits: new Set(selectedCommit ? [selectedCommit] : []), onSelectCommit }),
+      ],
+      selectedCommit && tree && [
+        h(CommitViewer, { tree, commitId: selectedCommit, reconciler })
+      ]
+    ])
   ]);
 };
 

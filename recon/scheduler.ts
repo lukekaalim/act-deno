@@ -32,9 +32,9 @@ export const createScheduler = (
   let pendingTargets: Map<CommitID, CommitRef> = new Map();
 
   const work = () => {
+    currentRequest = null;
     if (!currentThread)
       return;
-    currentRequest = null;
     
     const update = currentThread.pendingUpdates.pop();
     if (update) {

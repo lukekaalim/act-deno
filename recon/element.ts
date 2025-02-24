@@ -40,7 +40,6 @@ export const createElementService = (
   requestRender: (ref: CommitRef) => void
 ): ElementService => {
   const contextStates = new Map<CommitID, ContextState<unknown>>();
-  const componentStates = new Map<CommitID, ComponentState>();
   const boundaryValues = new Map<CommitID, unknown>();
 
   const render = (
@@ -82,7 +81,7 @@ export const createElementService = (
         }
         break;
       case 'function': {
-        let state = componentStates.get(ref.id);
+        let state = tree.components.get(ref.id);
         if (!state) {
           state = {
             unmounted: false,
@@ -93,7 +92,7 @@ export const createElementService = (
             deps: new Map(),
             effects: new Map(),
           }
-          componentStates.set(ref.id, state);
+          tree.components.set(ref.id, state);
         }
         loadHooks(contextStates, requestRender, state, ref, output);
         const props = {
@@ -125,7 +124,7 @@ export const createElementService = (
         break;
       }
       case 'function': {
-        const componentState = componentStates.get(prev.id) as ComponentState;
+        const componentState = tree.components.get(prev.id) as ComponentState;
         componentState.unmounted = true;
         for (const [,context] of componentState.contexts) {
           if (context.state)
@@ -143,7 +142,7 @@ export const createElementService = (
             }
           });
         }
-        componentStates.delete(prev.id);
+        tree.components.delete(prev.id);
         break;
       }
     }

@@ -92,7 +92,12 @@ export const createReconciler = (): Reconciler => {
     } }
   }
   const work = () => {
-    for (const task of tasks)
+    if (tasks.size <= 0)
+      return;
+    const tasksThisRound = [...tasks];
+    tasks.clear();
+
+    for (const task of tasksThisRound)
       task();
 
     for (const [,handler] of handlers["complete-work"])

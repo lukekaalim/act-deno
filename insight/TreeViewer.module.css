@@ -1,32 +1,3 @@
-.commitAttributeTag {
-  display: inline-flex;
-
-  gap: 4px;
-  margin: auto 4px;
-
-  color: white;
-
-  border-radius: 4px;
-  padding: 4px;
-
-  font-family: monospace;
-  font-size: 12px;
-
-  height: 18px;
-} 
-
-.commitAttributeTagName {
-  margin: auto;
-}
-
-.commitAttributeTagValue {
-  margin: auto;
-  border-radius: 4px;
-  padding: 2px;
-  background-color: white;
-  color: black;
-}
-
 .elementBar {
   overflow: visible;
   display: flex;

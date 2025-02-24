@@ -1,8 +1,8 @@
-import { Element, primitiveNodeTypes } from "@lukekaalim/act";
+import { Element, primitiveNodeTypes, providerNodeType, renderNodeType } from "@lukekaalim/act";
 
 export const getElementName = (element: Element) => {
   if (typeof element.type === 'function')
-    return `<${element.type.name}>`;
+    return `<component(${element.type.name})>`;
   if (typeof element.type === 'symbol')
     switch (element.type) {
       case primitiveNodeTypes.number:
@@ -15,6 +15,10 @@ export const getElementName = (element: Element) => {
         return `<array>`
       case primitiveNodeTypes.null:
         return `<null>`
+      case renderNodeType:
+        return `<render type="${element.props.type}">`;
+      case providerNodeType:
+        return `<context id="${element.props.id}">`;
       default:
         return `<symbol>`
     }
