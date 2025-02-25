@@ -8,6 +8,8 @@ import { debounce } from 'lodash-es'
 import { getElementName } from './utils';
 import { CommitViewer } from './CommitViewer';
 import classes from './InsightApp.module.css';
+import { InsightMode } from './mode';
+import { MenuBar } from './MenuBar';
 
 export type InsightAppProps = {
   reconciler: Reconciler,
@@ -15,6 +17,8 @@ export type InsightAppProps = {
 }
 
 export const InsightApp: Component<InsightAppProps> = ({ reconciler, onReady }) => {
+  const [mode, setMode] = useState<InsightMode>('tree');
+
   const [renderReportIndex, setRenderReportIndex] = useState(0);
   const [renderReports, setRenderReports] = useState<WorkThread[]>([]);
   const [tree, setTree] = useState<null | CommitTree>(null);
@@ -87,14 +91,15 @@ export const InsightApp: Component<InsightAppProps> = ({ reconciler, onReady }) 
   }
 
   return h('div', {}, [
-    hs('div', {}, [
+    h(MenuBar, { currentMode: mode, onSelectMode: setMode }),
+    mode === 'thread' && hs('div', {}, [
       hs('button', { onClick: onWorkClick }, pendingWork ? 'Do Pending Work' : 'Work'),
       hs('label', {}, [
         hs('span', {}, 'Toggle Auto-Work'),
         hs('input', { type: 'checkbox', onInput: onToggleAutoWork, checked: autoWork }),
       ])
     ]),
-    currentThread && [
+    mode === 'thread' && currentThread && [
       hs('h3', {}, 'Fibers'),
       hs('ul', {}, [...currentThread.pendingUpdates].map((update) => hs('li', {}, h(UpdateDesc, { update })))),
       hs('h3', {}, 'Visited'),
@@ -116,7 +121,7 @@ export const InsightApp: Component<InsightAppProps> = ({ reconciler, onReady }) 
       ]))),
     ],
     //hs('pre', {}, counter),
-    hs('div', { className: classes.treeExplorer }, [
+    mode === 'tree' && hs('div', { className: classes.treeExplorer }, [
       tree && [
         h(TreeViewer, { tree, selectedCommits: new Set(selectedCommit ? [selectedCommit] : []), onSelectCommit }),
       ],

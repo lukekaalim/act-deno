@@ -1,4 +1,4 @@
-import { Element, primitiveNodeTypes, providerNodeType, renderNodeType } from "@lukekaalim/act";
+import { Element, errorBoundaryType, primitiveNodeTypes, providerNodeType, renderNodeType } from "@lukekaalim/act";
 
 export const getElementName = (element: Element) => {
   if (typeof element.type === 'function')
@@ -19,6 +19,8 @@ export const getElementName = (element: Element) => {
         return `<render type="${element.props.type}">`;
       case providerNodeType:
         return `<context id="${element.props.id}">`;
+      case errorBoundaryType:
+        return `<boundary>`;
       default:
         return `<symbol>`
     }

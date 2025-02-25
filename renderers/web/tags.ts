@@ -6,7 +6,7 @@ export const htmlTagNames = new Set([
   "h1", "h2", "h3", "h4", "h5", "h6",
   "hl",
   'p',
-  "ol", "ul", "li",
+  "ol", "ul", "li", "menu",
   "table", 'td', 'tr', 'th',
   "pre",
 
